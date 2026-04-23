@@ -1,0 +1,72 @@
+name: Spec-Driven Development Refresh
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '17 3 * * *'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: spec-driven-development-refresh
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: self-hosted
+    timeout-minutes: 30
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref_name }}
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Bootstrap Codex auth
+        shell: bash
+        env:
+          CODEX_AUTH_JSON: ${{ secrets.CODEX_AUTH_JSON }}
+        run: |
+          export CODEX_HOME="${CODEX_HOME:-$HOME/.codex}"
+          mkdir -p "$CODEX_HOME"
+          chmod 700 "$CODEX_HOME"
+          if [ ! -f "$CODEX_HOME/auth.json" ]; then
+            if [ -z "${CODEX_AUTH_JSON:-}" ]; then
+              echo "CODEX_AUTH_JSON is required to bootstrap Codex auth." >&2
+              exit 1
+            fi
+            printf '%s' "$CODEX_AUTH_JSON" > "$CODEX_HOME/auth.json"
+            chmod 600 "$CODEX_HOME/auth.json"
+          fi
+
+      - name: Install latest Codex CLI
+        run: npm install -g @openai/codex@latest
+
+      - name: Show Codex version
+        run: codex --version
+
+      - name: Update state of the art
+        env:
+          CODEX_MODEL: ${{ vars.CODEX_MODEL }}
+        run: ./scripts/update_state_of_the_art.sh
+
+      - name: Verify repo surfaces
+        run: ./scripts/verify.sh
+
+      - name: Commit changes
+        run: |
+          if git diff --quiet -- STATE_OF_THE_ART.md; then
+            echo "No changes to commit."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add STATE_OF_THE_ART.md
+          git commit -m "docs: refresh state of the art"
+          git push origin HEAD:${GITHUB_REF_NAME}

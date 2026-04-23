@@ -1,0 +1,20 @@
+flowchart LR
+    auth[Seed auth.json if missing]
+    current[STATE_OF_THE_ART.md]
+    prompt[Prompt plus JSON Schema]
+    codex[Codex CLI]
+    web[Fresh Web Research]
+    compare[Structured Comparison]
+    update[Managed Block Update]
+    ci[Daily GitHub Actions Cron on Self-Hosted Runner]
+    commit[Commit Only If Changed]
+
+    ci --> auth
+    auth --> current
+    ci --> prompt
+    current --> codex
+    prompt --> codex
+    codex --> web
+    web --> compare
+    compare --> update
+    update --> commit
