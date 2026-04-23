@@ -6,13 +6,13 @@ This document is the version-controlled source of truth for this repository's ar
 
 This repository exists to operate as a spec-driven observatory for the state of the art in spec-driven development.
 
-It maintains one research report, `STATE_OF_THE_ART.md`, and one canonical spec set under `specs/`, with a daily LLM-assisted CI loop.
+It maintains one research report, `STATE_OF_THE_ART.md`, one canonical spec set under `specs/`, and a two-job LLM-assisted CI control loop.
 
 ## Core Loop
 
 The architectural center of the repository is:
 
-`Read current repo -> Research -> Compare -> Update managed surfaces -> Verify -> Commit`
+`Advance -> Verify -> Watchdog -> Accept or Revert -> Feed Back Into Next Advance`
 
 ## Main Surfaces
 
@@ -21,22 +21,29 @@ The architectural center of the repository is:
 - `specs/RESEARCH_SCOPE_SPEC.md`: what the observatory watches
 - `specs/REPO_SHAPE_SPEC.md`: how the repo should present itself
 - `specs/DAILY_REFRESH_SPEC.md`: the operating contract for the daily loop
+- `specs/ADVANCE_JOB_SPEC.md`: the contract for one bounded self-reimplementation step
+- `specs/WATCHDOG_JOB_SPEC.md`: the contract for regression detection and rollback
+- `governance/WATCHDOG_FEEDBACK.md`: durable feedback from watchdog to advance
 - `automation/managed_repo_paths.txt`: the bounded allowlist of repo files the LLM may rewrite
-- `automation/observatory_refresh_prompt.md`: the bounded research and repo-conformance prompt
-- `automation/observatory_refresh.schema.json`: the expected final response shape from Codex
-- `scripts/refresh_observatory.sh`: the local and CI entrypoint
-- `.github/workflows/daily-observatory.yml`: the scheduled automation
+- `automation/advance_observatory_prompt.md`: the bounded prompt for the advance job
+- `automation/advance_observatory.schema.json`: the expected final response shape for advance
+- `automation/watchdog_observatory_prompt.md`: the bounded prompt for the watchdog job
+- `automation/watchdog_observatory.schema.json`: the expected final response shape for watchdog
+- `scripts/advance_observatory.sh`: the local and CI entrypoint for advance
+- `scripts/watchdog_observatory.sh`: the local and CI entrypoint for watchdog
+- `.github/workflows/advance-observatory.yml`: the scheduled advance automation
+- `.github/workflows/watchdog-observatory.yml`: the follow-on watchdog automation
 
 ## Write Path
 
-1. The CI runner ensures `${CODEX_HOME}/auth.json` exists, bootstrapping it from `CODEX_AUTH_JSON` only when the file is missing.
-2. The script reads `STATE_OF_THE_ART.md`, the canonical specs, and the current contents of the allowlisted managed files.
-3. The script sends the current repo context plus instructions to `codex --search exec`.
-4. Codex performs fresh web research.
-5. Codex returns structured output that states whether the research document or managed repo files need a material update.
-6. The script replaces only the managed block inside `STATE_OF_THE_ART.md` and rewrites only the allowlisted spec and doc files whose returned contents materially differ.
-7. The workflow verifies the repository.
-8. The workflow commits only when the repo changed.
+1. The advance runner ensures `${CODEX_HOME}/auth.json` exists, bootstrapping it from `CODEX_AUTH_JSON` only when the file is missing.
+2. The advance job reads `STATE_OF_THE_ART.md`, the canonical specs, `governance/WATCHDOG_FEEDBACK.md`, and the current contents of the allowlisted managed files.
+3. The advance job runs Codex with web search, the latest CLI, `gpt-5.4` by default, and `model_reasoning_effort = "xhigh"`.
+4. Advance performs fresh research, returns a bounded set of managed-surface updates, writes them, verifies the repo, and creates at most one advance commit.
+5. The watchdog job reads the candidate advance commit, the previous commit, the canonical specs, the current watchdog feedback, and verification signals.
+6. The watchdog uses Codex to decide whether the candidate commit is genuine progress or disguised regression.
+7. On acceptance, the watchdog may update the feedback file if the guidance materially changed.
+8. On rejection, the watchdog produces a revert commit and updates the feedback file so the next advance run sees the critique.
 
 ## Design Constraints
 
@@ -49,6 +56,7 @@ The architectural center of the repository is:
 - The repository never stores Codex credentials in version control.
 - The routine daily loop may not mutate controller surfaces such as workflow code, scripts, and repo-local instruction files.
 - The repo should express itself primarily through version-controlled specs and generated research, not ad hoc prose.
+- The watchdog feedback surface must remain outside the managed rewrite set so the advance job cannot erase its own critique.
 
 ## Target Repo Shape
 
@@ -59,21 +67,29 @@ The architectural center of the repository is:
 ├── STATE_OF_THE_ART.md
 ├── ARCHITECTURE.md
 ├── AGENTS.md
+├── governance/
+│   └── WATCHDOG_FEEDBACK.md
 ├── specs/
 │   ├── PRODUCT_SPEC.md
 │   ├── RESEARCH_SCOPE_SPEC.md
 │   ├── REPO_SHAPE_SPEC.md
-│   └── DAILY_REFRESH_SPEC.md
+│   ├── DAILY_REFRESH_SPEC.md
+│   ├── ADVANCE_JOB_SPEC.md
+│   └── WATCHDOG_JOB_SPEC.md
 ├── automation/
 │   ├── managed_repo_paths.txt
-│   ├── observatory_refresh_prompt.md
-│   └── observatory_refresh.schema.json
+│   ├── advance_observatory_prompt.md
+│   ├── advance_observatory.schema.json
+│   ├── watchdog_observatory_prompt.md
+│   └── watchdog_observatory.schema.json
 ├── scripts/
-│   ├── refresh_observatory.sh
+│   ├── advance_observatory.sh
+│   ├── watchdog_observatory.sh
 │   └── verify.sh
 ├── .github/
 │   └── workflows/
-│       └── daily-observatory.yml
+│       ├── advance-observatory.yml
+│       └── watchdog-observatory.yml
 └── docs/
     ├── adr/
     └── architecture/

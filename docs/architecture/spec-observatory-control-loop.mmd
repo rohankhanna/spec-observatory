@@ -1,0 +1,22 @@
+flowchart LR
+    feedback[Watchdog Feedback]
+    advance[Advance Job]
+    research[Fresh Research]
+    update[One Bounded Self-Reimplementation Step]
+    verify[Verification]
+    candidate[Candidate Commit]
+    watchdog[Watchdog Job]
+    decision{Accept?}
+    accept[Keep Commit]
+    revert[Revert Commit]
+
+    feedback --> advance
+    advance --> research
+    research --> update
+    update --> verify
+    verify --> candidate
+    candidate --> watchdog
+    watchdog --> decision
+    decision -->|Yes| accept
+    decision -->|No| revert
+    watchdog --> feedback

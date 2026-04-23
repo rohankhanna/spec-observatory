@@ -11,6 +11,7 @@ The repo should make these layers legible:
 - product framing
 - research scope
 - current state-of-the-art report
+- control-loop governance
 - repo shape and information architecture
 - daily refresh operating contract
 - architecture and controller boundaries
@@ -41,3 +42,5 @@ The repo should only rewrite managed surfaces when the latest research implies:
 - a clearer information hierarchy
 - a clearer product framing
 - a materially better mapping from ecosystem layers to repo surfaces
+
+The watchdog feedback surface is intentionally outside the managed rewrite set. The advance job must read it, but routine self-reimplementation must not overwrite it.

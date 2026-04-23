@@ -1,0 +1,99 @@
+name: Observatory Watchdog
+
+on:
+  workflow_dispatch:
+  push:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: observatory-watchdog
+  cancel-in-progress: false
+
+jobs:
+  watchdog:
+    runs-on: self-hosted
+    timeout-minutes: 45
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref_name }}
+          fetch-depth: 0
+
+      - name: Detect advance candidate
+        id: candidate
+        shell: bash
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            echo "should_run=true" >> "$GITHUB_OUTPUT"
+            echo "target_sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          SUBJECT="$(git log -1 --pretty=%s)"
+          if [[ "$SUBJECT" == advance:* ]]; then
+            echo "should_run=true" >> "$GITHUB_OUTPUT"
+            echo "target_sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+          else
+            echo "should_run=false" >> "$GITHUB_OUTPUT"
+            echo "Head commit is not an advance commit: $SUBJECT"
+          fi
+
+      - name: Setup Node
+        if: ${{ steps.candidate.outputs.should_run == 'true' }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Bootstrap Codex auth
+        if: ${{ steps.candidate.outputs.should_run == 'true' }}
+        shell: bash
+        env:
+          CODEX_AUTH_JSON: ${{ secrets.CODEX_AUTH_JSON }}
+        run: |
+          export CODEX_HOME="${CODEX_HOME:-$HOME/.codex}"
+          mkdir -p "$CODEX_HOME"
+          chmod 700 "$CODEX_HOME"
+          if [ ! -f "$CODEX_HOME/auth.json" ]; then
+            if [ -z "${CODEX_AUTH_JSON:-}" ]; then
+              echo "CODEX_AUTH_JSON is required to bootstrap Codex auth." >&2
+              exit 1
+            fi
+            printf '%s' "$CODEX_AUTH_JSON" > "$CODEX_HOME/auth.json"
+            chmod 600 "$CODEX_HOME/auth.json"
+          fi
+
+      - name: Install latest Codex CLI
+        if: ${{ steps.candidate.outputs.should_run == 'true' }}
+        run: npm install -g @openai/codex@latest
+
+      - name: Show Codex version
+        if: ${{ steps.candidate.outputs.should_run == 'true' }}
+        run: codex --version
+
+      - name: Run watchdog audit
+        if: ${{ steps.candidate.outputs.should_run == 'true' }}
+        env:
+          CODEX_MODEL: ${{ vars.CODEX_WATCHDOG_MODEL }}
+          CODEX_REASONING_EFFORT: xhigh
+          WATCHDOG_TARGET_SHA: ${{ steps.candidate.outputs.target_sha }}
+        run: ./scripts/watchdog_observatory.sh
+
+      - name: Verify repo surfaces
+        if: ${{ steps.candidate.outputs.should_run == 'true' }}
+        run: ./scripts/verify.sh
+
+      - name: Push watchdog result if needed
+        if: ${{ steps.candidate.outputs.should_run == 'true' }}
+        env:
+          WATCHDOG_TARGET_SHA: ${{ steps.candidate.outputs.target_sha }}
+          WATCHDOG_TARGET_BRANCH: ${{ github.ref_name }}
+        run: |
+          CURRENT_HEAD="$(git rev-parse HEAD)"
+          if [ "$CURRENT_HEAD" = "$WATCHDOG_TARGET_SHA" ]; then
+            echo "No watchdog commit to push."
+            exit 0
+          fi
+          git push origin HEAD:${WATCHDOG_TARGET_BRANCH}

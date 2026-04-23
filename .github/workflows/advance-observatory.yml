@@ -1,4 +1,4 @@
-name: Spec Observatory Refresh
+name: Observatory Advance
 
 on:
   workflow_dispatch:
@@ -9,19 +9,20 @@ permissions:
   contents: write
 
 concurrency:
-  group: spec-observatory-refresh
+  group: observatory-advance
   cancel-in-progress: false
 
 jobs:
-  refresh:
+  advance:
     runs-on: self-hosted
-    timeout-minutes: 30
+    timeout-minutes: 45
 
     steps:
       - name: Checkout
         uses: actions/checkout@v4
         with:
           ref: ${{ github.ref_name }}
+          fetch-depth: 0
 
       - name: Setup Node
         uses: actions/setup-node@v4
@@ -51,22 +52,23 @@ jobs:
       - name: Show Codex version
         run: codex --version
 
-      - name: Refresh observatory from research
+      - name: Run bounded advance iteration
         env:
-          CODEX_MODEL: ${{ vars.CODEX_MODEL }}
-        run: ./scripts/refresh_observatory.sh
+          CODEX_MODEL: ${{ vars.CODEX_ADVANCE_MODEL }}
+          CODEX_REASONING_EFFORT: xhigh
+        run: ./scripts/advance_observatory.sh
 
       - name: Verify repo surfaces
         run: ./scripts/verify.sh
 
-      - name: Commit changes
+      - name: Commit advance changes
         run: |
           if git diff --quiet && [ -z "$(git ls-files --others --exclude-standard)" ]; then
-            echo "No changes to commit."
+            echo "No advance changes to commit."
             exit 0
           fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add -A
-          git commit -m "chore: refresh observatory surfaces"
+          git commit -m "advance: self-reimplement observatory"
           git push origin HEAD:${GITHUB_REF_NAME}

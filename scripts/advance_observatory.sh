@@ -7,51 +7,37 @@ PRODUCT_SPEC_PATH="${ROOT_DIR}/specs/PRODUCT_SPEC.md"
 RESEARCH_SCOPE_SPEC_PATH="${ROOT_DIR}/specs/RESEARCH_SCOPE_SPEC.md"
 REPO_SHAPE_SPEC_PATH="${ROOT_DIR}/specs/REPO_SHAPE_SPEC.md"
 DAILY_REFRESH_SPEC_PATH="${ROOT_DIR}/specs/DAILY_REFRESH_SPEC.md"
-PROMPT_PATH="${ROOT_DIR}/automation/observatory_refresh_prompt.md"
-SCHEMA_PATH="${ROOT_DIR}/automation/observatory_refresh.schema.json"
+ADVANCE_JOB_SPEC_PATH="${ROOT_DIR}/specs/ADVANCE_JOB_SPEC.md"
+WATCHDOG_JOB_SPEC_PATH="${ROOT_DIR}/specs/WATCHDOG_JOB_SPEC.md"
+WATCHDOG_FEEDBACK_PATH="${ROOT_DIR}/governance/WATCHDOG_FEEDBACK.md"
+PROMPT_PATH="${ROOT_DIR}/automation/advance_observatory_prompt.md"
+SCHEMA_PATH="${ROOT_DIR}/automation/advance_observatory.schema.json"
 MANAGED_PATHS_PATH="${ROOT_DIR}/automation/managed_repo_paths.txt"
 CODEX_HOME_DIR="${CODEX_HOME:-$HOME/.codex}"
 AUTH_FILE="${CODEX_HOME_DIR}/auth.json"
+CODEX_MODEL="${CODEX_MODEL:-gpt-5.4}"
+CODEX_REASONING_EFFORT="${CODEX_REASONING_EFFORT:-xhigh}"
 
-if [[ ! -f "${DOC_PATH}" ]]; then
-  echo "missing document: ${DOC_PATH}" >&2
-  exit 1
-fi
+require_file() {
+  local path="$1"
+  local label="$2"
+  if [[ ! -f "${path}" ]]; then
+    echo "missing ${label}: ${path}" >&2
+    exit 1
+  fi
+}
 
-if [[ ! -f "${PRODUCT_SPEC_PATH}" ]]; then
-  echo "missing product spec: ${PRODUCT_SPEC_PATH}" >&2
-  exit 1
-fi
-
-if [[ ! -f "${RESEARCH_SCOPE_SPEC_PATH}" ]]; then
-  echo "missing research scope spec: ${RESEARCH_SCOPE_SPEC_PATH}" >&2
-  exit 1
-fi
-
-if [[ ! -f "${REPO_SHAPE_SPEC_PATH}" ]]; then
-  echo "missing repo shape spec: ${REPO_SHAPE_SPEC_PATH}" >&2
-  exit 1
-fi
-
-if [[ ! -f "${DAILY_REFRESH_SPEC_PATH}" ]]; then
-  echo "missing daily refresh spec: ${DAILY_REFRESH_SPEC_PATH}" >&2
-  exit 1
-fi
-
-if [[ ! -f "${PROMPT_PATH}" ]]; then
-  echo "missing prompt: ${PROMPT_PATH}" >&2
-  exit 1
-fi
-
-if [[ ! -f "${SCHEMA_PATH}" ]]; then
-  echo "missing schema: ${SCHEMA_PATH}" >&2
-  exit 1
-fi
-
-if [[ ! -f "${MANAGED_PATHS_PATH}" ]]; then
-  echo "missing managed path allowlist: ${MANAGED_PATHS_PATH}" >&2
-  exit 1
-fi
+require_file "${DOC_PATH}" "document"
+require_file "${PRODUCT_SPEC_PATH}" "product spec"
+require_file "${RESEARCH_SCOPE_SPEC_PATH}" "research scope spec"
+require_file "${REPO_SHAPE_SPEC_PATH}" "repo shape spec"
+require_file "${DAILY_REFRESH_SPEC_PATH}" "daily refresh spec"
+require_file "${ADVANCE_JOB_SPEC_PATH}" "advance job spec"
+require_file "${WATCHDOG_JOB_SPEC_PATH}" "watchdog job spec"
+require_file "${WATCHDOG_FEEDBACK_PATH}" "watchdog feedback"
+require_file "${PROMPT_PATH}" "prompt"
+require_file "${SCHEMA_PATH}" "schema"
+require_file "${MANAGED_PATHS_PATH}" "managed path allowlist"
 
 if [[ -z "${OPENAI_API_KEY:-}" && ! -f "${AUTH_FILE}" ]]; then
   echo "Set OPENAI_API_KEY or provide ${AUTH_FILE}" >&2
@@ -85,6 +71,15 @@ RESULT_JSON="${TMP_DIR}/result.json"
   printf '\n<current_daily_refresh_spec>\n'
   cat "${DAILY_REFRESH_SPEC_PATH}"
   printf '\n</current_daily_refresh_spec>\n'
+  printf '\n<current_advance_job_spec>\n'
+  cat "${ADVANCE_JOB_SPEC_PATH}"
+  printf '\n</current_advance_job_spec>\n'
+  printf '\n<current_watchdog_job_spec>\n'
+  cat "${WATCHDOG_JOB_SPEC_PATH}"
+  printf '\n</current_watchdog_job_spec>\n'
+  printf '\n<current_watchdog_feedback>\n'
+  cat "${WATCHDOG_FEEDBACK_PATH}"
+  printf '\n</current_watchdog_feedback>\n'
   while IFS= read -r managed_path; do
     [[ -z "${managed_path}" ]] && continue
     if [[ ! -f "${ROOT_DIR}/${managed_path}" ]]; then
@@ -97,18 +92,15 @@ RESULT_JSON="${TMP_DIR}/result.json"
   done < "${MANAGED_PATHS_PATH}"
 } > "${PROMPT_INPUT}"
 
-MODEL_ARGS=()
-if [[ -n "${CODEX_MODEL:-}" ]]; then
-  MODEL_ARGS=(-m "${CODEX_MODEL}")
-fi
-
-codex --search exec \
+codex exec \
+  --search \
   --ignore-user-config \
   --ignore-rules \
   --ephemeral \
   --sandbox read-only \
   -C "${ROOT_DIR}" \
-  "${MODEL_ARGS[@]}" \
+  -m "${CODEX_MODEL}" \
+  -c "model_reasoning_effort=\"${CODEX_REASONING_EFFORT}\"" \
   --output-schema "${SCHEMA_PATH}" \
   --output-last-message "${RESULT_JSON}" \
   - < "${PROMPT_INPUT}"
