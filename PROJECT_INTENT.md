@@ -4,14 +4,14 @@ This file is the authoritative internal statement of this repo's purpose and int
 
 ## Purpose
 
-Maintain a current state-of-the-art document for spec-driven development and its adjacent software-development ecosystem, and keep the repository's managed surfaces conformed to the research-derived shape with a daily LLM-in-the-loop CI job.
+Implement a spec-driven observatory for the state of the art in spec-driven development and adjacent software-development tooling, and keep the repository's managed surfaces conformed to that research with a daily LLM-in-the-loop CI job.
 
 ## Intended Outcome
 
 Deliver a practical, reliable document-maintenance loop that makes it possible to:
 
 - keep `STATE_OF_THE_ART.md` under version control
-- keep `REPO_SHAPE.md` under version control
+- keep canonical product and operating specs under version control
 - run fresh research on a daily schedule in CI
 - read the current document before any research-driven update
 - update the document only when the newly researched state of the art materially differs from the current document
@@ -23,12 +23,12 @@ Deliver a practical, reliable document-maintenance loop that makes it possible t
 
 Until a user deliberately edits this file, the active goal is:
 
-Build and maintain a daily CI loop that keeps `STATE_OF_THE_ART.md` current and keeps the managed repo surfaces conformed to a research-derived shape by reading the current repo first, running fresh research second, comparing the two, and only committing a change when the repo is materially stale.
+Build and maintain a daily CI loop that keeps `STATE_OF_THE_ART.md` current and keeps the observatory's managed specs and docs conformed to a research-derived shape by reading the current repo first, running fresh research second, comparing the two, and only committing a change when the repo is materially stale.
 
 Work in this repo should prioritize:
 
+- defining the canonical specs that describe the observatory product, scope, shape, and refresh loop
 - defining the exact scope and structure of `STATE_OF_THE_ART.md`
-- defining the exact scope and structure of `REPO_SHAPE.md`
 - making the daily update workflow deterministic enough to review
 - keeping the LLM step bounded to research, comparison, and proposed replacements for the managed repo surface
 - installing the latest Codex CLI in CI on every run
@@ -36,7 +36,7 @@ Work in this repo should prioritize:
 - avoiding unnecessary rewrites when there is no material change
 - separating controller surfaces from LLM-managed surfaces so the repo can self-restructure without destabilizing its own control loop
 
-This repo should be considered locally complete for this goal when it contains a maintained `STATE_OF_THE_ART.md`, a maintained `REPO_SHAPE.md`, a daily CI update workflow, a bounded LLM prompt and schema, a managed-surface allowlist, and a verification path that together demonstrate the research-plus-restructure loop in a reusable form.
+This repo should be considered locally complete for this goal when it contains a maintained `STATE_OF_THE_ART.md`, a maintained canonical spec set, a daily CI update workflow, a bounded LLM prompt and schema, a managed-surface allowlist, and a verification path that together demonstrate the observatory loop in a reusable form.
 
 ## Notes
 

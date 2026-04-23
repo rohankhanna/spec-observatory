@@ -5,7 +5,7 @@
 
 ## Context
 
-This repository needs a daily Codex-driven workflow, but the intended billing model is to reuse a logged-in Codex account rather than provide a separate OpenAI API key for CI.
+This repository needs a daily Codex-driven observatory workflow, but the intended billing model is to reuse a logged-in Codex account rather than provide a separate OpenAI API key for CI.
 
 OpenAI documents an advanced Codex CI/CD pattern for this case: seed `~/.codex/auth.json` from a trusted machine, run Codex normally on a trusted runner, and preserve the refreshed file for later runs.
 
@@ -18,7 +18,7 @@ The scheduled workflow will assume a trusted `self-hosted` runner with a persist
 1. create `CODEX_HOME` if needed
 2. bootstrap `auth.json` only if it is missing
 3. install the latest Codex CLI
-4. run the research and repo refresh normally and let Codex refresh the session in place
+4. run the observatory refresh normally and let Codex refresh the session in place
 
 ## Consequences
 

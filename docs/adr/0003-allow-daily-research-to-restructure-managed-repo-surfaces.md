@@ -5,7 +5,7 @@
 
 ## Context
 
-The repository now aims to do more than maintain one research document. It also aims to express the current view of spec-driven development in its own shape.
+The repository now aims to do more than maintain one research document. It also aims to express the current view of spec-driven development through its observatory specs and docs.
 
 Allowing the daily loop to rewrite the entire repository would be unstable because it would let the same model that performs research also rewrite its own controller surfaces.
 

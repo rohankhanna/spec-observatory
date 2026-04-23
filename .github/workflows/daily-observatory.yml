@@ -1,4 +1,4 @@
-name: Spec-Driven Development Refresh
+name: Spec Observatory Refresh
 
 on:
   workflow_dispatch:
@@ -9,7 +9,7 @@ permissions:
   contents: write
 
 concurrency:
-  group: spec-driven-development-refresh
+  group: spec-observatory-refresh
   cancel-in-progress: false
 
 jobs:
@@ -51,10 +51,10 @@ jobs:
       - name: Show Codex version
         run: codex --version
 
-      - name: Refresh repo from research
+      - name: Refresh observatory from research
         env:
           CODEX_MODEL: ${{ vars.CODEX_MODEL }}
-        run: ./scripts/update_state_of_the_art.sh
+        run: ./scripts/refresh_observatory.sh
 
       - name: Verify repo surfaces
         run: ./scripts/verify.sh
@@ -68,5 +68,5 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add -A
-          git commit -m "chore: refresh research and repo shape"
+          git commit -m "chore: refresh observatory surfaces"
           git push origin HEAD:${GITHUB_REF_NAME}

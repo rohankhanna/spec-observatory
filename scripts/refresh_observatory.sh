@@ -3,9 +3,12 @@ set -euo pipefail
 
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 DOC_PATH="${ROOT_DIR}/STATE_OF_THE_ART.md"
-REPO_SHAPE_PATH="${ROOT_DIR}/REPO_SHAPE.md"
-PROMPT_PATH="${ROOT_DIR}/automation/state_of_the_art_prompt.md"
-SCHEMA_PATH="${ROOT_DIR}/automation/state_of_the_art_update.schema.json"
+PRODUCT_SPEC_PATH="${ROOT_DIR}/specs/PRODUCT_SPEC.md"
+RESEARCH_SCOPE_SPEC_PATH="${ROOT_DIR}/specs/RESEARCH_SCOPE_SPEC.md"
+REPO_SHAPE_SPEC_PATH="${ROOT_DIR}/specs/REPO_SHAPE_SPEC.md"
+DAILY_REFRESH_SPEC_PATH="${ROOT_DIR}/specs/DAILY_REFRESH_SPEC.md"
+PROMPT_PATH="${ROOT_DIR}/automation/observatory_refresh_prompt.md"
+SCHEMA_PATH="${ROOT_DIR}/automation/observatory_refresh.schema.json"
 MANAGED_PATHS_PATH="${ROOT_DIR}/automation/managed_repo_paths.txt"
 CODEX_HOME_DIR="${CODEX_HOME:-$HOME/.codex}"
 AUTH_FILE="${CODEX_HOME_DIR}/auth.json"
@@ -15,8 +18,23 @@ if [[ ! -f "${DOC_PATH}" ]]; then
   exit 1
 fi
 
-if [[ ! -f "${REPO_SHAPE_PATH}" ]]; then
-  echo "missing repo shape: ${REPO_SHAPE_PATH}" >&2
+if [[ ! -f "${PRODUCT_SPEC_PATH}" ]]; then
+  echo "missing product spec: ${PRODUCT_SPEC_PATH}" >&2
+  exit 1
+fi
+
+if [[ ! -f "${RESEARCH_SCOPE_SPEC_PATH}" ]]; then
+  echo "missing research scope spec: ${RESEARCH_SCOPE_SPEC_PATH}" >&2
+  exit 1
+fi
+
+if [[ ! -f "${REPO_SHAPE_SPEC_PATH}" ]]; then
+  echo "missing repo shape spec: ${REPO_SHAPE_SPEC_PATH}" >&2
+  exit 1
+fi
+
+if [[ ! -f "${DAILY_REFRESH_SPEC_PATH}" ]]; then
+  echo "missing daily refresh spec: ${DAILY_REFRESH_SPEC_PATH}" >&2
   exit 1
 fi
 
@@ -55,9 +73,18 @@ RESULT_JSON="${TMP_DIR}/result.json"
   printf '\n<current_state_of_the_art_document>\n'
   cat "${DOC_PATH}"
   printf '\n</current_state_of_the_art_document>\n'
-  printf '\n<current_repo_shape>\n'
-  cat "${REPO_SHAPE_PATH}"
-  printf '\n</current_repo_shape>\n'
+  printf '\n<current_product_spec>\n'
+  cat "${PRODUCT_SPEC_PATH}"
+  printf '\n</current_product_spec>\n'
+  printf '\n<current_research_scope_spec>\n'
+  cat "${RESEARCH_SCOPE_SPEC_PATH}"
+  printf '\n</current_research_scope_spec>\n'
+  printf '\n<current_repo_shape_spec>\n'
+  cat "${REPO_SHAPE_SPEC_PATH}"
+  printf '\n</current_repo_shape_spec>\n'
+  printf '\n<current_daily_refresh_spec>\n'
+  cat "${DAILY_REFRESH_SPEC_PATH}"
+  printf '\n</current_daily_refresh_spec>\n'
   while IFS= read -r managed_path; do
     [[ -z "${managed_path}" ]] && continue
     if [[ ! -f "${ROOT_DIR}/${managed_path}" ]]; then
