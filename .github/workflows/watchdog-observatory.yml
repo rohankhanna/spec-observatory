@@ -51,19 +51,25 @@ jobs:
         if: ${{ steps.candidate.outputs.should_run == 'true' }}
         shell: bash
         env:
-          CODEX_AUTH_JSON: ${{ secrets.CODEX_AUTH_JSON }}
+          CODEX_AUTH_JSON_B64: ${{ secrets.CODEX_AUTH_JSON_B64 }}
         run: |
           export CODEX_HOME="${CODEX_HOME:-$HOME/.codex}"
           mkdir -p "$CODEX_HOME"
           chmod 700 "$CODEX_HOME"
-          if [ ! -f "$CODEX_HOME/auth.json" ]; then
-            if [ -z "${CODEX_AUTH_JSON:-}" ]; then
-              echo "CODEX_AUTH_JSON is required to bootstrap Codex auth." >&2
-              exit 1
-            fi
-            printf '%s' "$CODEX_AUTH_JSON" > "$CODEX_HOME/auth.json"
-            chmod 600 "$CODEX_HOME/auth.json"
+          if [ -z "${CODEX_AUTH_JSON_B64:-}" ]; then
+            echo "CODEX_AUTH_JSON_B64 is required to bootstrap Codex auth." >&2
+            exit 1
           fi
+          python3 - <<'PY'
+          import base64
+          import os
+          import pathlib
+
+          codex_home = pathlib.Path(os.environ.get("CODEX_HOME", pathlib.Path.home() / ".codex"))
+          auth_b64 = os.environ["CODEX_AUTH_JSON_B64"]
+          (codex_home / "auth.json").write_bytes(base64.b64decode(auth_b64))
+          PY
+          chmod 600 "$CODEX_HOME/auth.json"
 
       - name: Install latest Codex CLI
         if: ${{ steps.candidate.outputs.should_run == 'true' }}

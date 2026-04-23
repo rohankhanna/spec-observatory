@@ -64,13 +64,13 @@ Those are the controller surfaces. They change deliberately, not as part of the 
 
 This repository is configured for ChatGPT-managed Codex auth rather than API-key billing.
 
-Set the GitHub Actions secret `CODEX_AUTH_JSON` to the full contents of a trusted machine's `~/.codex/auth.json` after `codex login` with file-backed credential storage.
+Set the GitHub Actions secret `CODEX_AUTH_JSON_B64` to the base64-encoded contents of a trusted machine's `~/.codex/auth.json` after `codex login` with file-backed credential storage.
 
-The workflow assumes a trusted `self-hosted` runner with a persistent `CODEX_HOME`. It bootstraps `auth.json` only if the file is missing, then lets Codex refresh the session in place on later runs.
+The workflows assume a trusted `self-hosted` runner. On each run they decode `CODEX_AUTH_JSON_B64` into `${CODEX_HOME:-$HOME/.codex}/auth.json` before invoking Codex.
 
 If you use GitHub-hosted ephemeral runners instead, you need an additional secure restore-and-persist loop for the refreshed `auth.json`. That round trip is not configured in this repository.
 
-The right term here is `GitHub Actions secret containing auth.json`, not `security key`.
+The right term here is `GitHub Actions secret containing base64-encoded auth.json`, not `security key`.
 
 This follows OpenAI's advanced Codex CI/CD guidance for maintained `auth.json` files on trusted runners: https://developers.openai.com/codex/auth/ci-cd-auth
 

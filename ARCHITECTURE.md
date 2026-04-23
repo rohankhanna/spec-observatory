@@ -36,7 +36,7 @@ The architectural center of the repository is:
 
 ## Write Path
 
-1. The advance runner ensures `${CODEX_HOME}/auth.json` exists, bootstrapping it from `CODEX_AUTH_JSON` only when the file is missing.
+1. Each CI runner writes `${CODEX_HOME}/auth.json` from the `CODEX_AUTH_JSON_B64` secret before invoking Codex.
 2. The advance job reads `STATE_OF_THE_ART.md`, the canonical specs, `governance/WATCHDOG_FEEDBACK.md`, and the current contents of the allowlisted managed files.
 3. The advance job runs Codex with web search, the latest CLI, `gpt-5.4` by default, and `model_reasoning_effort = "xhigh"`.
 4. Advance performs fresh research, returns a bounded set of managed-surface updates, writes them, verifies the repo, and creates at most one advance commit.
@@ -52,7 +52,7 @@ The architectural center of the repository is:
 - No update is written when the model concludes there is no material difference.
 - The automation updates only the managed block of `STATE_OF_THE_ART.md` plus the allowlisted managed repo files.
 - The final model response must match a version-controlled JSON Schema.
-- The default CI path uses ChatGPT-managed `auth.json` on a trusted private runner instead of an API key.
+- The default CI path uses ChatGPT-managed `auth.json`, sourced from the `CODEX_AUTH_JSON_B64` secret on a trusted private runner, instead of an API key.
 - The repository never stores Codex credentials in version control.
 - The routine daily loop may not mutate controller surfaces such as workflow code, scripts, and repo-local instruction files.
 - The repo should express itself primarily through version-controlled specs and generated research, not ad hoc prose.
