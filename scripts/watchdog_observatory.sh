@@ -103,13 +103,13 @@ git diff --name-only "${WATCHDOG_BASE_SHA}" "${WATCHDOG_TARGET_SHA}" -- \
 } > "${PROMPT_INPUT}"
 
 codex exec \
-  --search \
   --ignore-user-config \
   --ignore-rules \
   --ephemeral \
   --sandbox read-only \
   -C "${ROOT_DIR}" \
   -m "${CODEX_MODEL}" \
+  -c 'web_search="live"' \
   -c "model_reasoning_effort=\"${CODEX_REASONING_EFFORT}\"" \
   --output-schema "${SCHEMA_PATH}" \
   --output-last-message "${RESULT_JSON}" \
