@@ -64,13 +64,18 @@ Those are the controller surfaces. They change deliberately, not as part of the 
 
 This repository is configured for ChatGPT-managed Codex auth rather than API-key billing.
 
-Create a GitHub Actions environment named `observatory`, then store `CODEX_AUTH_JSON_B64` there as an environment secret. The value should be the base64-encoded contents of a trusted machine's `~/.codex/auth.json` after `codex login` with file-backed credential storage.
+Create a GitHub Actions environment named `observatory`, then store these environment secrets there:
 
-Both workflows are bound to the `observatory` environment. On each run they decode `CODEX_AUTH_JSON_B64` into `${CODEX_HOME:-$HOME/.codex}/auth.json` before invoking Codex on a trusted `self-hosted` runner.
+- `CODEX_AUTH_JSON_B64`: the base64-encoded contents of a trusted machine's `~/.codex/auth.json` after `codex login` with file-backed credential storage
+- `GH_OBSERVATORY_AUTOMATION_TOKEN`: a fine-grained GitHub personal access token from your existing GitHub account, scoped only to this repository, with `Contents: Read and write` and `Environments: Read and write`
 
-If you use GitHub-hosted ephemeral runners instead, you need an additional secure restore-and-persist loop for the refreshed `auth.json`. That round trip is not configured in this repository.
+Both workflows are bound to the `observatory` environment and run on GitHub-hosted `ubuntu-latest` runners. On each run they decode `CODEX_AUTH_JSON_B64` into `${CODEX_HOME:-$HOME/.codex}/auth.json`, invoke Codex, then write the refreshed `auth.json` back into the same environment secret using `GH_OBSERVATORY_AUTOMATION_TOKEN`.
 
-The right term here is `GitHub Actions secret containing base64-encoded auth.json`, not `security key`.
+`GH_OBSERVATORY_AUTOMATION_TOKEN` should contain only the raw GitHub token string, for example a value that starts with `github_pat_`. It is not JSON and it should not be base64-encoded.
+
+The workflows also use `GH_OBSERVATORY_AUTOMATION_TOKEN` for checkout and push so that an `advance:` commit can trigger the `watchdog` workflow. GitHub's built-in `GITHUB_TOKEN` suppresses new workflow runs for most push events, so it is not sufficient for this repo's recursive loop.
+
+The right terms here are `GitHub Actions environment secret containing base64-encoded auth.json` and `GitHub Actions environment secret containing a fine-grained GitHub PAT`, not `security key`.
 
 This follows OpenAI's advanced Codex CI/CD guidance for maintained `auth.json` files on trusted runners: https://developers.openai.com/codex/auth/ci-cd-auth
 

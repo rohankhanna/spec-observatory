@@ -36,7 +36,7 @@ The architectural center of the repository is:
 
 ## Write Path
 
-1. Each CI job runs inside the GitHub Actions environment `observatory` and writes `${CODEX_HOME}/auth.json` from that environment's `CODEX_AUTH_JSON_B64` secret before invoking Codex.
+1. Each CI job runs inside the GitHub Actions environment `observatory` on `ubuntu-latest`, writes `${CODEX_HOME}/auth.json` from that environment's `CODEX_AUTH_JSON_B64` secret, and authenticates GitHub operations with `GH_OBSERVATORY_AUTOMATION_TOKEN`.
 2. The advance job reads `STATE_OF_THE_ART.md`, the canonical specs, `governance/WATCHDOG_FEEDBACK.md`, and the current contents of the allowlisted managed files.
 3. The advance job runs Codex with web search, the latest CLI, `gpt-5.4` by default, and `model_reasoning_effort = "xhigh"`.
 4. Advance performs fresh research, returns a bounded set of managed-surface updates, writes them, verifies the repo, and creates at most one advance commit.
@@ -44,6 +44,7 @@ The architectural center of the repository is:
 6. The watchdog uses Codex to decide whether the candidate commit is genuine progress or disguised regression.
 7. On acceptance, the watchdog may update the feedback file if the guidance materially changed.
 8. On rejection, the watchdog produces a revert commit and updates the feedback file so the next advance run sees the critique.
+9. After a successful Codex run, the workflow base64-encodes the refreshed `auth.json` and overwrites the `observatory` environment secret `CODEX_AUTH_JSON_B64` so the next run starts from the newest session state.
 
 ## Design Constraints
 
@@ -52,7 +53,8 @@ The architectural center of the repository is:
 - No update is written when the model concludes there is no material difference.
 - The automation updates only the managed block of `STATE_OF_THE_ART.md` plus the allowlisted managed repo files.
 - The final model response must match a version-controlled JSON Schema.
-- The default CI path uses ChatGPT-managed `auth.json`, sourced from the `observatory` environment secret `CODEX_AUTH_JSON_B64` on a trusted private runner, instead of an API key.
+- The default CI path uses ChatGPT-managed `auth.json`, sourced from the `observatory` environment secret `CODEX_AUTH_JSON_B64` on GitHub-hosted runners, instead of an API key.
+- A second environment secret, `GH_OBSERVATORY_AUTOMATION_TOKEN`, is used to push commits and rotate `CODEX_AUTH_JSON_B64`.
 - The repository never stores Codex credentials in version control.
 - The routine daily loop may not mutate controller surfaces such as workflow code, scripts, and repo-local instruction files.
 - The repo should express itself primarily through version-controlled specs and generated research, not ad hoc prose.

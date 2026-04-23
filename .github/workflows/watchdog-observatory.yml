@@ -14,7 +14,7 @@ concurrency:
 jobs:
   watchdog:
     environment: observatory
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     timeout-minutes: 45
 
     steps:
@@ -23,6 +23,7 @@ jobs:
         with:
           ref: ${{ github.ref_name }}
           fetch-depth: 0
+          token: ${{ secrets.GH_OBSERVATORY_AUTOMATION_TOKEN }}
 
       - name: Detect advance candidate
         id: candidate
@@ -91,6 +92,31 @@ jobs:
       - name: Verify repo surfaces
         if: ${{ steps.candidate.outputs.should_run == 'true' }}
         run: ./scripts/verify.sh
+
+      - name: Rotate Codex auth environment secret
+        if: ${{ steps.candidate.outputs.should_run == 'true' }}
+        env:
+          GH_TOKEN: ${{ secrets.GH_OBSERVATORY_AUTOMATION_TOKEN }}
+        run: |
+          if [ -z "${GH_TOKEN:-}" ]; then
+            echo "GH_OBSERVATORY_AUTOMATION_TOKEN is required to rotate CODEX_AUTH_JSON_B64." >&2
+            exit 1
+          fi
+          export CODEX_HOME="${CODEX_HOME:-$HOME/.codex}"
+          if [ ! -f "$CODEX_HOME/auth.json" ]; then
+            echo "Codex auth file not found at $CODEX_HOME/auth.json." >&2
+            exit 1
+          fi
+          AUTH_B64="$(python3 - <<'PY'
+          import base64
+          import os
+          import pathlib
+
+          codex_home = pathlib.Path(os.environ.get("CODEX_HOME", pathlib.Path.home() / ".codex"))
+          print(base64.b64encode((codex_home / "auth.json").read_bytes()).decode())
+          PY
+          )"
+          gh secret set CODEX_AUTH_JSON_B64 --env observatory --repo "${GITHUB_REPOSITORY}" --body "${AUTH_B64}"
 
       - name: Push watchdog result if needed
         if: ${{ steps.candidate.outputs.should_run == 'true' }}
