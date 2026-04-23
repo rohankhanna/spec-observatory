@@ -1,15 +1,16 @@
 # Spec-Driven Development
 
-This repository maintains one living document, [STATE_OF_THE_ART.md](./STATE_OF_THE_ART.md), about spec-driven development and the adjacent tooling ecosystem. A daily Codex-in-the-loop CI job keeps that document current.
+This repository researches spec-driven development across layers of abstraction and uses that research to keep its own managed surfaces in shape. A daily Codex-in-the-loop CI job maintains both the state-of-the-art document and the repo shape that follows from it.
 
 ## Goal
 
 The job should:
 
-1. read the current document first
+1. read the current research document and current managed repo surfaces first
 2. run fresh research on the relevant ecosystem
-3. compare the fresh findings against the current document
-4. update the document only when there is a material difference
+3. compare the fresh findings against the current document and current repo shape
+4. update the research document only when there is a material difference
+5. restructure the repo's managed surfaces only when the researched state of the art implies a better shape
 
 ## Automation
 
@@ -19,8 +20,26 @@ The daily update loop lives in:
 - updater: [scripts/update_state_of_the_art.sh](./scripts/update_state_of_the_art.sh)
 - prompt: [automation/state_of_the_art_prompt.md](./automation/state_of_the_art_prompt.md)
 - output schema: [automation/state_of_the_art_update.schema.json](./automation/state_of_the_art_update.schema.json)
+- managed repo allowlist: [automation/managed_repo_paths.txt](./automation/managed_repo_paths.txt)
+- repo shape spec: [REPO_SHAPE.md](./REPO_SHAPE.md)
 
-The workflow installs the latest `@openai/codex` CLI on each run, uses `codex --search exec` for fresh research, and only commits when `STATE_OF_THE_ART.md` actually changes.
+The workflow installs the latest `@openai/codex` CLI on each run, uses `codex --search exec` for fresh research, and only commits when the research or managed repo surfaces actually change.
+
+## Managed Versus Controller Surfaces
+
+The daily loop may rewrite:
+
+- the managed block of [STATE_OF_THE_ART.md](./STATE_OF_THE_ART.md)
+- the allowlisted repo files named in [automation/managed_repo_paths.txt](./automation/managed_repo_paths.txt)
+
+The daily loop should not routinely rewrite:
+
+- workflow code
+- shell scripts
+- auth bootstrapping
+- repo-local instruction files
+
+Those are the controller surfaces. They change deliberately, not as part of the normal daily self-restructuring loop.
 
 ## Authentication
 
@@ -38,7 +57,7 @@ This follows OpenAI's advanced Codex CI/CD guidance for maintained `auth.json` f
 
 ## Local Commands
 
-- refresh the document locally: `./scripts/update_state_of_the_art.sh`
+- refresh the managed research and repo surfaces locally: `./scripts/update_state_of_the_art.sh`
 - verify the repo surfaces: `./scripts/verify.sh`
 
 ## Scope
@@ -50,3 +69,5 @@ The maintained document currently tracks the state of the art for:
 - coding agents
 - agent orchestration
 - software portfolio and project steering
+
+The managed repo shape is intended to express those layers clearly rather than merely document them.

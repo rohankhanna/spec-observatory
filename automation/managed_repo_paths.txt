@@ -1,0 +1,8 @@
+README.md
+PROJECT_INTENT.md
+ARCHITECTURE.md
+REPO_SHAPE.md
+docs/adr/0001-keep-the-repo-focused-on-one-daily-updated-document.md
+docs/adr/0002-use-codex-auth-json-on-trusted-ci-runners.md
+docs/adr/0003-allow-daily-research-to-restructure-managed-repo-surfaces.md
+docs/architecture/daily-state-of-the-art-refresh.mmd

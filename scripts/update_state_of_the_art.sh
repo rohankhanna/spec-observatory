@@ -3,13 +3,20 @@ set -euo pipefail
 
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 DOC_PATH="${ROOT_DIR}/STATE_OF_THE_ART.md"
+REPO_SHAPE_PATH="${ROOT_DIR}/REPO_SHAPE.md"
 PROMPT_PATH="${ROOT_DIR}/automation/state_of_the_art_prompt.md"
 SCHEMA_PATH="${ROOT_DIR}/automation/state_of_the_art_update.schema.json"
+MANAGED_PATHS_PATH="${ROOT_DIR}/automation/managed_repo_paths.txt"
 CODEX_HOME_DIR="${CODEX_HOME:-$HOME/.codex}"
 AUTH_FILE="${CODEX_HOME_DIR}/auth.json"
 
 if [[ ! -f "${DOC_PATH}" ]]; then
   echo "missing document: ${DOC_PATH}" >&2
+  exit 1
+fi
+
+if [[ ! -f "${REPO_SHAPE_PATH}" ]]; then
+  echo "missing repo shape: ${REPO_SHAPE_PATH}" >&2
   exit 1
 fi
 
@@ -23,6 +30,11 @@ if [[ ! -f "${SCHEMA_PATH}" ]]; then
   exit 1
 fi
 
+if [[ ! -f "${MANAGED_PATHS_PATH}" ]]; then
+  echo "missing managed path allowlist: ${MANAGED_PATHS_PATH}" >&2
+  exit 1
+fi
+
 if [[ -z "${OPENAI_API_KEY:-}" && ! -f "${AUTH_FILE}" ]]; then
   echo "Set OPENAI_API_KEY or provide ${AUTH_FILE}" >&2
   exit 1
@@ -33,15 +45,29 @@ trap 'rm -rf "${TMP_DIR}"' EXIT
 
 PROMPT_INPUT="${TMP_DIR}/prompt.txt"
 RESULT_JSON="${TMP_DIR}/result.json"
-UPDATED_BLOCK="${TMP_DIR}/updated_block.md"
-UPDATED_DOC="${TMP_DIR}/updated_doc.md"
 
 {
   cat "${PROMPT_PATH}"
   printf '\n\nCurrent UTC date: %s\n' "$(date -u +%F)"
-  printf '\n<current_document>\n'
+  printf '\n<managed_repo_paths>\n'
+  cat "${MANAGED_PATHS_PATH}"
+  printf '\n</managed_repo_paths>\n'
+  printf '\n<current_state_of_the_art_document>\n'
   cat "${DOC_PATH}"
-  printf '\n</current_document>\n'
+  printf '\n</current_state_of_the_art_document>\n'
+  printf '\n<current_repo_shape>\n'
+  cat "${REPO_SHAPE_PATH}"
+  printf '\n</current_repo_shape>\n'
+  while IFS= read -r managed_path; do
+    [[ -z "${managed_path}" ]] && continue
+    if [[ ! -f "${ROOT_DIR}/${managed_path}" ]]; then
+      printf '\n<managed_file path="%s" missing="true"></managed_file>\n' "${managed_path}"
+      continue
+    fi
+    printf '\n<managed_file path="%s">\n' "${managed_path}"
+    cat "${ROOT_DIR}/${managed_path}"
+    printf '\n</managed_file>\n'
+  done < "${MANAGED_PATHS_PATH}"
 } > "${PROMPT_INPUT}"
 
 MODEL_ARGS=()
@@ -60,65 +86,91 @@ codex --search exec \
   --output-last-message "${RESULT_JSON}" \
   - < "${PROMPT_INPUT}"
 
-python3 - "${RESULT_JSON}" "${UPDATED_BLOCK}" <<'PY'
+python3 - "${RESULT_JSON}" <<'PY'
 import json
 import pathlib
 import sys
 
 result_path = pathlib.Path(sys.argv[1])
-block_path = pathlib.Path(sys.argv[2])
 data = json.loads(result_path.read_text())
-
 print(data["reason"])
-
-if not data["needs_update"]:
-    sys.exit(0)
-
-replacement = data["replacement_managed_block_markdown"]
-if replacement is None or not replacement.strip():
-    raise SystemExit("needs_update was true but replacement_managed_block_markdown was empty")
-
-block_path.write_text(replacement.rstrip() + "\n")
 PY
 
-if [[ ! -f "${UPDATED_BLOCK}" ]]; then
-  echo "No material update detected."
-  exit 0
-fi
-
-python3 - "${DOC_PATH}" "${UPDATED_BLOCK}" "${UPDATED_DOC}" <<'PY'
+python3 - "${ROOT_DIR}" "${RESULT_JSON}" "${MANAGED_PATHS_PATH}" <<'PY'
+import json
 import pathlib
 import re
 import sys
 
-doc_path = pathlib.Path(sys.argv[1])
-block_path = pathlib.Path(sys.argv[2])
-output_path = pathlib.Path(sys.argv[3])
+root_dir = pathlib.Path(sys.argv[1])
+result_path = pathlib.Path(sys.argv[2])
+allowlist_path = pathlib.Path(sys.argv[3])
 
+data = json.loads(result_path.read_text())
+
+allowed_paths = {
+    line.strip()
+    for line in allowlist_path.read_text().splitlines()
+    if line.strip()
+}
+
+file_updates = data["file_updates"]
+seen_paths = set()
+changed_paths = []
+
+for update in file_updates:
+    path = update["path"]
+    if path in seen_paths:
+        raise SystemExit(f"duplicate file update path: {path}")
+    seen_paths.add(path)
+    if path not in allowed_paths:
+        raise SystemExit(f"path not in managed allowlist: {path}")
+
+doc_path = root_dir / "STATE_OF_THE_ART.md"
+doc = doc_path.read_text()
 start_marker = "<!-- state-of-the-art:managed:start -->"
 end_marker = "<!-- state-of-the-art:managed:end -->"
 
-doc = doc_path.read_text()
-block = block_path.read_text().rstrip()
+if data["state_of_the_art_needs_update"]:
+    replacement_block = data["replacement_state_of_the_art_managed_block_markdown"]
+    if replacement_block is None or not replacement_block.strip():
+        raise SystemExit(
+            "state_of_the_art_needs_update was true but replacement block was empty"
+        )
 
-pattern = re.compile(
-    rf"{re.escape(start_marker)}\n.*?\n{re.escape(end_marker)}",
-    re.DOTALL,
-)
+    pattern = re.compile(
+        rf"{re.escape(start_marker)}\n.*?\n{re.escape(end_marker)}",
+        re.DOTALL,
+    )
+    replacement = f"{start_marker}\n{replacement_block.rstrip()}\n{end_marker}"
+    updated_doc, count = pattern.subn(replacement, doc, count=1)
 
-replacement = f"{start_marker}\n{block}\n{end_marker}"
-updated, count = pattern.subn(replacement, doc, count=1)
+    if count != 1:
+        raise SystemExit("managed block markers not found exactly once")
 
-if count != 1:
-    raise SystemExit("managed block markers not found exactly once")
+    if updated_doc != doc:
+        doc_path.write_text(updated_doc)
+        changed_paths.append("STATE_OF_THE_ART.md")
+else:
+    if data["replacement_state_of_the_art_managed_block_markdown"] is not None:
+        raise SystemExit(
+            "state_of_the_art_needs_update was false but replacement block was not null"
+        )
 
-output_path.write_text(updated)
+for update in file_updates:
+    path = root_dir / update["path"]
+    content = update["content"].rstrip() + "\n"
+    current = path.read_text() if path.exists() else None
+    if current == content:
+        continue
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(content)
+    changed_paths.append(str(path.relative_to(root_dir)))
+
+if not changed_paths:
+    print("No material update detected.")
+else:
+    print("Updated paths:")
+    for path in changed_paths:
+        print(path)
 PY
-
-if cmp -s "${DOC_PATH}" "${UPDATED_DOC}"; then
-  echo "Generated managed block matches the current document."
-  exit 0
-fi
-
-mv "${UPDATED_DOC}" "${DOC_PATH}"
-echo "Updated ${DOC_PATH}"

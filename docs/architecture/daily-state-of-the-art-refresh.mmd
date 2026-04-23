@@ -1,13 +1,14 @@
 flowchart LR
     auth[Seed auth.json if missing]
-    current[STATE_OF_THE_ART.md]
+    current[Current research and managed repo files]
     prompt[Prompt plus JSON Schema]
     codex[Codex CLI]
     web[Fresh Web Research]
     compare[Structured Comparison]
-    update[Managed Block Update]
+    update[Managed Surface Update]
     ci[Daily GitHub Actions Cron on Self-Hosted Runner]
     commit[Commit Only If Changed]
+    verify[Verify Repo]
 
     ci --> auth
     auth --> current
@@ -17,4 +18,5 @@ flowchart LR
     codex --> web
     web --> compare
     compare --> update
-    update --> commit
+    update --> verify
+    verify --> commit

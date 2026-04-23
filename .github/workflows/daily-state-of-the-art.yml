@@ -51,7 +51,7 @@ jobs:
       - name: Show Codex version
         run: codex --version
 
-      - name: Update state of the art
+      - name: Refresh repo from research
         env:
           CODEX_MODEL: ${{ vars.CODEX_MODEL }}
         run: ./scripts/update_state_of_the_art.sh
@@ -61,12 +61,12 @@ jobs:
 
       - name: Commit changes
         run: |
-          if git diff --quiet -- STATE_OF_THE_ART.md; then
+          if git diff --quiet && [ -z "$(git ls-files --others --exclude-standard)" ]; then
             echo "No changes to commit."
             exit 0
           fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add STATE_OF_THE_ART.md
-          git commit -m "docs: refresh state of the art"
+          git add -A
+          git commit -m "chore: refresh research and repo shape"
           git push origin HEAD:${GITHUB_REF_NAME}

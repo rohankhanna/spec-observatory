@@ -18,7 +18,7 @@ The scheduled workflow will assume a trusted `self-hosted` runner with a persist
 1. create `CODEX_HOME` if needed
 2. bootstrap `auth.json` only if it is missing
 3. install the latest Codex CLI
-4. run the document refresh normally and let Codex refresh the session in place
+4. run the research and repo refresh normally and let Codex refresh the session in place
 
 ## Consequences
 

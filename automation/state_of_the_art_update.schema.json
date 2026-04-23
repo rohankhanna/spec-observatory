@@ -3,23 +3,44 @@
   "type": "object",
   "additionalProperties": false,
   "required": [
-    "needs_update",
+    "state_of_the_art_needs_update",
     "reason",
-    "replacement_managed_block_markdown"
+    "replacement_state_of_the_art_managed_block_markdown",
+    "file_updates"
   ],
   "properties": {
-    "needs_update": {
+    "state_of_the_art_needs_update": {
       "type": "boolean"
     },
     "reason": {
       "type": "string",
       "minLength": 1
     },
-    "replacement_managed_block_markdown": {
+    "replacement_state_of_the_art_managed_block_markdown": {
       "type": [
         "string",
         "null"
       ]
+    },
+    "file_updates": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "path",
+          "content"
+        ],
+        "properties": {
+          "path": {
+            "type": "string",
+            "minLength": 1
+          },
+          "content": {
+            "type": "string"
+          }
+        }
+      }
     }
   }
 }

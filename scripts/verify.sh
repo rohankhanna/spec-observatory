@@ -9,7 +9,10 @@ python3 -m json.tool "${ROOT_DIR}/automation/state_of_the_art_update.schema.json
 
 grep -q '^<!-- state-of-the-art:managed:start -->$' "${ROOT_DIR}/STATE_OF_THE_ART.md"
 grep -q '^<!-- state-of-the-art:managed:end -->$' "${ROOT_DIR}/STATE_OF_THE_ART.md"
+test -f "${ROOT_DIR}/REPO_SHAPE.md"
+test -f "${ROOT_DIR}/automation/managed_repo_paths.txt"
 grep -q 'codex --search exec' "${ROOT_DIR}/scripts/update_state_of_the_art.sh"
+grep -q 'managed_repo_paths.txt' "${ROOT_DIR}/scripts/update_state_of_the_art.sh"
 grep -q 'cron:' "${ROOT_DIR}/.github/workflows/daily-state-of-the-art.yml"
 grep -q 'CODEX_AUTH_JSON' "${ROOT_DIR}/.github/workflows/daily-state-of-the-art.yml"
 grep -q 'runs-on: self-hosted' "${ROOT_DIR}/.github/workflows/daily-state-of-the-art.yml"

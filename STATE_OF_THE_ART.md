@@ -1,6 +1,6 @@
 # State Of The Art
 
-This is the canonical document that the daily CI job maintains.
+This is the canonical research document that the daily CI job maintains.
 
 The automation contract for this file is simple:
 
@@ -8,6 +8,8 @@ The automation contract for this file is simple:
 - run fresh web research
 - compare fresh findings to the current document
 - update only when there is a material difference
+
+The same daily run may also update bounded repo-shape surfaces when the research implies the repository should present itself differently.
 
 Manual edits outside the managed block are allowed. Manual edits inside the managed block will be overwritten by the automation.
 
@@ -70,7 +72,7 @@ These tools already cover much of the "durable agent runtime or protocol" layer.
 
 ## Current Conclusion
 
-The most defensible use of this repository is not to invent another coding agent or another repo-local spec tool. The narrower and more credible role is to maintain an always-current state-of-the-art document and the automation that keeps it up to date.
+The strongest adjacent tooling is still split across several mature categories rather than one single product. A credible repository in this space should not try to outbuild the whole stack; it should use ongoing research to clarify how spec-driven development should be expressed across layers and keep its own shape aligned with that view.
 
 ## Sources
 
