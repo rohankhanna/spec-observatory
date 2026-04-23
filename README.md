@@ -64,9 +64,9 @@ Those are the controller surfaces. They change deliberately, not as part of the 
 
 This repository is configured for ChatGPT-managed Codex auth rather than API-key billing.
 
-Set the GitHub Actions secret `CODEX_AUTH_JSON_B64` to the base64-encoded contents of a trusted machine's `~/.codex/auth.json` after `codex login` with file-backed credential storage.
+Create a GitHub Actions environment named `observatory`, then store `CODEX_AUTH_JSON_B64` there as an environment secret. The value should be the base64-encoded contents of a trusted machine's `~/.codex/auth.json` after `codex login` with file-backed credential storage.
 
-The workflows assume a trusted `self-hosted` runner. On each run they decode `CODEX_AUTH_JSON_B64` into `${CODEX_HOME:-$HOME/.codex}/auth.json` before invoking Codex.
+Both workflows are bound to the `observatory` environment. On each run they decode `CODEX_AUTH_JSON_B64` into `${CODEX_HOME:-$HOME/.codex}/auth.json` before invoking Codex on a trusted `self-hosted` runner.
 
 If you use GitHub-hosted ephemeral runners instead, you need an additional secure restore-and-persist loop for the refreshed `auth.json`. That round trip is not configured in this repository.
 

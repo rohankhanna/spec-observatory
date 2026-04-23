@@ -14,6 +14,7 @@ concurrency:
 
 jobs:
   advance:
+    environment: observatory
     runs-on: self-hosted
     timeout-minutes: 45
 
