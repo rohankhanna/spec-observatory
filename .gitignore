@@ -3,3 +3,5 @@ learnings
 .codex
 .claude
 .gemini
+runtime/
+scripts/__pycache__/

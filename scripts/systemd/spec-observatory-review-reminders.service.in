@@ -1,0 +1,7 @@
+[Unit]
+Description=Spec Observatory review reminder dispatcher
+
+[Service]
+Type=oneshot
+Environment=DBUS_SESSION_BUS_ADDRESS=unix:path=%t/bus
+ExecStart=/usr/bin/env python3 @ROOT_DIR@/scripts/spec_observatory_review_reminders.py run @STATE_FILE@

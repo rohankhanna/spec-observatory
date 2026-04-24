@@ -1,0 +1,11 @@
+[Unit]
+Description=Spec Observatory review reminder checks
+
+[Timer]
+OnCalendar=*:0/15
+Persistent=true
+AccuracySec=5m
+Unit=spec-observatory-review-reminders.service
+
+[Install]
+WantedBy=timers.target
