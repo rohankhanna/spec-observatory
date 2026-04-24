@@ -43,6 +43,8 @@ The control loop lives in:
 
 The advance workflow installs the latest `@openai/codex` CLI on each run, uses `codex exec` with web search enabled, defaults to `gpt-5.4`, forces `model_reasoning_effort = "xhigh"`, and performs exactly one bounded self-reimplementation step. The watchdog then reviews that candidate step, can revert it by normal git history, and leaves durable feedback for the next advance run.
 
+The scheduled advance run is set to `20:47 UTC`, which is `02:17 IST` on the following calendar day.
+
 ## Managed Versus Controller Surfaces
 
 The daily loop may rewrite:
@@ -70,6 +72,8 @@ Create a GitHub Actions environment named `observatory`, then store these enviro
 - `GH_OBSERVATORY_AUTOMATION_TOKEN`: a fine-grained GitHub personal access token from your existing GitHub account, scoped only to this repository, with `Contents: Read and write` and `Environments: Read and write`
 
 Both workflows are bound to the `observatory` environment and run on GitHub-hosted `ubuntu-latest` runners. On each run they decode `CODEX_AUTH_JSON_B64` into `${CODEX_HOME:-$HOME/.codex}/auth.json`, invoke Codex, then write the refreshed `auth.json` back into the same environment secret using `GH_OBSERVATORY_AUTOMATION_TOKEN`.
+
+If Codex fails with what looks like a transient service or network problem, the scripts retry once after a short delay. If the failure is non-transient, the run fails closed without committing changes.
 
 `GH_OBSERVATORY_AUTOMATION_TOKEN` should contain only the raw GitHub token string, for example a value that starts with `github_pat_`. It is not JSON and it should not be base64-encoded.
 

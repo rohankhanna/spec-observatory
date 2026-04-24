@@ -18,6 +18,7 @@ CODEX_HOME_DIR="${CODEX_HOME:-$HOME/.codex}"
 AUTH_FILE="${CODEX_HOME_DIR}/auth.json"
 CODEX_MODEL="${CODEX_MODEL:-gpt-5.4}"
 CODEX_REASONING_EFFORT="${CODEX_REASONING_EFFORT:-xhigh}"
+CODEX_TRANSIENT_RETRY_DELAY_SECONDS="${CODEX_TRANSIENT_RETRY_DELAY_SECONDS:-30}"
 WATCHDOG_TARGET_SHA="${WATCHDOG_TARGET_SHA:-$(git rev-parse HEAD)}"
 WATCHDOG_BASE_SHA="${WATCHDOG_BASE_SHA:-$(git rev-parse "${WATCHDOG_TARGET_SHA}^")}"
 
@@ -47,6 +48,51 @@ if [[ -z "${OPENAI_API_KEY:-}" && ! -f "${AUTH_FILE}" ]]; then
   exit 1
 fi
 
+is_transient_codex_failure() {
+  local log_path="$1"
+  grep -Eiq \
+    '429|rate.?limit|bandwidth|temporar(il)?y unavailable|timeout|timed out|connection reset|connection refused|network error|5[0-9]{2}|internal server error|server error|overloaded|capacity' \
+    "${log_path}"
+}
+
+run_codex_exec() {
+  local log_path="$1"
+  local attempt=1
+  local max_attempts=2
+  local exit_code=0
+
+  while true; do
+    : > "${log_path}"
+    set +e
+    codex exec \
+      --ignore-user-config \
+      --ignore-rules \
+      --ephemeral \
+      --sandbox read-only \
+      -C "${ROOT_DIR}" \
+      -m "${CODEX_MODEL}" \
+      -c 'web_search="live"' \
+      -c "model_reasoning_effort=\"${CODEX_REASONING_EFFORT}\"" \
+      --output-schema "${SCHEMA_PATH}" \
+      --output-last-message "${RESULT_JSON}" \
+      - < "${PROMPT_INPUT}" 2>&1 | tee "${log_path}"
+    exit_code=${PIPESTATUS[0]}
+    set -e
+
+    if [[ "${exit_code}" -eq 0 ]]; then
+      return 0
+    fi
+
+    if [[ "${attempt}" -ge "${max_attempts}" ]] || ! is_transient_codex_failure "${log_path}"; then
+      return "${exit_code}"
+    fi
+
+    echo "Transient Codex failure detected on attempt ${attempt}; retrying once after ${CODEX_TRANSIENT_RETRY_DELAY_SECONDS}s." >&2
+    sleep "${CODEX_TRANSIENT_RETRY_DELAY_SECONDS}"
+    attempt=$((attempt + 1))
+  done
+}
+
 TMP_DIR="$(mktemp -d)"
 trap 'rm -rf "${TMP_DIR}"' EXIT
 
@@ -54,6 +100,7 @@ PROMPT_INPUT="${TMP_DIR}/prompt.txt"
 RESULT_JSON="${TMP_DIR}/result.json"
 VERIFY_OUTPUT="${TMP_DIR}/verify.txt"
 CHANGED_PATHS="${TMP_DIR}/changed_paths.txt"
+CODEX_LOG="${TMP_DIR}/codex.log"
 
 set +e
 "${ROOT_DIR}/scripts/verify.sh" >"${VERIFY_OUTPUT}" 2>&1
@@ -102,18 +149,7 @@ git diff --name-only "${WATCHDOG_BASE_SHA}" "${WATCHDOG_TARGET_SHA}" -- \
   printf '\n</candidate_diff>\n'
 } > "${PROMPT_INPUT}"
 
-codex exec \
-  --ignore-user-config \
-  --ignore-rules \
-  --ephemeral \
-  --sandbox read-only \
-  -C "${ROOT_DIR}" \
-  -m "${CODEX_MODEL}" \
-  -c 'web_search="live"' \
-  -c "model_reasoning_effort=\"${CODEX_REASONING_EFFORT}\"" \
-  --output-schema "${SCHEMA_PATH}" \
-  --output-last-message "${RESULT_JSON}" \
-  - < "${PROMPT_INPUT}"
+run_codex_exec "${CODEX_LOG}"
 
 python3 - "${RESULT_JSON}" <<'PY'
 import json

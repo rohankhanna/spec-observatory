@@ -49,10 +49,13 @@ The architectural center of the repository is:
 ## Design Constraints
 
 - The Codex CLI is installed fresh in CI with `@openai/codex@latest`.
+- The scheduled advance run happens at `20:47 UTC`, which is `02:17 IST` on the following calendar day.
 - The current document and current managed repo surfaces are always provided to the model before research.
 - No update is written when the model concludes there is no material difference.
 - The automation updates only the managed block of `STATE_OF_THE_ART.md` plus the allowlisted managed repo files.
 - The final model response must match a version-controlled JSON Schema.
+- The controller may retry a Codex invocation once when the failure looks transient, such as bandwidth exhaustion, rate limiting, timeout, or temporary upstream failure.
+- Non-transient execution failures stop the run before commit and before auth rotation.
 - The default CI path uses ChatGPT-managed `auth.json`, sourced from the `observatory` environment secret `CODEX_AUTH_JSON_B64` on GitHub-hosted runners, instead of an API key.
 - A second environment secret, `GH_OBSERVATORY_AUTOMATION_TOKEN`, is used to push commits and rotate `CODEX_AUTH_JSON_B64`.
 - The repository never stores Codex credentials in version control.

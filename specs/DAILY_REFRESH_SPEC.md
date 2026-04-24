@@ -28,9 +28,11 @@ The control loop may emit:
 ## Constraints
 
 - install the latest `@openai/codex` CLI on each CI run
-- use `codex --search exec`
+- use `codex exec` with live web search enabled
 - require a structured response that matches a version-controlled schema
 - do not rewrite for style-only churn
 - do not mutate controller surfaces as part of the routine loop
-- run the advance job as one bounded iteration per schedule
+- run the advance job once per day during local overnight hours
 - run the watchdog job after the advance job and allow it to reject the advance
+- retry a Codex invocation at most once when the failure looks transient, such as rate limiting, bandwidth exhaustion, timeout, or temporary upstream failure
+- fail closed on non-transient errors: do not commit, do not rewrite secrets, and let the next scheduled run try again
