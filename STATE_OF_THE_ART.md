@@ -16,7 +16,7 @@ Manual edits outside the managed block are allowed. Manual edits inside the mana
 <!-- state-of-the-art:managed:start -->
 ## Last Reviewed
 
-2026-04-23
+2026-04-24
 
 ## Scope
 
@@ -25,17 +25,18 @@ This document tracks the state of the art for software-development approaches an
 - spec-driven development
 - outcome-driven development
 - coding agents
-- agent orchestration
+- agent orchestration and interoperability
 - software portfolio and project steering
 
 ## Current View
 
-The strongest practical stack is still distributed across several layers rather than one end-to-end product, but the layer boundary is clearer than the current report states.
+The strongest practical stack is still distributed across several layers rather than one end-to-end product, but the current report now understates two parts of that stack.
 
-- Spec-first workflow tools are mature enough to turn repo-local intent into reviewable requirements, design, and task artifacts.
-- Coding agents are mature enough to execute bounded software work from a CLI, IDE, or hosted environment.
-- The agent-systems layer now splits cleanly into agent runtimes and interoperability protocols; treating them as one category now hides an important part of the landscape.
-- Portfolio and outcome steering remain framework- and terminology-heavy rather than standardized around one dominant software-development toolchain.
+- Spec-first workflow tools still define the repo-local `intent -> design -> tasks` layer.
+- Coding agents are no longer only bounded executors. Official Codex and Claude Code surfaces now expose parallel-agent supervision, and Jules explicitly consumes repo-local `AGENTS.md` guidance.
+- The runtime/framework layer is broader than the current report names. Google ADK now belongs beside LangGraph, OpenAI Agents SDK, and Microsoft Agent Framework as a first-class system for building, evaluating, and deploying multi-agent software.
+- The interoperability layer has moved from emerging standards to foundation-governed infrastructure. MCP now sits inside the Agentic AI Foundation under Linux Foundation governance, while A2A has official Linux Foundation governance and documentation.
+- Outcome and portfolio steering still remain framework- and terminology-heavy rather than standardized around one dominant agent-native toolchain.
 
 ## Notable Categories
 
@@ -45,58 +46,61 @@ The strongest practical stack is still distributed across several layers rather 
 - OpenSpec
 - Kiro Specs
 
-These tools continue to define the repo-local `intent -> design -> tasks` layer.
+These still define the repo-local `intent -> design -> tasks` layer.
 
-### Coding-agent execution
+### Coding-agent execution and supervision
 
 - Codex
 - Claude Code
 - Jules
 - OpenHands
 
-These tools continue to define the `bounded agent does software work` layer.
+`AGENTS.md` is now a meaningful cross-tool repo-local convention in this layer, but it complements rather than replaces spec-first artifacts.
 
-### Agent runtimes
+### Agent runtimes and frameworks
 
 - LangGraph
 - OpenAI Agents SDK
+- Google ADK
 - Microsoft Agent Framework
 
-This category now includes both independent orchestration frameworks and vendor-backed runtimes.
+This layer now clearly includes both low-level orchestration runtimes and vendor-backed build/evaluate/deploy frameworks.
 
 ### Interoperability protocols
 
 - MCP
 - A2A
 
-This is now a first-class layer, not a footnote to orchestration. MCP has become a broad tool-and-context protocol surface, and A2A is now a Linux Foundation-hosted open protocol originally contributed by Google.
+MCP is now foundation-governed infrastructure through AAIF, and A2A is a Linux Foundation project with official protocol docs.
 
 ### Outcome and portfolio framing
 
 - Outcome-driven development terminology remains established.
+- Product discovery remains a common bridge from strategy to executable work.
 - Portfolio management terminology remains established.
-- Goal-oriented requirements engineering remains the closest established requirements vocabulary for deriving lower-level artifacts from higher-level intent.
 
 ## Current Conclusion
 
-The main correction is structural: the observatory should treat agent runtimes and interoperability protocols as separate adjacent layers. Official sources now show MCP and A2A maturing as shared protocol surfaces, while OpenAI, Microsoft, and LangChain each expose runtime-level orchestration products. The strongest current picture is therefore: spec-first authoring, coding-agent execution, agent runtimes, interoperability protocols, and outcome/portfolio steering above them.
+The main material correction is that the observatory should now treat Google ADK as a first-class peer in the runtime/framework layer and should treat MCP and A2A as foundation-governed shared infrastructure rather than merely emerging standards. A secondary supporting signal is that `AGENTS.md` has matured into a real cross-tool repo-local coordination convention for coding agents. The strongest current picture is therefore: spec-first authoring, coding-agent execution and supervision, agent runtimes and frameworks, interoperability protocols, and outcome/portfolio steering.
 
 ## Sources
 
-- 2026-04-23: Spec Kit, https://github.github.com/spec-kit/index.html
-- 2026-04-23: OpenSpec, https://openspec.dev/
-- 2026-04-23: Kiro Specs, https://kiro.dev/docs/specs/
-- 2026-04-23: Codex use cases, https://developers.openai.com/codex/use-cases
-- 2026-04-23: Claude Code overview, https://docs.anthropic.com/en/docs/claude-code/overview
-- 2026-04-23: Jules getting started, https://jules.google/docs/
-- 2026-04-23: OpenHands Quick Start, https://docs.openhands.dev/usage/installation
-- 2026-04-23: LangGraph overview, https://docs.langchain.com/oss/python/langgraph/overview
-- 2026-04-23: OpenAI Agents SDK, https://platform.openai.com/docs/guides/agents-sdk/
-- 2026-04-23: Microsoft Agent Framework overview, https://learn.microsoft.com/en-us/agent-framework/overview/
-- 2026-04-23: Model Context Protocol overview, https://modelcontextprotocol.io/
-- 2026-04-23: MCP Registry, https://modelcontextprotocol.io/registry/about
-- 2026-04-23: Agent2Agent protocol, https://github.com/a2aproject/A2A
-- 2026-04-23: Outcome Driven Development, https://www.atlassian.com/software-development/practices/outcome-driven-development
-- 2026-04-23: Using outcomes to guide product work, https://www.atlassian.com/software/jira/product-discovery/resources/handbook/outcomes
-- 2026-04-23: The Standard for Portfolio Management, https://www.pmi.org/-/media/pmi/documents/public/pdf/certifications/standard-for-portfolio-management-third-edition.pdf
+- 2026-04-24: Spec Kit, https://github.github.com/spec-kit/
+- 2026-04-24: OpenSpec, https://openspec.dev/
+- 2026-04-24: Kiro Specs, https://kiro.dev/docs/specs/
+- 2026-04-24: Introducing the Codex app, https://openai.com/index/introducing-the-codex-app/
+- 2026-04-24: Claude Code overview, https://code.claude.com/docs/en/overview
+- 2026-04-24: Jules getting started, https://jules.google/docs/
+- 2026-04-24: OpenHands installation, https://docs.openhands.dev/openhands/usage/cli/installation
+- 2026-04-24: LangGraph overview, https://docs.langchain.com/oss/python/langgraph/overview
+- 2026-04-24: OpenAI Agents SDK, https://developers.openai.com/api/docs/guides/agents
+- 2026-04-24: Agent Development Kit, https://google.github.io/adk-docs/
+- 2026-04-24: Agents CLI in Agent Platform, https://developers.googleblog.com/agents-cli-in-agent-platform-create-to-production-in-one-cli/
+- 2026-04-24: Microsoft Agent Framework overview, https://learn.microsoft.com/en-us/agent-framework/overview/
+- 2026-04-24: Model Context Protocol specification, https://modelcontextprotocol.io/specification/draft
+- 2026-04-24: A2A Protocol docs, https://a2a-protocol.org/latest/
+- 2026-04-24: Agentic AI Foundation formation announcement, https://aaif.io/press/linux-foundation-announces-the-formation-of-the-agentic-ai-foundation-aaif-anchored-by-new-project-contributions-including-model-context-protocol-mcp-goose-and-agents-md/
+- 2026-04-24: Outcome Driven Development, https://www.atlassian.com/software-development/practices/outcome-driven-development
+- 2026-04-24: Using outcomes to guide product work, https://www.atlassian.com/software/jira/product-discovery/resources/handbook/outcomes
+- 2026-04-24: The Standard for Portfolio Management – Fourth Edition, https://www.pmi.org/standards/for-portfolio-management
 <!-- state-of-the-art:managed:end -->

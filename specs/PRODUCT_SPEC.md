@@ -14,7 +14,8 @@ The relevant ecosystem is fragmented across several layers:
 
 - spec-first workflow tools
 - coding agents
-- orchestration runtimes
+- agent runtimes and frameworks
+- interoperability protocols
 - portfolio and outcome framing
 
 There is no single stable surface that watches those layers together, records the current picture, and keeps its own structure aligned with the latest view.
@@ -43,5 +44,6 @@ Produce a repository that:
 
 - building a new general-purpose spec workflow tool
 - building a new coding agent
-- building a new orchestration runtime
+- building a new agent runtime or orchestration framework
+- building a new interoperability protocol
 - replacing primary sources with original claims
