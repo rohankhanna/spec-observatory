@@ -16,7 +16,7 @@ Manual edits outside the managed block are allowed. Manual edits inside the mana
 <!-- state-of-the-art:managed:start -->
 ## Last Reviewed
 
-2026-04-24
+2026-04-25
 
 ## Scope
 
@@ -30,13 +30,13 @@ This document tracks the state of the art for software-development approaches an
 
 ## Current View
 
-The strongest practical stack is still distributed across several layers rather than one end-to-end product, but the current report now understates two parts of that stack.
+The strongest practical stack is still distributed across several layers rather than one end-to-end product, but the current report now misses three material changes.
 
-- Spec-first workflow tools still define the repo-local `intent -> design -> tasks` layer.
-- Coding agents are no longer only bounded executors. Official Codex and Claude Code surfaces now expose parallel-agent supervision, and Jules explicitly consumes repo-local `AGENTS.md` guidance.
-- The runtime/framework layer is broader than the current report names. Google ADK now belongs beside LangGraph, OpenAI Agents SDK, and Microsoft Agent Framework as a first-class system for building, evaluating, and deploying multi-agent software.
-- The interoperability layer has moved from emerging standards to foundation-governed infrastructure. MCP now sits inside the Agentic AI Foundation under Linux Foundation governance, while A2A has official Linux Foundation governance and documentation.
-- Outcome and portfolio steering still remain framework- and terminology-heavy rather than standardized around one dominant agent-native toolchain.
+- Spec-first workflow tools still define the repo-local `intent -> design -> tasks` layer, and the strongest official surfaces now cover feature, design-first, and bugfix or brownfield paths rather than only greenfield feature work.
+- Coding-agent execution now has a broader first tier. Codex, Claude Code, GitHub Copilot cloud agent, Jules, and OpenHands all support autonomous or background code execution, while Codex and Claude Code also expose explicit multi-agent or multi-session supervision.
+- The runtime and framework layer is better split into low-level orchestration and higher-level agent systems. LangGraph remains the low-level orchestration runtime, while LangChain now recommends Deep Agents as its batteries-included entry point. OpenAI Agents SDK, Google ADK, and Microsoft Agent Framework remain first-class vendor-backed frameworks.
+- The interoperability layer is no longer just protocol transport. MCP has a latest versioned specification at `2025-11-25`, A2A has shipped `v1.0` as a stable production-ready standard under Linux Foundation governance, and `AGENTS.md` is now AAIF-stewarded open infrastructure for repo-local agent guidance.
+- Outcome and portfolio steering still remain vocabulary- and workflow-heavy rather than standardized around one dominant agent-native control plane.
 
 ## Notable Categories
 
@@ -46,32 +46,35 @@ The strongest practical stack is still distributed across several layers rather 
 - OpenSpec
 - Kiro Specs
 
-These still define the repo-local `intent -> design -> tasks` layer.
+These tools still define repo-local specification authoring, but Spec Kit and Kiro now make iterative, brownfield, and bugfix flows more explicit.
 
 ### Coding-agent execution and supervision
 
 - Codex
 - Claude Code
+- GitHub Copilot cloud agent
 - Jules
 - OpenHands
 
-`AGENTS.md` is now a meaningful cross-tool repo-local convention in this layer, but it complements rather than replaces spec-first artifacts.
+This layer now clearly includes both local interactive agents and background cloud agents that own issue-to-PR or task-to-PR flows.
 
 ### Agent runtimes and frameworks
 
 - LangGraph
+- Deep Agents
 - OpenAI Agents SDK
 - Google ADK
 - Microsoft Agent Framework
 
-This layer now clearly includes both low-level orchestration runtimes and vendor-backed build/evaluate/deploy frameworks.
+LangGraph is the low-level orchestration runtime here. Deep Agents, OpenAI Agents SDK, Google ADK, and Microsoft Agent Framework are the more batteries-included build, evaluate, and deploy surfaces.
 
-### Interoperability protocols
+### Interoperability and repo coordination
 
 - MCP
 - A2A
+- AGENTS.md
 
-MCP is now foundation-governed infrastructure through AAIF, and A2A is a Linux Foundation project with official protocol docs.
+This layer now spans tool and context connectivity, agent-to-agent communication, and repo-local agent guidance.
 
 ### Outcome and portfolio framing
 
@@ -81,26 +84,33 @@ MCP is now foundation-governed infrastructure through AAIF, and A2A is a Linux F
 
 ## Current Conclusion
 
-The main material correction is that the observatory should now treat Google ADK as a first-class peer in the runtime/framework layer and should treat MCP and A2A as foundation-governed shared infrastructure rather than merely emerging standards. A secondary supporting signal is that `AGENTS.md` has matured into a real cross-tool repo-local coordination convention for coding agents. The strongest current picture is therefore: spec-first authoring, coding-agent execution and supervision, agent runtimes and frameworks, interoperability protocols, and outcome/portfolio steering.
+The main correction is that the observatory should treat open agent coordination as a broader layer than protocol transport alone. `AGENTS.md` now belongs beside MCP and A2A as shared interoperability infrastructure, albeit at the repo boundary rather than the network boundary. A second correction is that the coding-agent layer should name GitHub Copilot cloud agent, and the framework layer should distinguish LangGraph from LangChain's higher-level Deep Agents entry point. The strongest current picture is therefore: spec-first authoring, coding-agent execution and supervision, agent runtimes and frameworks, interoperability and repo coordination, and outcome or portfolio steering.
 
 ## Sources
 
-- 2026-04-24: Spec Kit, https://github.github.com/spec-kit/
-- 2026-04-24: OpenSpec, https://openspec.dev/
-- 2026-04-24: Kiro Specs, https://kiro.dev/docs/specs/
-- 2026-04-24: Introducing the Codex app, https://openai.com/index/introducing-the-codex-app/
-- 2026-04-24: Claude Code overview, https://code.claude.com/docs/en/overview
-- 2026-04-24: Jules getting started, https://jules.google/docs/
-- 2026-04-24: OpenHands installation, https://docs.openhands.dev/openhands/usage/cli/installation
-- 2026-04-24: LangGraph overview, https://docs.langchain.com/oss/python/langgraph/overview
-- 2026-04-24: OpenAI Agents SDK, https://developers.openai.com/api/docs/guides/agents
-- 2026-04-24: Agent Development Kit, https://google.github.io/adk-docs/
-- 2026-04-24: Agents CLI in Agent Platform, https://developers.googleblog.com/agents-cli-in-agent-platform-create-to-production-in-one-cli/
-- 2026-04-24: Microsoft Agent Framework overview, https://learn.microsoft.com/en-us/agent-framework/overview/
-- 2026-04-24: Model Context Protocol specification, https://modelcontextprotocol.io/specification/draft
-- 2026-04-24: A2A Protocol docs, https://a2a-protocol.org/latest/
-- 2026-04-24: Agentic AI Foundation formation announcement, https://aaif.io/press/linux-foundation-announces-the-formation-of-the-agentic-ai-foundation-aaif-anchored-by-new-project-contributions-including-model-context-protocol-mcp-goose-and-agents-md/
-- 2026-04-24: Outcome Driven Development, https://www.atlassian.com/software-development/practices/outcome-driven-development
-- 2026-04-24: Using outcomes to guide product work, https://www.atlassian.com/software/jira/product-discovery/resources/handbook/outcomes
-- 2026-04-24: The Standard for Portfolio Management – Fourth Edition, https://www.pmi.org/standards/for-portfolio-management
+- 2026-04-25: Spec Kit, https://github.github.com/spec-kit/
+- 2026-04-25: Spec Kit repository, https://github.com/github/spec-kit
+- 2026-04-25: OpenSpec, https://openspec.dev/
+- 2026-04-25: Kiro Specs, https://kiro.dev/docs/specs/
+- 2026-04-25: Kiro Bugfix Specs, https://kiro.dev/docs/specs/bugfix-specs/
+- 2026-04-25: Introducing the Codex app, https://openai.com/index/introducing-the-codex-app/
+- 2026-04-25: Claude Code overview, https://code.claude.com/docs
+- 2026-04-25: Extend Claude Code, https://code.claude.com/docs/en/features-overview
+- 2026-04-25: GitHub Copilot cloud agent, https://docs.github.com/en/copilot/concepts/agents/cloud-agent/about-cloud-agent
+- 2026-04-25: Jules getting started, https://jules.google/docs/
+- 2026-04-25: OpenHands CLI mode, https://docs.openhands.dev/openhands/usage/how-to/cli-mode
+- 2026-04-25: LangGraph overview, https://docs.langchain.com/oss/python/langgraph
+- 2026-04-25: LangChain overview, https://docs.langchain.com/oss/python/langchain/overview
+- 2026-04-25: OpenAI Agents SDK, https://openai.github.io/openai-agents-python/
+- 2026-04-25: Agent Development Kit technical overview, https://adk.dev/get-started/about/
+- 2026-04-25: ADK with A2A, https://google.github.io/adk-docs/a2a/
+- 2026-04-25: Microsoft Agent Framework overview, https://learn.microsoft.com/en-us/agent-framework/overview/
+- 2026-04-25: Model Context Protocol specification `2025-11-25`, https://modelcontextprotocol.io/specification/2025-11-25
+- 2026-04-25: A2A Protocol v1.0 announcement, https://a2a-protocol.org/latest/announcing-1.0/
+- 2026-04-25: Agent2Agent project, https://github.com/a2aproject
+- 2026-04-25: AGENTS.md, https://agents.md/
+- 2026-04-25: AAIF formation announcement, https://aaif.io/press/linux-foundation-announces-the-formation-of-the-agentic-ai-foundation-aaif-anchored-by-new-project-contributions-including-model-context-protocol-mcp-goose-and-agents-md/
+- 2026-04-25: Outcome Driven Development, https://www.atlassian.com/software-development/practices/outcome-driven-development
+- 2026-04-25: Using outcomes to guide product work, https://www.atlassian.com/software/jira/product-discovery/resources/handbook/outcomes
+- 2026-04-25: The Standard for Portfolio Management – Fourth Edition, https://www.pmi.org/standards/for-portfolio-management
 <!-- state-of-the-art:managed:end -->
