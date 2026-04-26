@@ -101,6 +101,7 @@ RESULT_JSON="${TMP_DIR}/result.json"
 VERIFY_OUTPUT="${TMP_DIR}/verify.txt"
 CHANGED_PATHS="${TMP_DIR}/changed_paths.txt"
 CODEX_LOG="${TMP_DIR}/codex.log"
+RENDERED_WATCHDOG_FEEDBACK="${TMP_DIR}/watchdog_feedback.md"
 
 set +e
 "${ROOT_DIR}/scripts/verify.sh" >"${VERIFY_OUTPUT}" 2>&1
@@ -162,14 +163,14 @@ print(data["reason"])
 print(f"watchdog decision: {data['decision']}")
 PY
 
-python3 - "${ROOT_DIR}" "${RESULT_JSON}" "${WATCHDOG_FEEDBACK_PATH}" <<'PY'
+python3 - "${ROOT_DIR}" "${RESULT_JSON}" "${RENDERED_WATCHDOG_FEEDBACK}" <<'PY'
 import json
 import pathlib
 import sys
 
 root_dir = pathlib.Path(sys.argv[1])
 result_path = pathlib.Path(sys.argv[2])
-feedback_path = pathlib.Path(sys.argv[3])
+output_path = pathlib.Path(sys.argv[3])
 
 data = json.loads(result_path.read_text())
 feedback = data["feedback_markdown"].rstrip()
@@ -182,8 +183,7 @@ content = (
     f"{feedback}\n"
 )
 
-if feedback_path.read_text() != content:
-    feedback_path.write_text(content)
+output_path.write_text(content)
 PY
 
 WATCHDOG_DECISION="$(python3 - "${RESULT_JSON}" <<'PY'
@@ -196,9 +196,16 @@ PY
 
 if [[ "${WATCHDOG_DECISION}" == "rollback" ]]; then
   git revert --no-commit "${WATCHDOG_TARGET_SHA}"
+  if ! cmp -s "${RENDERED_WATCHDOG_FEEDBACK}" "${WATCHDOG_FEEDBACK_PATH}"; then
+    cp "${RENDERED_WATCHDOG_FEEDBACK}" "${WATCHDOG_FEEDBACK_PATH}"
+  fi
   git add "${WATCHDOG_FEEDBACK_REL}"
   git commit -m "watchdog: revert regressive advance"
   exit 0
+fi
+
+if ! cmp -s "${RENDERED_WATCHDOG_FEEDBACK}" "${WATCHDOG_FEEDBACK_PATH}"; then
+  cp "${RENDERED_WATCHDOG_FEEDBACK}" "${WATCHDOG_FEEDBACK_PATH}"
 fi
 
 if ! git diff --quiet -- "${WATCHDOG_FEEDBACK_REL}"; then
