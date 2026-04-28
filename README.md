@@ -96,10 +96,11 @@ The maintained document currently tracks the state of the art for:
 - spec-driven development
 - outcome-driven development
 - coding agents
+- agent harnesses and customization surfaces
 - agent orchestration
 - software portfolio and project steering
 
-The observatory does not try to replace spec workflow tools, coding agents, or orchestration frameworks. It monitors them, tracks how the layers fit together, and keeps this repository aligned with that view.
+The observatory does not try to replace spec workflow tools, coding agents, agent harnesses, or orchestration frameworks. It monitors them, tracks how the layers fit together, and keeps this repository aligned with that view.
 
 ## Suggested Repo Name
 
