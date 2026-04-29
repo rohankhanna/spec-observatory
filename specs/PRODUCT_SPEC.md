@@ -17,7 +17,9 @@ The relevant ecosystem is fragmented across several layers:
 - agent harnesses and customization surfaces
 - agent runtimes and frameworks
 - interoperability protocols
-- portfolio and outcome framing
+- outcome framing and product discovery
+- software portfolio and project steering
+- agent governance and control planes
 
 There is no single stable surface that watches those layers together, records the current picture, and keeps its own structure aligned with the latest view.
 

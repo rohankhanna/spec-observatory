@@ -16,28 +16,29 @@ Manual edits outside the managed block are allowed. Manual edits inside the mana
 <!-- state-of-the-art:managed:start -->
 ## Last Reviewed
 
-2026-04-28
+2026-04-29
 
 ## Scope
 
-This document tracks the state of the art for software-development approaches and tools that are relevant to:
+This document tracks the state of the art for:
 
 - spec-driven development
 - outcome-driven development
-- coding agents
-- agent orchestration and interoperability
-- software portfolio and project steering
+- coding-agent execution
+- vendor agent harnesses and customization surfaces
+- orchestration and interoperability
+- software portfolio, project steering, and agent control planes
 
 ## Current View
 
-As of 2026-04-28, the practical stack is still distributed across layers rather than consolidated into one dominant end-to-end product, but the current observatory view is missing one now-material layer and needs one stronger steering nuance.
+As of 2026-04-29, the practical stack is still distributed across layers rather than consolidated into one dominant end-to-end product, but the steering layer now needs a sharper split than the current report gives it.
 
 - Spec-first workflow tools still define the repo-local planning layer. Spec Kit, OpenSpec, and Kiro continue to cover greenfield feature work, repo-native living specs, brownfield iteration, and explicit bugfix flows.
-- Coding-agent execution remains a broad first tier. Codex, Claude Code, GitHub Copilot cloud agent, Jules, and OpenHands still define the practical set to watch. Product movement is increasingly toward parallel supervision, background execution, cross-tool integrations, and persistent task context.
-- A separate vendor-harness layer now deserves first-class treatment. Codex SDK, Claude Agent SDK, and GitHub custom agents show that major coding-agent products now expose the same or adjacent agent loops as programmable or repo-configurable build surfaces, rather than leaving teams to choose only between an end-user coding agent and a general-purpose framework.
-- The runtime and framework layer is still best split into low-level orchestration and higher-level general agent systems. LangGraph remains the low-level runtime, while Deep Agents, OpenAI Agents SDK, Google ADK, and Microsoft Agent Framework remain the main higher-level general build surfaces.
+- Coding-agent execution remains a broad first tier. Codex, Claude Code, GitHub Copilot cloud agent, Jules, and OpenHands still define the practical set to watch. Product movement is increasingly toward background execution, scheduled or event-driven routines, persistent repo context, and built-in review or repair loops.
+- A separate vendor-harness layer still deserves first-class treatment. Codex SDK, Claude Agent SDK, and GitHub custom agents show that major coding-agent products now expose programmable or repo-configurable build surfaces instead of forcing teams to start from a general-purpose framework.
+- The runtime and framework layer is still best split into low-level orchestration and higher-level general agent systems. LangGraph remains the low-level runtime, while Deep Agents, OpenAI Agents SDK, Google ADK, and Microsoft Agent Framework remain the main higher-level build surfaces.
 - The interoperability layer is still best understood across five open boundaries: MCP for model-to-tool and context connectivity, ACP for editor-to-agent integration, A2A for agent-to-agent communication, AG-UI for agent-to-user-interface interaction, and AGENTS.md for repo-local agent guidance.
-- Outcome and portfolio steering still lacks a dominant neutral control plane. JetBrains Central remains the clearest explicit open-system entrant for governance, execution infrastructure, and shared context, but the line between coding-agent products and software-production control planes is weakening as Codex and Copilot add integrations, automations, and administrative control surfaces around development work.
+- The material change is at the steering layer. Outcome framing and product discovery remain distinct from agent control planes. JetBrains Central remains the clearest open-system software-production control and execution plane, while Microsoft Agent 365 is now a major enterprise agent-governance control plane with explicit cross-agent positioning. GitHub Copilot enterprise AI Controls reinforce the broader trend, but remain tied to GitHub's own agent suite.
 
 ## Notable Categories
 
@@ -57,15 +58,15 @@ These still define the practical spec-authoring layer, with OpenSpec emphasizing
 - Jules
 - OpenHands
 
-This layer still mixes local interactive agents with remote or background agents that can research, plan, edit, integrate external context, and return code changes.
+This layer still mixes local interactive agents with remote or background agents that can research, plan, edit, review, integrate external context, and run on schedules or triggers.
 
 ### Vendor agent harnesses and customization surfaces
 
-- Codex SDK and Codex app automations
+- Codex SDK and Codex automations
 - Claude Agent SDK
 - GitHub custom agents
 
-This is the missing layer in the previous report. The important shift is that major coding-agent vendors now expose reusable harnesses, repo-configurable specialization surfaces, or both. That makes product-native extension a credible alternative to starting directly from a general-purpose agent framework.
+Product-native agent harnesses remain a credible alternative to starting from a general-purpose framework, especially when teams want repo-configurable behavior, built-in integrations, or vendor-managed execution.
 
 ### Agent runtimes and frameworks
 
@@ -85,49 +86,61 @@ LangGraph remains the low-level orchestration runtime. Deep Agents, OpenAI Agent
 - AG-UI
 - AGENTS.md
 
-The practical open stack still spans tool and context connectivity, editor integration, agent-to-agent exchange, agent-to-UI interaction, and repo-local guidance.
+The practical open stack still spans tool connectivity, editor integration, agent-to-agent exchange, agent-to-UI interaction, and repo-local guidance.
 
-### Outcome and portfolio steering
+### Outcome framing and product discovery
 
 - Outcome-driven development terminology
 - Jira Product Discovery
-- JetBrains Central
-- Portfolio management terminology
 
-This layer still is not standardized around one neutral control plane, but it is no longer just vocabulary plus workflow. JetBrains Central remains the clearest explicit cross-tool control-plane entrant, while leading coding-agent products are beginning to overlap with adjacent execution-management territory.
+This remains the vocabulary and product-planning slice, not the same thing as an agent control plane.
+
+### Software-production control and execution planes
+
+- JetBrains Central
+
+JetBrains Central remains the clearest open-system entrant for running, monitoring, governing, and routing agent work across tools and infrastructure.
+
+### Enterprise agent governance and control planes
+
+- Microsoft Agent 365
+- GitHub Copilot enterprise agent management
+
+This is the material update. Microsoft Agent 365, announced on 2026-03-09 and scheduled for general availability on 2026-05-01, is now an explicit cross-agent governance surface for observing, governing, and securing agents across an organization. GitHub is also adding enterprise policy, session, and audit surfaces around its own agent suite.
 
 ## Current Conclusion
 
-The strongest update is a missing abstraction boundary. The observatory should no longer collapse major vendor coding-agent build surfaces into either the end-user agent layer or the general framework layer. A practical stack description now needs a separate vendor-harness layer for productized agent loops and specialization surfaces such as Codex SDK, Claude Agent SDK, and GitHub custom agents. A second, smaller correction is at the steering layer: JetBrains Central remains the clearest explicit neutral control-plane entrant, but OpenAI Codex and GitHub Copilot are now pushing farther into cross-tool workflow execution and oversight than the current report states.
+The strongest correction is at the steering layer. The observatory should no longer treat agent control as mainly a JetBrains Central-style entrant plus vague overlap from coding-agent products. As of 2026-04-29, the practical landscape is better understood as three adjacent but distinct slices: outcome framing and product discovery, open-system software-production control and execution, and enterprise agent governance control planes. JetBrains Central still anchors the middle slice. Microsoft Agent 365 is now the clearest new entrant in the last slice, and GitHub Copilot enterprise AI Controls reinforce the broader trend that governance surfaces are becoming first-class products rather than side features.
 
 ## Sources
 
-- 2026-04-28 access: Spec Kit, https://github.github.com/spec-kit/index.html
-- 2026-04-28 access: OpenSpec, https://openspec.dev/
-- 2026-02-18 update: Kiro Specs, https://kiro.dev/docs/specs/
-- 2026-02-18 update: Kiro Bugfix Specs, https://kiro.dev/docs/specs/bugfix-specs/
-- 2026-04-16 publication: Codex for (almost) everything, https://openai.com/index/codex-for-almost-everything/
-- 2025-10-06 publication accessed 2026-04-28: Codex is now generally available, https://openai.com/index/codex-now-generally-available/
-- 2026-04-21 publication: Scaling Codex to enterprises worldwide, https://openai.com/index/scaling-codex-to-enterprises-worldwide/
-- 2026-04-28 access: Claude Code overview, https://code.claude.com/docs
-- 2026-04-28 access: Claude Agent SDK overview, https://code.claude.com/docs/en/agent-sdk
-- 2026-04-28 access: GitHub Copilot coding agent, https://docs.github.com/en/copilot/concepts/coding-agent/about-copilot-coding-agent
-- 2026-04-28 access: GitHub custom agents, https://docs.github.com/en/copilot/concepts/agents/cloud-agent/about-custom-agents
-- 2026-04-28 access: GitHub Copilot integrations, https://docs.github.com/en/copilot/concepts/tools/about-copilot-integrations
-- 2026-04-28 access: Jules getting started, https://jules.google/docs/
-- 2026-04-28 access: OpenHands ACP overview, https://docs.openhands.dev/openhands/usage/cli/ide/overview
-- 2026-04-28 access: LangGraph overview, https://docs.langchain.com/oss/python/langgraph
-- 2026-04-28 access: Deep Agents overview, https://docs.langchain.com/oss/python/deepagents/overview
-- 2026-04-28 access: OpenAI Agents SDK, https://platform.openai.com/docs/guides/agents-sdk
-- 2026-04-28 access: Google ADK technical overview, https://adk.dev/get-started/about/
-- 2026-02-20 update accessed 2026-04-28: Microsoft Agent Framework overview, https://learn.microsoft.com/en-us/agent-framework/overview/
-- 2026-04-28 access: MCP specification 2025-11-25, https://modelcontextprotocol.io/specification/2025-11-25/basic
-- 2026-04-28 access: ACP overview, https://agentclientprotocol.com/protocol/overview
-- 2026-04-23 update accessed 2026-04-28: ACP RFD updates, https://agentclientprotocol.com/rfds/updates
-- 2026-04-28 access: A2A Protocol v1.0 announcement, https://a2a-protocol.org/latest/announcing-1.0/
-- 2026-04-28 access: AG-UI overview, https://docs.ag-ui.com/
-- 2026-04-28 access: AGENTS.md, https://agents.md/index
-- 2026-03-24 publication: Introducing JetBrains Central, https://blog.jetbrains.com/blog/2026/03/24/introducing-jetbrains-central-an-open-system-for-agentic-software-development/
-- 2026-04-28 access: Outcome Driven Development, https://www.atlassian.com/software-development/practices/outcome-driven-development
-- 2026-04-28 access: Jira Product Discovery, https://www.atlassian.com/en/software/jira/product-discovery
+- 2026-04-29 access: [Spec Kit](https://github.github.com/spec-kit/index.html)
+- 2026-04-29 access: [OpenSpec](https://openspec.dev/)
+- 2026-04-29 access: [Kiro Specs](https://kiro.dev/docs/specs/)
+- 2026-04-29 access: [Kiro Bugfix Specs](https://kiro.dev/docs/specs/bugfix-specs/)
+- 2026-04-16 publication: [Codex for (almost) everything](https://openai.com/index/codex-for-almost-everything/)
+- 2026-04-29 access: [Codex SDK](https://developers.openai.com/codex/sdk)
+- 2026-04-13 to 2026-04-17 release week: [Claude Code week 16 updates](https://code.claude.com/docs/en/whats-new/2026-w16)
+- 2026-04-29 access: [Claude Agent SDK](https://code.claude.com/docs/en/agent-sdk)
+- 2026-04-29 access: [GitHub Copilot agent concepts](https://docs.github.com/en/copilot/concepts/agents)
+- 2026-04-29 access: [GitHub custom agents](https://docs.github.com/en/copilot/concepts/agents/coding-agent/about-custom-agents)
+- 2026-04-29 access: [GitHub enterprise agent management](https://docs.github.com/en/copilot/concepts/agents/enterprise-management)
+- 2026-04-29 access: [Jules scheduled tasks](https://jules.google/docs/scheduled-tasks/)
+- 2026-04-29 access: [OpenHands IDE overview](https://docs.openhands.dev/openhands/usage/cli/ide/overview)
+- 2026-04-29 access: [LangGraph overview](https://docs.langchain.com/oss/python/langgraph)
+- 2026-04-29 access: [Deep Agents overview](https://docs.langchain.com/oss/python/deepagents/overview)
+- 2026-04-29 access: [OpenAI Agents SDK](https://platform.openai.com/docs/guides/agents-sdk)
+- 2026-04-29 access: [Google ADK technical overview](https://adk.dev/get-started/about/)
+- 2026-02-20 update accessed 2026-04-29: [Microsoft Agent Framework overview](https://learn.microsoft.com/en-us/agent-framework/overview/)
+- 2026-04-29 access: [MCP specification 2025-11-25](https://modelcontextprotocol.io/specification/2025-11-25/basic)
+- 2026-04-29 access: [ACP overview](https://agentclientprotocol.com/protocol/overview)
+- 2026-04-29 access: [A2A Protocol v1.0 announcement](https://a2a-protocol.org/latest/announcing-1.0/)
+- 2026-04-29 access: [AG-UI overview](https://docs.ag-ui.com/)
+- 2026-04-29 access: [AGENTS.md](https://agents.md/)
+- 2026-03-24 publication: [Introducing JetBrains Central](https://blog.jetbrains.com/blog/2026/03/24/introducing-jetbrains-central-an-open-system-for-agentic-software-development/)
+- 2026-03-09 publication: [Introducing the First Frontier Suite built on Intelligence + Trust](https://blogs.microsoft.com/blog/2026/03/09/introducing-the-first-frontier-suite-built-on-intelligence-trust/)
+- 2026-04-29 access: [Microsoft Agent 365 documentation](https://learn.microsoft.com/en-us/microsoft-agent-365/)
+- 2026-04-29 access: [Microsoft Agent 365 product page](https://www.microsoft.com/en-us/microsoft-agent-365)
+- 2026-04-29 access: [Outcome Driven Development](https://www.atlassian.com/software-development/practices/outcome-driven-development)
+- 2026-04-29 access: [Jira Product Discovery](https://www.atlassian.com/en/software/jira/product-discovery)
 <!-- state-of-the-art:managed:end -->
