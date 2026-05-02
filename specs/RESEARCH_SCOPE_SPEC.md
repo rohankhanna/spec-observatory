@@ -6,7 +6,8 @@ The observatory tracks the state of the art for:
 
 - spec-driven development
 - outcome-driven development and product discovery
-- coding-agent execution and agent harnesses
+- coding-agent execution and vendor agent harnesses
+- general agent build, deploy, runtime, and operating surfaces
 - orchestration and interoperability
 - software portfolio and project steering
 - agent governance and control planes
@@ -32,5 +33,5 @@ The observatory report should answer:
 - what categories matter right now
 - which tools meaningfully define those categories
 - what vocabulary is established versus invented
-- where the practical abstraction boundaries sit between end-user agents, vendor harnesses, frameworks, protocols, and control or governance planes
+- where the practical abstraction boundaries sit between end-user agents, vendor harnesses, general agent platforms or frameworks, protocols, and control or governance planes
 - what the most credible shape of the ecosystem looks like

@@ -15,7 +15,7 @@ The relevant ecosystem is fragmented across several layers:
 - spec-first workflow tools
 - coding agents
 - agent harnesses and customization surfaces
-- agent runtimes and frameworks
+- general agent build, deploy, runtime, and operating surfaces
 - interoperability protocols
 - outcome framing and product discovery
 - software portfolio and project steering
