@@ -16,7 +16,7 @@ Manual edits outside the managed block are allowed. Manual edits inside the mana
 <!-- state-of-the-art:managed:start -->
 ## Last Reviewed
 
-2026-05-13
+2026-05-14
 
 ## Scope
 
@@ -33,15 +33,13 @@ This document tracks the state of the art for:
 
 ## Current View
 
-As of 2026-05-13, the ecosystem is still layered rather than consolidated into one end-to-end winner. The material correction from fresh official research is that registry and directory surfaces are not the only important new boundary inside the vendor-managed layer. A clearer practical split is now visible across four first-party surfaces that increasingly ship together: execution substrates, orchestration surfaces, registry or directory surfaces, and governance or control surfaces.
+As of 2026-05-14, the ecosystem is still layered rather than consolidated into one end-to-end winner. The material correction from fresh official research is that `registry/discovery` is no longer a precise enough single layer for the agent stack. A better practical split is now visible between host-facing access surfaces and neutral protocol or metadata backbones.
 
-- GitHub makes execution plus orchestration explicit. Copilot cloud agent runs in a GitHub Actions-powered ephemeral environment, while the Copilot SDK can define custom agents that the runtime automatically delegates to as sub-agents. Enterprise MCP policy and private registries then govern tool discovery and use.
-- Microsoft makes execution plus governance explicit. Agent 365 is a cross-platform registry and control plane, and Windows 365 for Agents is now the managed execution layer for computer-using agents that need a full operating environment rather than API-only tool use.
-- Google makes orchestration plus distribution explicit. ADK formalizes multi-agent hierarchies plus sequential and parallel workflows, while Gemini Enterprise exposes Agent Gallery and admin-managed registration for ADK, A2A, and Dialogflow agents.
-- AWS makes governed orchestration plus catalog explicit. Amazon Bedrock supports supervisor and collaborator multi-agent teams, and Agent Registry adds approval-driven discovery for agents, tools, skills, MCP servers, and custom resources.
-- OpenAI makes code-first orchestration plus application distribution explicit. The Agents SDK now treats orchestration and handoffs as core surfaces, while ChatGPT workspace agents add templates, directories, schedules, analytics, skills, and custom MCP servers inside a workspace operating surface.
-- Atlassian and Linear remain strongest on work context and steering rather than raw runtime infrastructure. Atlassian now formalizes both CLI and MCP access to Teamwork Graph for agents, while Linear Agent plus MCP support pulls external context into planning, specs, releases, and updates.
-- Open standards still matter most at the cross-vendor boundary. MCP remains the dominant tool and context surface, the official MCP Registry remains the neutral metadata backbone in preview, A2A v1.0 remains the clearest agent-to-agent standard, AG-UI remains the clearest agent-to-user interaction standard, and `AGENTS.md` remains the clearest lightweight repo-local instruction surface.
+- GitHub is the clearest correction. Copilot cloud agent still runs in an ephemeral GitHub Actions-powered environment and the Copilot SDK still supports automatic sub-agent delegation, but GitHub now documents that private MCP registries and allowlists apply to Copilot CLI and supported IDEs, not to cloud agents. For cloud agents, MCP servers are configured at the repository or custom-agent-profile layer instead.
+- Atlassian makes the same host distinction explicit. Teamwork Graph CLI and Rovo MCP are documented as complementary rather than interchangeable: the CLI is for terminal and CI environments, while Rovo MCP is for MCP-capable web, IDE, and sandbox hosts.
+- Google is moving in the same direction. Agents CLI is now positioned as the programmatic backbone for AI coding agents reaching the Google Cloud agent stack, while Gemini Enterprise Agent Gallery and the admin Agents page remain the discovery and lifecycle surfaces for end users and administrators.
+- The official MCP Registry remains important, but its role is more precise than the current report implied. Official docs describe it as a preview metadata backbone for downstream registries and marketplaces, and explicitly say host applications should consume downstream registries conforming to its API rather than the official registry directly.
+- OpenAI, AWS, Microsoft, and Linear otherwise reinforce the broader picture already recorded on 2026-05-13: code-first orchestration plus workspace distribution for OpenAI; governed catalog plus multi-agent infrastructure for AWS; cross-platform control plane plus managed compute for Microsoft; and work-context steering plus MCP expansion for Linear.
 
 ## Notable Categories
 
@@ -71,19 +69,21 @@ As of 2026-05-13, the ecosystem is still layered rather than consolidated into o
 - Microsoft Agent 365 and Windows 365 for Agents
 - Atlassian Rovo, Teamwork Graph CLI, and Rovo MCP
 
-### Registry, directory, and discovery surfaces
+### Host-facing access and discovery surfaces
 
-- AWS Agent Registry
-- Microsoft Agent 365 registry sync
-- GitHub MCP registries and allowlists
+- GitHub private MCP registries for Copilot CLI and supported IDEs
+- GitHub repository and custom-agent-profile MCP configuration for Copilot cloud agent
+- Google Agents CLI
 - Gemini Enterprise Agent Gallery and Agents page
+- Atlassian Teamwork Graph CLI
+- Atlassian Rovo MCP
 - ChatGPT workspace directory
-- Atlassian agent libraries and Marketplace agents
+- AWS Agent Registry
 
-### Open interoperability surfaces
+### Open interoperability and metadata backbones
 
 - MCP
-- MCP Registry
+- official MCP Registry
 - A2A
 - AG-UI
 - `AGENTS.md`
@@ -101,37 +101,34 @@ As of 2026-05-13, the ecosystem is still layered rather than consolidated into o
 - Microsoft Agent 365
 - Amazon Bedrock AgentCore Policy and Agent Registry
 - OpenAI workspace-agent admin controls
-- managed execution environments, approval workflows, and registry sync as a now-common enterprise pattern
+- managed execution environments, approval workflows, registry sync, and runtime blocking as a now-common enterprise pattern
 
 ## Current Conclusion
 
-The practical inference for 2026-05-13 is that the observatory should not treat orchestration and interoperability as the same layer, and should not treat registry surfaces as the whole story inside the vendor-managed layer. The stronger abstraction boundary is now: shared context and planning surfaces, execution or runtime surfaces, vendor-local orchestration, registry or directory distribution, and governance or control. Microsoft is the clearest managed compute plus control-plane signal because Agent 365 is now paired with Windows 365 for Agents. GitHub is the clearest coding-specific managed execution signal because Copilot cloud agent, custom agents, and enterprise MCP policy live on one platform. OpenAI and Google remain the clearest code-first orchestration signals. AWS is strongest where governed catalog and multi-agent infrastructure meet. Atlassian remains the clearest context-to-delivery stack. The bounded update for this run is the observatory report only.
+The practical inference for 2026-05-14 is that the observatory should stop treating `registry/discovery` as one uniform layer. The stronger boundary is now: shared context and planning surfaces, execution or runtime surfaces, orchestration, host-facing access and discovery surfaces, neutral protocol and metadata backbones, and governance or control. GitHub is less unified on MCP governance than the 2026-05-13 report implied because enterprise MCP registries stop at CLI and IDE use, while cloud-agent MCP access is configured separately. Atlassian and Google strengthen the same pattern by pairing terminal-native agent CLIs with MCP or gallery surfaces. The bounded update for this run is the observatory report only.
 
 ## Sources
 
-- Accessed 2026-05-13: [Spec Kit](https://github.github.com/spec-kit/index.html)
-- Accessed 2026-05-13: [OpenSpec](https://openspec.dev/)
-- Accessed 2026-05-13: [Kiro Specs](https://kiro.dev/docs/specs/)
-- Accessed 2026-05-13: [OpenAI Agents SDK](https://developers.openai.com/api/docs/guides/agents)
-- Accessed 2026-05-13: [Handoffs | OpenAI Agents SDK](https://openai.github.io/openai-agents-python/handoffs/)
-- Updated 2026-05-07, accessed 2026-05-13: [ChatGPT Workspace Agents for Enterprise and Business](https://help.openai.com/en/articles/20001143-chatgpt-workspace-agents-for-enterprise-and-business)
-- Accessed 2026-05-13: [About GitHub Copilot cloud agent](https://docs.github.com/en/copilot/concepts/agents/cloud-agent/about-cloud-agent)
-- Accessed 2026-05-13: [Custom agents and sub-agent orchestration](https://docs.github.com/en/enterprise-cloud%40latest/copilot/how-tos/copilot-sdk/use-copilot-sdk/custom-agents)
-- Accessed 2026-05-13: [Agent management for enterprises](https://docs.github.com/en/copilot/concepts/agents/enterprise-management)
-- Accessed 2026-05-13: [Configure an MCP registry for your organization or enterprise](https://docs.github.com/en/copilot/how-tos/administer-copilot/manage-mcp-usage/configure-mcp-registry)
-- Published 2026-04-22, accessed 2026-05-13: [Agents CLI in Agent Platform: create to production in one CLI](https://developers.googleblog.com/agents-cli-in-agent-platform-create-to-production-in-one-cli/)
-- Accessed 2026-05-13: [Multi-Agent Systems in ADK](https://adk.dev/agents/multi-agents/)
-- Accessed 2026-05-13: [Browse agents with Agent Gallery](https://docs.cloud.google.com/gemini/enterprise/docs/agents-gallery)
-- Accessed 2026-05-13: [Agents overview | Gemini Enterprise](https://docs.cloud.google.com/gemini/enterprise/docs/agents-overview)
-- Published 2026-04-09, accessed 2026-05-13: [AWS Agent Registry for centralized agent discovery and governance is now available in Preview](https://aws.amazon.com/about-aws/whats-new/2026/04/aws-agent-registry-in-agentcore-preview/)
-- Accessed 2026-05-13: [Use multi-agent collaboration with Amazon Bedrock Agents](https://docs.aws.amazon.com/bedrock/latest/userguide/agents-multi-agent-collaboration.html)
-- Published 2026-05-01, accessed 2026-05-13: [Microsoft Agent 365, now generally available, expands capabilities and integrations](https://www.microsoft.com/en-us/security/blog/2026/05/01/microsoft-agent-365-now-generally-available-expands-capabilities-and-integrations/)
-- Last updated 2026-05-01, accessed 2026-05-13: [Windows 365 for Agents in Agent 365](https://learn.microsoft.com/en-us/windows-365/agents/w365a-availability-a365)
-- Accessed 2026-05-13: [Teamwork Graph CLI and Rovo MCP decision guide](https://support.atlassian.com/rovo/docs/teamwork-graph-cli-and-rovo-mcp-decision-guide/)
-- Accessed 2026-05-13: [Atlassian Teamwork Graph](https://www.atlassian.com/platform/teamwork-graph)
-- Published 2026-04-23, accessed 2026-05-13: [Changelog | Linear](https://linear.app/changelog)
-- Accessed 2026-05-13: [The MCP Registry](https://modelcontextprotocol.io/registry/about)
-- Accessed 2026-05-13: [A2A Protocol Ships v1.0: Production-Ready Standard for Agent-to-Agent Communication](https://a2a-protocol.org/latest/announcing-1.0/)
-- Accessed 2026-05-13: [AG-UI Overview](https://docs.ag-ui.com/)
-- Accessed 2026-05-13: [AGENTS.md](https://agents.md/)
+- Accessed 2026-05-14: [Spec Kit](https://github.github.com/spec-kit/index.html)
+- Accessed 2026-05-14: [OpenSpec](https://openspec.dev/)
+- Accessed 2026-05-14: [Kiro Specs](https://kiro.dev/docs/specs/)
+- Accessed 2026-05-14: [OpenAI Agents SDK handoffs](https://openai.github.io/openai-agents-python/handoffs/)
+- Accessed 2026-05-14: [ChatGPT Workspace Agents for Enterprise and Business](https://help.openai.com/en/articles/20001143/)
+- Accessed 2026-05-14: [GitHub Copilot enterprise agent management](https://docs.github.com/en/enterprise-cloud%40latest/copilot/concepts/agents/enterprise-management)
+- Accessed 2026-05-14: [GitHub MCP server usage in your company](https://docs.github.com/en/copilot/concepts/mcp-management)
+- Accessed 2026-05-14: [GitHub custom agents and sub-agent orchestration](https://docs.github.com/en/enterprise-cloud%40latest/copilot/how-tos/copilot-sdk/use-copilot-sdk/custom-agents)
+- Published 2026-04-22, accessed 2026-05-14: [Agents CLI in Agent Platform: create to production in one CLI](https://developers.googleblog.com/agents-cli-in-agent-platform-create-to-production-in-one-cli/)
+- Accessed 2026-05-14: [Multi-Agent Systems in ADK](https://adk.dev/agents/multi-agents/)
+- Accessed 2026-05-14: [Gemini Enterprise agents overview](https://docs.cloud.google.com/gemini/enterprise/docs/agents-overview)
+- Accessed 2026-05-14: [Browse agents with Agent Gallery](https://docs.cloud.google.com/gemini/enterprise/docs/agents-gallery)
+- Accessed 2026-05-14: [AWS Agent Registry](https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/registry.html)
+- Accessed 2026-05-14: [Windows 365 for Agents in Agent 365](https://learn.microsoft.com/en-us/windows-365/agents/w365a-availability-a365)
+- Published 2026-05-01, accessed 2026-05-14: [Microsoft Agent 365, now generally available, expands capabilities and integrations](https://www.microsoft.com/en-us/security/blog/2026/05/01/microsoft-agent-365-now-generally-available-expands-capabilities-and-integrations/)
+- Accessed 2026-05-14: [Teamwork Graph CLI and Rovo MCP decision guide](https://support.atlassian.com/rovo/docs/teamwork-graph-cli-and-rovo-mcp-decision-guide/)
+- Accessed 2026-05-14: [Atlassian Teamwork Graph](https://www.atlassian.com/platform/teamwork-graph)
+- Published 2026-04-23, accessed 2026-05-14: [Linear Agent MCP support](https://linear.app/changelog/2026-04-23-linear-agent-mcp-support)
+- Accessed 2026-05-14: [The MCP Registry](https://modelcontextprotocol.io/registry/about)
+- Accessed 2026-05-14: [A2A Protocol Ships v1.0](https://a2a-protocol.org/latest/announcing-1.0/)
+- Accessed 2026-05-14: [AG-UI Overview](https://docs.ag-ui.com/introduction)
+- Accessed 2026-05-14: [AGENTS.md](https://agents.md/)
 <!-- state-of-the-art:managed:end -->
