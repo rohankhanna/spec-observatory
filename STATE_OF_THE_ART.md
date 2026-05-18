@@ -16,7 +16,7 @@ Manual edits outside the managed block are allowed. Manual edits inside the mana
 <!-- state-of-the-art:managed:start -->
 ## Last Reviewed
 
-2026-05-16
+2026-05-18
 
 ## Scope
 
@@ -33,12 +33,12 @@ This document tracks the state of the art for:
 
 ## Current View
 
-As of 2026-05-16, the ecosystem is still layered rather than consolidated into one end-to-end winner. The material correction from fresh official research is that the observatory should update two abstraction boundaries it currently understates.
+As of 2026-05-18, the ecosystem is still layered rather than consolidated into one end-to-end winner. The material correction from fresh official research is that the observatory should update one separation it currently draws too cleanly.
 
-- As accessed on 2026-05-16, GitHub Docs present Copilot CLI as a first-class local agent surface with autopilot execution, `/delegate` handoff to Copilot cloud agent, `/fleet` parallel subagent execution, remote control from GitHub surfaces, plugins, and MCP. GitHub is no longer best described mainly through a cloud-agent-versus-registry split.
-- As accessed on 2026-05-16, GitHub Docs also describe the GitHub MCP Registry as a curated registry in public preview while allowing organization and enterprise admins to configure MCP server access separately. That makes GitHub a clearer example of a vendor host layering its own registry and policy surfaces on top of the neutral official MCP Registry, and it corrects the previous report's too-narrow `private registries` wording.
-- As accessed on 2026-05-16, GitHub Spec Kit docs describe integrations, extensions, presets, and workflows with conditional logic, loops, fan-out or fan-in, and pause or resume. Kiro docs show dependency-aware parallel task execution directly from spec tasks. Leading spec-first tools are increasingly process and orchestration layers, not only planning or documentation aids.
-- Google Agents CLI, AWS AgentCore CLI plus harness, Atlassian Teamwork Graph CLI plus Rovo MCP, OpenAI workspace agents, Microsoft Agent 365, and Linear Code Intelligence otherwise preserve the layered picture already recorded: vendor host surfaces, managed execution and governance layers, neutral protocols, and shared work context remain distinct.
+- As accessed on 2026-05-18, OpenAI Help Center docs describe ChatGPT workspace agents as a builder, directory, scheduling, Slack, custom-MCP, app-auth, analytics, and admin-governed surface, and the 2026-05-07 Enterprise release notes extend that surface to eligible EKM workspaces. ChatGPT is not only a workspace directory or policy layer; it is a host-facing agent build and execution surface inside an enterprise work hub.
+- As accessed on 2026-05-18, Linear docs describe agents as first-class workspace actors that admins install, users delegate work to, and teams steer with markdown guidance. Linear changelogs add MCP connections on 2026-04-23 and Code Intelligence on 2026-05-14. Linear is not only a portfolio-steering or shared-context layer; it is also an agent host embedded inside the product operating system.
+- As published on 2026-05-06 and accessed on 2026-05-18, Atlassian describes Teamwork Graph CLI and Rovo MCP as official ways for agents to read and act on work via the Teamwork Graph, and explicitly frames these surfaces as headless-app access to the system of work. Atlassian likewise spans context-backbone and execution-host roles.
+- GitHub Copilot CLI and cloud-agent surfaces, Spec Kit and Kiro orchestration, Google Agents CLI and Gemini Enterprise, AWS AgentCore, Microsoft Agent 365, the official MCP Registry, A2A, and AG-UI otherwise preserve the layered picture already recorded.
 
 ## Notable Categories
 
@@ -79,7 +79,8 @@ As of 2026-05-16, the ecosystem is still layered rather than consolidated into o
 - AWS AgentCore CLI
 - Atlassian Teamwork Graph CLI
 - Atlassian Rovo MCP
-- ChatGPT workspace directory
+- ChatGPT workspace agent builder, directory, schedules, and Slack channels
+- Linear Agent delegation, integrations directory, and MCP connections
 - AWS Agent Registry
 
 ### Open interoperability and metadata backbones
@@ -90,11 +91,12 @@ As of 2026-05-16, the ecosystem is still layered rather than consolidated into o
 - AG-UI
 - `AGENTS.md`
 
-### Shared work context, code intelligence, outcome framing, and portfolio steering
+### Work operating systems, shared context backbones, code intelligence, and portfolio steering
 
 - Atlassian Teamwork Graph
 - Atlassian Teamwork Collection
 - Jira Product Discovery
+- Rovo
 - Linear Agent
 - Linear Code Intelligence
 - Linear MCP
@@ -104,45 +106,20 @@ As of 2026-05-16, the ecosystem is still layered rather than consolidated into o
 - GitHub Copilot AI Controls
 - Microsoft Agent 365
 - Amazon Bedrock AgentCore Policy and Agent Registry
-- OpenAI workspace-agent admin controls
-- managed execution environments, approval workflows, registry sync, and runtime blocking as a now-common enterprise pattern
+- OpenAI workspace-agent admin controls and agent analytics surfaces
+- managed execution environments, approval workflows, registry sync, runtime blocking, and agent analytics as a now-common enterprise pattern
 
 ## Current Conclusion
 
-The stronger practical inference for 2026-05-16 is that the observatory should make two bounded corrections. First, `host-facing access, discovery, and build surfaces` should be treated as `host-facing execution, discovery, and build surfaces` because GitHub now joins Google, AWS, and Atlassian with an official CLI and session-control layer that can execute locally, delegate to cloud agents, parallelize subagent work, and expose registry-backed extensions. Second, `spec-first workflow` should be treated as `spec-first workflow and process layers` because Spec Kit and Kiro now expose programmable execution and orchestration behavior around the spec artifacts themselves. This is a material correction to the current report's GitHub and spec-layer framing. The bounded update for this run is the observatory report only.
+The stronger practical inference for 2026-05-18 is that the observatory should collapse one separation it currently keeps too sharp. `shared work context, code intelligence, outcome framing, and portfolio steering` should be reframed as `work operating systems, shared context backbones, code intelligence, and portfolio steering`, because Atlassian, Linear, and ChatGPT workspace surfaces now combine shared context with agent hosting, work delegation or scheduling, MCP extension, and admin governance inside the same operational systems. This is a material correction to the current report's tendency to treat portfolio or context surfaces as mostly adjacent to host-facing execution surfaces rather than increasingly overlapping with them. The bounded update for this run is the observatory report only.
 
 ## Sources
 
-- Accessed 2026-05-16: [Spec Kit](https://github.github.com/spec-kit/index.html)
-- Accessed 2026-05-16: [Spec Kit CLI Reference](https://github.github.com/spec-kit/reference/overview.html)
-- Accessed 2026-05-16: [OpenSpec](https://openspec.dev/)
-- Page updated 2026-05-05, accessed 2026-05-16: [Kiro Specs](https://kiro.dev/docs/specs/)
-- Accessed 2026-05-16: [OpenAI Agents SDK handoffs](https://openai.github.io/openai-agents-python/handoffs/)
-- Accessed 2026-05-16: [ChatGPT Workspace Agents for Enterprise and Business](https://help.openai.com/en/articles/20001143/)
-- Accessed 2026-05-16: [ChatGPT agent workspace controls](https://help.openai.com/en/articles/11752874-chatgpt-agent)
-- Accessed 2026-05-16: [GitHub Copilot CLI](https://docs.github.com/en/copilot/concepts/agents/copilot-cli/about-copilot-cli)
-- Accessed 2026-05-16: [Delegating tasks to Copilot](https://docs.github.com/en/copilot/how-tos/copilot-cli/use-copilot-cli/delegate-tasks-to-cca)
-- Accessed 2026-05-16: [Running tasks in parallel with the /fleet command](https://docs.github.com/en/copilot/concepts/agents/copilot-cli/fleet)
-- Accessed 2026-05-16: [About remote control of GitHub Copilot CLI sessions](https://docs.github.com/en/copilot/concepts/agents/copilot-cli/about-remote-control)
-- Accessed 2026-05-16: [About plugins for GitHub Copilot CLI](https://docs.github.com/en/copilot/concepts/agents/copilot-cli/about-cli-plugins)
-- Accessed 2026-05-16: [About Model Context Protocol for GitHub Copilot](https://docs.github.com/en/copilot/concepts/context/mcp)
-- Accessed 2026-05-16: [Configure MCP server access for your organization or enterprise](https://docs.github.com/en/copilot/how-tos/administer-copilot/manage-mcp-usage/configure-mcp-server-access)
-- Accessed 2026-05-16: [GitHub custom agents](https://docs.github.com/en/enterprise-cloud@latest/copilot/concepts/agents/cloud-agent/about-custom-agents)
-- Accessed 2026-05-16: [GitHub agent management for enterprises](https://docs.github.com/en/enterprise-cloud@latest/copilot/concepts/agents/enterprise-management)
-- Published 2026-04-22, accessed 2026-05-16: [Agents CLI in Agent Platform: create to production in one CLI](https://developers.googleblog.com/agents-cli-in-agent-platform-create-to-production-in-one-cli/)
-- Accessed 2026-05-16: [Gemini Enterprise agents overview](https://docs.cloud.google.com/gemini/enterprise/docs/agents-overview)
-- Accessed 2026-05-16: [Browse agents with Agent Gallery](https://docs.cloud.google.com/gemini/enterprise/docs/agent-gallery)
-- Published 2026-04-22, accessed 2026-05-16: [Amazon Bedrock AgentCore adds new features to help developers build agents faster](https://aws.amazon.com/about-aws/whats-new/2026/04/agentcore-new-features-to-build-agents-faster/)
-- Accessed 2026-05-16: [Get started with the AgentCore CLI](https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/runtime-get-started-cli.html)
-- Accessed 2026-05-16: [AWS Agent Registry](https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/registry.html)
-- Accessed 2026-05-16: [Teamwork Graph CLI and Rovo MCP decision guide](https://support.atlassian.com/rovo/docs/teamwork-graph-cli-and-rovo-mcp-decision-guide/)
-- Published 2026-05-14, accessed 2026-05-16: [Linear Code Intelligence](https://linear.app/changelog/2026-05-14-code-intelligence)
-- Accessed 2026-05-16: [Linear AI Agents](https://linear.app/docs/agents-in-linear)
-- Accessed 2026-05-16: [Linear MCP server](https://linear.app/docs/mcp)
-- Published 2026-05-01, accessed 2026-05-16: [Microsoft Agent 365, now generally available, expands capabilities and integrations](https://www.microsoft.com/en-us/security/blog/2026/05/01/microsoft-agent-365-now-generally-available-expands-capabilities-and-integrations/)
-- Accessed 2026-05-16: [Windows 365 for Agents in Agent 365](https://learn.microsoft.com/en-us/windows-365/agents/w365a-availability-a365)
-- Accessed 2026-05-16: [The MCP Registry](https://modelcontextprotocol.io/registry/about)
-- Accessed 2026-05-16: [A2A Protocol v1.0 announcement](https://a2a-protocol.org/latest/announcing-1.0/)
-- Accessed 2026-05-16: [AG-UI overview](https://docs.ag-ui.com/introduction)
-- Accessed 2026-05-16: [AGENTS.md](https://agents.md/)
+- Accessed 2026-05-18: [ChatGPT Workspace Agents for Enterprise and Business](https://help.openai.com/en/articles/20001143-chatgpt-workspace-agents-for-enterprise-and-business)
+- Published 2026-05-07 and accessed 2026-05-18: [ChatGPT Enterprise & Edu - Release Notes](https://help.openai.com/en/articles/10128477-chatgpt-enterprise-edu-release-notes)
+- Accessed 2026-05-18: [AI Agents | Linear Docs](https://linear.app/docs/agents-in-linear)
+- Published 2026-04-23 and accessed 2026-05-18: [Linear Agent MCP support](https://linear.app/changelog/2026-04-23-linear-agent-mcp-support)
+- Published 2026-05-14 and accessed 2026-05-18: [Code Intelligence](https://linear.app/changelog/2026-05-14-code-intelligence)
+- Published 2026-05-06 and accessed 2026-05-18: [Atlassian Teamwork Graph: The context engine behind your AI—everywhere](https://www.atlassian.com/blog/company-news/teamwork-graph-team-26)
+- Accessed 2026-05-18: [Teamwork Graph CLI and Rovo MCP decision guide](https://support.atlassian.com/rovo/docs/teamwork-graph-cli-and-rovo-mcp-decision-guide/)
 <!-- state-of-the-art:managed:end -->
