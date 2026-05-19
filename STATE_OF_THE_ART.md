@@ -16,7 +16,7 @@ Manual edits outside the managed block are allowed. Manual edits inside the mana
 <!-- state-of-the-art:managed:start -->
 ## Last Reviewed
 
-2026-05-18
+2026-05-19
 
 ## Scope
 
@@ -25,7 +25,7 @@ This document tracks the state of the art for:
 - spec-driven development
 - outcome-driven development
 - coding-agent execution
-- vendor agent harnesses and customization surfaces
+- vendor agent harnesses and managed lifecycle surfaces
 - general agent build, deploy, runtime, and operating surfaces
 - orchestration and interoperability
 - software portfolio and project steering
@@ -33,12 +33,11 @@ This document tracks the state of the art for:
 
 ## Current View
 
-As of 2026-05-18, the ecosystem is still layered rather than consolidated into one end-to-end winner. The material correction from fresh official research is that the observatory should update one separation it currently draws too cleanly.
+As of 2026-05-19, the ecosystem is still layered rather than consolidated into one end-to-end winner. The new material change from fresh official research is that Google now belongs clearly in the `vendor agent harnesses and managed lifecycle surfaces` layer, not only in the open framework and CLI layer.
 
-- As accessed on 2026-05-18, OpenAI Help Center docs describe ChatGPT workspace agents as a builder, directory, scheduling, Slack, custom-MCP, app-auth, analytics, and admin-governed surface, and the 2026-05-07 Enterprise release notes extend that surface to eligible EKM workspaces. ChatGPT is not only a workspace directory or policy layer; it is a host-facing agent build and execution surface inside an enterprise work hub.
-- As accessed on 2026-05-18, Linear docs describe agents as first-class workspace actors that admins install, users delegate work to, and teams steer with markdown guidance. Linear changelogs add MCP connections on 2026-04-23 and Code Intelligence on 2026-05-14. Linear is not only a portfolio-steering or shared-context layer; it is also an agent host embedded inside the product operating system.
-- As published on 2026-05-06 and accessed on 2026-05-18, Atlassian describes Teamwork Graph CLI and Rovo MCP as official ways for agents to read and act on work via the Teamwork Graph, and explicitly frames these surfaces as headless-app access to the system of work. Atlassian likewise spans context-backbone and execution-host roles.
-- GitHub Copilot CLI and cloud-agent surfaces, Spec Kit and Kiro orchestration, Google Agents CLI and Gemini Enterprise, AWS AgentCore, Microsoft Agent 365, the official MCP Registry, A2A, and AG-UI otherwise preserve the layered picture already recorded.
+- Published on 2026-05-19 and accessed on 2026-05-19, Google introduced Managed Agents in the Gemini API: a hosted Antigravity agent harness that provisions an isolated Linux sandbox from a single API call, supports code execution, file management, web access, resumable environments, and lets teams define agent behavior with `AGENTS.md` and `SKILL.md` or persist agents by ID through `agents.create`.
+- Updated on 2026-05-19 and accessed on 2026-05-19, Google documented the Gemini Enterprise Agent Platform Managed Agents API as a separate control-plane and data-plane surface, with an Agents API for configuration and environment policy plus an Interactions API for runtime calls. That is a first-party managed lifecycle surface, not just an SDK or open framework.
+- OpenAI, Linear, Atlassian, GitHub, AWS, and Microsoft otherwise preserve the layered picture already recorded. Their recent official updates continue to reinforce enterprise governance, shared-context, and host-surface overlap rather than changing the category map.
 
 ## Notable Categories
 
@@ -64,7 +63,7 @@ As of 2026-05-18, the ecosystem is still layered rather than consolidated into o
 
 - OpenAI Agents SDK and ChatGPT workspace agents
 - GitHub Copilot cloud agent, custom agents, and AI Controls
-- Google Agents CLI, ADK, and Gemini Enterprise
+- Google Gemini API managed agents, Gemini Enterprise Agent Platform, Google Agents CLI, and ADK
 - Amazon Bedrock AgentCore managed harness, CLI, Agent Registry, and multi-agent collaboration
 - Microsoft Agent 365 and Windows 365 for Agents
 - Atlassian Rovo, Teamwork Graph CLI, and Rovo MCP
@@ -75,7 +74,7 @@ As of 2026-05-18, the ecosystem is still layered rather than consolidated into o
 - GitHub MCP Registry and configurable MCP server access
 - GitHub cloud-agent repository MCP configuration and agent management
 - Google Agents CLI
-- Gemini Enterprise Agent Gallery and Agents page
+- Gemini API Antigravity agent and AI Studio Playground
 - AWS AgentCore CLI
 - Atlassian Teamwork Graph CLI
 - Atlassian Rovo MCP
@@ -105,21 +104,26 @@ As of 2026-05-18, the ecosystem is still layered rather than consolidated into o
 
 - GitHub Copilot AI Controls
 - Microsoft Agent 365
+- Google Gemini Enterprise Agent Platform
 - Amazon Bedrock AgentCore Policy and Agent Registry
 - OpenAI workspace-agent admin controls and agent analytics surfaces
-- managed execution environments, approval workflows, registry sync, runtime blocking, and agent analytics as a now-common enterprise pattern
+- managed execution environments, approval workflows, registry sync, runtime blocking, network policy, and agent analytics as a now-common enterprise pattern
 
 ## Current Conclusion
 
-The stronger practical inference for 2026-05-18 is that the observatory should collapse one separation it currently keeps too sharp. `shared work context, code intelligence, outcome framing, and portfolio steering` should be reframed as `work operating systems, shared context backbones, code intelligence, and portfolio steering`, because Atlassian, Linear, and ChatGPT workspace surfaces now combine shared context with agent hosting, work delegation or scheduling, MCP extension, and admin governance inside the same operational systems. This is a material correction to the current report's tendency to treat portfolio or context surfaces as mostly adjacent to host-facing execution surfaces rather than increasingly overlapping with them. The bounded update for this run is the observatory report only.
+The stronger practical inference for 2026-05-19 is that the observatory should keep the `work operating systems` correction from 2026-05-18 and add one more correction: the repo should speak about `vendor agent harnesses and managed lifecycle surfaces`, not `customization surfaces`. Google's 2026-05-19 Managed Agents launch shows that a major vendor now offers a first-party hosted agent harness with repo-native agent files, saved agent identities, sandbox and network policy, and enterprise control-plane/data-plane separation. That moves Google from mostly `framework/CLI provider` into the same broader managed-agent layer already occupied by OpenAI, GitHub, AWS, Atlassian, and Microsoft. The bounded update for this run is the observatory report plus wording alignment in the product and research-scope specs.
 
 ## Sources
 
-- Accessed 2026-05-18: [ChatGPT Workspace Agents for Enterprise and Business](https://help.openai.com/en/articles/20001143-chatgpt-workspace-agents-for-enterprise-and-business)
-- Published 2026-05-07 and accessed 2026-05-18: [ChatGPT Enterprise & Edu - Release Notes](https://help.openai.com/en/articles/10128477-chatgpt-enterprise-edu-release-notes)
-- Accessed 2026-05-18: [AI Agents | Linear Docs](https://linear.app/docs/agents-in-linear)
-- Published 2026-04-23 and accessed 2026-05-18: [Linear Agent MCP support](https://linear.app/changelog/2026-04-23-linear-agent-mcp-support)
-- Published 2026-05-14 and accessed 2026-05-18: [Code Intelligence](https://linear.app/changelog/2026-05-14-code-intelligence)
-- Published 2026-05-06 and accessed 2026-05-18: [Atlassian Teamwork Graph: The context engine behind your AI—everywhere](https://www.atlassian.com/blog/company-news/teamwork-graph-team-26)
-- Accessed 2026-05-18: [Teamwork Graph CLI and Rovo MCP decision guide](https://support.atlassian.com/rovo/docs/teamwork-graph-cli-and-rovo-mcp-decision-guide/)
+- Published 2026-05-19 and accessed 2026-05-19: [Introducing Managed Agents in the Gemini API](https://blog.google/innovation-and-ai/technology/developers-tools/managed-agents-gemini-api/)
+- Updated 2026-05-19 and accessed 2026-05-19: [Agents Overview](https://ai.google.dev/gemini-api/docs/agents)
+- Updated 2026-05-19 and accessed 2026-05-19: [Building Managed Agents](https://ai.google.dev/gemini-api/docs/custom-agents)
+- Updated 2026-05-19 and accessed 2026-05-19: [Managed Agents API on Agent Platform overview](https://docs.cloud.google.com/gemini-enterprise-agent-platform/build/managed-agents)
+- May 14, 2026 section accessed 2026-05-19: [ChatGPT Enterprise & Edu - Release Notes](https://help.openai.com/en/articles/10128477-chatgpt-enterprise-edu-release-notes)
+- Published 2026-05-18 and accessed 2026-05-19: [Audit repository Copilot cloud agent configuration via the REST API](https://github.blog/changelog/2026-05-18-audit-repository-copilot-cloud-agent-configuration-via-the-rest-api/)
+- Published 2026-05-08 and accessed 2026-05-19: [More flexible secrets and variables for Copilot cloud agent](https://github.blog/changelog/2026-05-08-more-flexible-secrets-and-variables-for-copilot-cloud-agent/)
+- Published 2026-05-14 and accessed 2026-05-19: [Code Intelligence](https://linear.app/changelog/2026-05-14-code-intelligence)
+- Accessed 2026-05-19: [Teamwork Graph CLI and Rovo MCP decision guide](https://support.atlassian.com/rovo/docs/teamwork-graph-cli-and-rovo-mcp-decision-guide/)
+- Posted 2026-04-09 and accessed 2026-05-19: [AWS Agent Registry for centralized agent discovery and governance is now available in Preview](https://aws.amazon.com/about-aws/whats-new/2026/04/aws-agent-registry-in-agentcore-preview/)
+- Updated 2026-05-19 and accessed 2026-05-19: [May 2026 announcements](https://learn.microsoft.com/en-us/partner-center/announcements/2026-may)
 <!-- state-of-the-art:managed:end -->
