@@ -16,7 +16,7 @@ Manual edits outside the managed block are allowed. Manual edits inside the mana
 <!-- state-of-the-art:managed:start -->
 ## Last Reviewed
 
-2026-05-19
+2026-05-20
 
 ## Scope
 
@@ -33,11 +33,11 @@ This document tracks the state of the art for:
 
 ## Current View
 
-As of 2026-05-19, the ecosystem is still layered rather than consolidated into one end-to-end winner. The new material change from fresh official research is that Google now belongs clearly in the `vendor agent harnesses and managed lifecycle surfaces` layer, not only in the open framework and CLI layer.
+As of 2026-05-20, the ecosystem is still layered rather than consolidated into one end-to-end winner. The new material correction from fresh official research is that Kiro now belongs clearly in `coding-agent execution` and `host-facing execution`, not only in the spec-first workflow layer.
 
-- Published on 2026-05-19 and accessed on 2026-05-19, Google introduced Managed Agents in the Gemini API: a hosted Antigravity agent harness that provisions an isolated Linux sandbox from a single API call, supports code execution, file management, web access, resumable environments, and lets teams define agent behavior with `AGENTS.md` and `SKILL.md` or persist agents by ID through `agents.create`.
-- Updated on 2026-05-19 and accessed on 2026-05-19, Google documented the Gemini Enterprise Agent Platform Managed Agents API as a separate control-plane and data-plane surface, with an Agents API for configuration and environment policy plus an Interactions API for runtime calls. That is a first-party managed lifecycle surface, not just an SDK or open framework.
-- OpenAI, Linear, Atlassian, GitHub, AWS, and Microsoft otherwise preserve the layered picture already recorded. Their recent official updates continue to reinforce enterprise governance, shared-context, and host-surface overlap rather than changing the category map.
+- Published on 2026-05-18 and accessed on 2026-05-20, Kiro launched Kiro Web in preview: a web agent that writes code, coordinates changes across repositories, opens pull requests, reads shared steering files, and exposes sandbox network and base-image controls.
+- Accessed on 2026-05-20, Kiro's official product surface describes one agentic product spanning IDE, CLI, and web interfaces, with specs, steering, native MCP support, and autonomous task execution. That makes Kiro a cross-layer coding-agent surface, not just `Kiro Specs`.
+- Google, OpenAI, GitHub, AWS, Atlassian, Linear, and Microsoft otherwise preserve the layered picture already recorded. Their current official materials continue to reinforce managed harnesses, remote supervision, model governance, code intelligence, registry-driven discovery, and enterprise control planes rather than collapsing the stack.
 
 ## Notable Categories
 
@@ -56,6 +56,7 @@ As of 2026-05-19, the ecosystem is still layered rather than consolidated into o
 - Gemini CLI
 - Jules
 - Junie
+- Kiro
 - OpenHands
 - Rovo Dev
 
@@ -78,6 +79,7 @@ As of 2026-05-19, the ecosystem is still layered rather than consolidated into o
 - AWS AgentCore CLI
 - Atlassian Teamwork Graph CLI
 - Atlassian Rovo MCP
+- Kiro IDE, CLI, Web, steering files, and agent hooks
 - ChatGPT workspace agent builder, directory, schedules, and Slack channels
 - Linear Agent delegation, integrations directory, and MCP connections
 - AWS Agent Registry
@@ -98,6 +100,7 @@ As of 2026-05-19, the ecosystem is still layered rather than consolidated into o
 - Rovo
 - Linear Agent
 - Linear Code Intelligence
+- Linear Releases
 - Linear MCP
 
 ### Agent governance and control planes
@@ -111,19 +114,20 @@ As of 2026-05-19, the ecosystem is still layered rather than consolidated into o
 
 ## Current Conclusion
 
-The stronger practical inference for 2026-05-19 is that the observatory should keep the `work operating systems` correction from 2026-05-18 and add one more correction: the repo should speak about `vendor agent harnesses and managed lifecycle surfaces`, not `customization surfaces`. Google's 2026-05-19 Managed Agents launch shows that a major vendor now offers a first-party hosted agent harness with repo-native agent files, saved agent identities, sandbox and network policy, and enterprise control-plane/data-plane separation. That moves Google from mostly `framework/CLI provider` into the same broader managed-agent layer already occupied by OpenAI, GitHub, AWS, Atlassian, and Microsoft. The bounded update for this run is the observatory report plus wording alignment in the product and research-scope specs.
+The stronger practical inference for 2026-05-20 is that the observatory should keep the 2026-05-19 `vendor agent harnesses and managed lifecycle surfaces` correction and add one more category correction: Kiro should be tracked as a cross-layer product that spans spec-first workflow and coding-agent execution. The 2026-05-18 Kiro Web launch and the 2026-05-20 Kiro product surface make the current report's Kiro placement too narrow. The bounded update for this run is the observatory report plus README wording alignment where the public-facing summary still says `customization surfaces`.
 
 ## Sources
 
-- Published 2026-05-19 and accessed 2026-05-19: [Introducing Managed Agents in the Gemini API](https://blog.google/innovation-and-ai/technology/developers-tools/managed-agents-gemini-api/)
-- Updated 2026-05-19 and accessed 2026-05-19: [Agents Overview](https://ai.google.dev/gemini-api/docs/agents)
-- Updated 2026-05-19 and accessed 2026-05-19: [Building Managed Agents](https://ai.google.dev/gemini-api/docs/custom-agents)
-- Updated 2026-05-19 and accessed 2026-05-19: [Managed Agents API on Agent Platform overview](https://docs.cloud.google.com/gemini-enterprise-agent-platform/build/managed-agents)
-- May 14, 2026 section accessed 2026-05-19: [ChatGPT Enterprise & Edu - Release Notes](https://help.openai.com/en/articles/10128477-chatgpt-enterprise-edu-release-notes)
-- Published 2026-05-18 and accessed 2026-05-19: [Audit repository Copilot cloud agent configuration via the REST API](https://github.blog/changelog/2026-05-18-audit-repository-copilot-cloud-agent-configuration-via-the-rest-api/)
-- Published 2026-05-08 and accessed 2026-05-19: [More flexible secrets and variables for Copilot cloud agent](https://github.blog/changelog/2026-05-08-more-flexible-secrets-and-variables-for-copilot-cloud-agent/)
-- Published 2026-05-14 and accessed 2026-05-19: [Code Intelligence](https://linear.app/changelog/2026-05-14-code-intelligence)
-- Accessed 2026-05-19: [Teamwork Graph CLI and Rovo MCP decision guide](https://support.atlassian.com/rovo/docs/teamwork-graph-cli-and-rovo-mcp-decision-guide/)
-- Posted 2026-04-09 and accessed 2026-05-19: [AWS Agent Registry for centralized agent discovery and governance is now available in Preview](https://aws.amazon.com/about-aws/whats-new/2026/04/aws-agent-registry-in-agentcore-preview/)
-- Updated 2026-05-19 and accessed 2026-05-19: [May 2026 announcements](https://learn.microsoft.com/en-us/partner-center/announcements/2026-may)
+- Accessed 2026-05-20: [GitHub Spec Kit](https://github.github.com/spec-kit/index.html)
+- Accessed 2026-05-20: [OpenSpec](https://openspec.dev/)
+- Published 2026-05-18 and accessed 2026-05-20: [Introducing Kiro Web](https://kiro.dev/blog/introducing-kiro-web/)
+- Accessed 2026-05-20: [Kiro product overview](https://kiro.dev/)
+- Published 2026-05-19 and accessed 2026-05-20: [Introducing Managed Agents in the Gemini API](https://blog.google/innovation-and-ai/technology/developers-tools/managed-agents-gemini-api/)
+- Published 2026-05-14 and accessed 2026-05-20: [Work with Codex from anywhere](https://openai.com/index/work-with-codex-from-anywhere/)
+- Published 2026-05-17 and accessed 2026-05-20: [GPT-5.3-Codex is now the base model for Copilot Business and Enterprise](https://github.blog/changelog/2026-05-17-gpt-5-3-codex-is-now-the-base-model-for-copilot-business-and-enterprise/)
+- Published 2026-04-09 and accessed 2026-05-20: [AWS Agent Registry for centralized agent discovery and governance is now available in Preview](https://aws.amazon.com/about-aws/whats-new/2026/04/aws-agent-registry-in-agentcore-preview/)
+- Accessed 2026-05-20: [Teamwork Graph CLI and Rovo MCP decision guide](https://support.atlassian.com/rovo/docs/teamwork-graph-cli-and-rovo-mcp-decision-guide/)
+- Published 2026-05-14 and accessed 2026-05-20: [Code Intelligence](https://linear.app/changelog/2026-05-14-code-intelligence)
+- Published 2026-04-30 and accessed 2026-05-20: [Releases](https://linear.app/changelog/2026-04-30-releases)
+- Updated 2026-05-20 and accessed 2026-05-20: [May 2026 announcements](https://learn.microsoft.com/en-us/partner-center/announcements/2026-may)
 <!-- state-of-the-art:managed:end -->

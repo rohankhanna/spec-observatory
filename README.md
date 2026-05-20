@@ -96,7 +96,7 @@ The maintained document currently tracks the state of the art for:
 - spec-driven development
 - outcome-driven development
 - coding agents
-- vendor agent harnesses and customization surfaces
+- vendor agent harnesses and managed lifecycle surfaces
 - general agent build, deploy, runtime, and operating surfaces
 - agent orchestration and interoperability
 - software portfolio and project steering
