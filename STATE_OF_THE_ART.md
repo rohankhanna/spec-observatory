@@ -16,7 +16,7 @@ Manual edits outside the managed block are allowed. Manual edits inside the mana
 <!-- state-of-the-art:managed:start -->
 ## Last Reviewed
 
-2026-05-22
+2026-05-23
 
 ## Scope
 
@@ -33,14 +33,20 @@ This document tracks the state of the art for:
 
 ## Current View
 
-As of 2026-05-22, the ecosystem is still layered rather than consolidated into one end-to-end winner, but the material refinement from fresh official research is no longer only protocol-level. The spec-driven layer itself now has a clearer split between portable repo-native planning systems and integrated spec-execution surfaces inside agent harnesses.
+As of 2026-05-23, the ecosystem is still layered rather than consolidated, but fresh official research makes one abstraction boundary materially clearer than the 2026-05-22 report stated: there is now a distinct harness-primitives layer between portable repo-native planning systems and full managed agent platforms.
 
-- Accessed on 2026-05-22, GitHub Spec Kit describes a spec-driven `Spec -> Plan -> Tasks -> Implement` workflow, 30 agent integrations, and a large extensions and presets ecosystem. That makes it a portable planning layer, not just a single-agent template pack.
-- Accessed on 2026-05-22, OpenSpec positions itself as a lightweight, universal planning layer where specs live in the repository, persist across sessions, and remain useful when teams switch coding agents.
-- Published on 2026-05-05 and accessed on 2026-05-22, Kiro documents specs as an integrated three-phase workflow with requirements, design, tasks, quick-plan shortcuts, and parallel task execution. That places Kiro Specs closer to a vendor harness feature than to a neutral planning layer.
-- Accessed on 2026-05-22, Kiro steering and Kiro Powers show an adjacent vendor pattern: persistent markdown steering, `AGENTS.md` support, hooks, MCP, and installable bundles are being packaged into one governed execution surface.
-- Published on 2026-03-09 and accessed on 2026-05-22, ACP still merits first-class tracking because the ACP Registry is stabilized and official agent docs continue to position ACP as the editor or client-to-agent interoperability layer.
-- Accessed on 2026-05-22, the official MCP Registry still describes itself as preview metadata and says host applications should usually consume downstream registries rather than the official registry directly.
+- Accessed on 2026-05-23, GitHub Spec Kit still presents `Spec -> Plan -> Tasks -> Implement`, 30 integrations, and a large extensions and presets ecosystem. It remains the clearest portable repo-native spec and planning layer.
+- Accessed on 2026-05-23, OpenSpec still positions specs, proposals, design notes, tasks, and spec deltas as repo-native artifacts that survive agent switching. It remains a lightweight agent-agnostic planning layer.
+- Published on 2026-05-05 and accessed on 2026-05-23, Kiro Specs still packages requirements, design, tasks, quick-plan, and parallel task execution as an integrated vendor execution surface rather than a neutral planning layer.
+- Published on 2026-05-18 and accessed on 2026-05-23, Kiro Web extends that same governed harness pattern across cloud sandboxes, multi-repo sessions, and shared steering files, with specs explicitly coming to the web surface.
+- Published on 2026-04-15 and accessed on 2026-05-23, OpenAI's updated Agents SDK explicitly bundles a model-native harness with sandbox execution, a portable `Manifest` workspace abstraction, MCP, skills, `AGENTS.md`, shell, and apply-patch style editing primitives.
+- Accessed on 2026-05-23, GitHub Copilot custom agents and Copilot CLI now treat version-controlled `.agent.md` profiles, skills, subagents, and parallel `/fleet` orchestration as first-class product surfaces, while GitHub Enterprise AI Controls protects those agent-profile paths at enterprise scale.
+- Published on 2026-05-06 and accessed on 2026-05-23, Atlassian Product Collection and the Teamwork Graph refresh make a stronger product-steering claim than the current report states: outcome-to-delivery context is being packaged as an AI-powered operating layer, not just as adjacent planning tools.
+- Accessed on 2026-05-23, Linear's current agent, MCP, customer-request, release, and code-intelligence surfaces show the same adjacent pattern on the portfolio and delivery side: customer signal, workspace context, code context, and shipped-state telemetry are being pulled into one operating loop.
+- Published on 2026-03-09 and accessed on 2026-05-23, ACP still merits first-class tracking because the registry is stabilized and official docs continue to position ACP as the client-to-agent control layer.
+- Accessed on 2026-05-23, the official MCP Registry still describes itself as preview metadata meant mainly for downstream registries rather than direct host consumption.
+
+This does not overturn the 2026-05-22 layered-market conclusion, but it materially improves the map: portable specs, harness primitives, integrated execution surfaces, governed platforms, and product-steering systems are now more clearly separable categories.
 
 ## Notable Categories
 
@@ -49,103 +55,91 @@ As of 2026-05-22, the ecosystem is still layered rather than consolidated into o
 - Spec Kit
 - OpenSpec
 
+### Harness-native instruction, profile, and execution primitives
+
+- `AGENTS.md`
+- GitHub custom agent profiles in `.github/agents/*.agent.md`
+- GitHub Copilot skills and subagents
+- OpenAI Agents SDK skills and `Manifest` workspace abstraction
+- Kiro steering and Powers
+
 ### Integrated spec-execution surfaces inside agent harnesses
 
 - Kiro Specs
-- Kiro steering
-- Kiro Powers
+- Kiro Web autonomous workflows
 
 ### Coding-agent execution
 
 - Codex
-- Claude Code
-- GitHub Copilot CLI
-- GitHub Copilot cloud agent
+- GitHub Copilot CLI and cloud agent
 - Gemini CLI
-- Jules
-- Junie
 - Kiro
-- OpenHands
 - Rovo Dev
 
-### Vendor agent harnesses and managed lifecycle surfaces
+### Managed agent harnesses and lifecycle surfaces
 
 - OpenAI Agents SDK and ChatGPT workspace agents
 - GitHub Copilot cloud agent, custom agents, and AI Controls
-- Google Gemini API managed agents, Gemini Enterprise Agent Platform, Google Agents CLI, and ADK
-- Amazon Bedrock AgentCore managed harness, CLI, Agent Registry, and multi-agent collaboration
-- Microsoft Agent 365 and Windows 365 for Agents
-- Atlassian Rovo, Teamwork Graph CLI, and Rovo MCP
-
-### Host-facing execution, discovery, and build surfaces
-
-- GitHub Copilot CLI
-- GitHub MCP Registry and configurable MCP server access
-- GitHub cloud-agent repository MCP configuration and agent management
-- Google Agents CLI
-- Gemini CLI
-- Gemini API Antigravity agent and AI Studio Playground
-- AWS AgentCore CLI
-- Atlassian Teamwork Graph CLI
-- Atlassian Rovo MCP
-- Kiro IDE, CLI, Web, steering files, hooks, and powers
-- ChatGPT workspace agent builder, directory, schedules, and Slack channels
-- Linear Agent delegation, integrations directory, and MCP connections
-- AWS Agent Registry
+- Google Agent Platform, Agents CLI, and ADK
+- Amazon Bedrock AgentCore and AWS Agent Registry
+- Atlassian Rovo and Teamwork Graph CLI
 
 ### Interoperability protocols
 
 - MCP
 - ACP
 - A2A
-- AG-UI
 
-### Discovery, registry, and instruction surfaces
+### Work operating systems, shared context backbones, and portfolio steering
 
-- ACP Registry
-- official MCP Registry
-- GitHub MCP Registry
-- AWS Agent Registry
-- `AGENTS.md`
-
-### Work operating systems, shared context backbones, code intelligence, and portfolio steering
-
+- Atlassian Product Collection
 - Atlassian Teamwork Graph
 - Atlassian Teamwork Collection
 - Jira Product Discovery
 - Rovo
 - Linear Agent
-- Linear Code Intelligence
+- Linear Customer Requests
 - Linear Releases
+- Linear Code Intelligence
 - Linear MCP
 
 ### Agent governance and control planes
 
-- GitHub Copilot AI Controls
-- Microsoft Agent 365
-- Google Gemini Enterprise Agent Platform
-- Amazon Bedrock AgentCore Policy and Agent Registry
-- OpenAI workspace-agent admin controls and agent analytics surfaces
-- managed execution environments, approval workflows, registry sync, runtime blocking, network policy, and agent analytics as a now-common enterprise pattern
+- GitHub Copilot AI Controls and agent control plane
+- AWS Agent Registry approval and curation workflows
+- OpenAI workspace-agent admin controls and analytics
+- isolated sandboxes, policy surfaces, and auditable agent activity as a now-common enterprise pattern
 
 ## Current Conclusion
 
-The stronger practical inference for 2026-05-22 is a two-part map.
+The more defensible practical map for 2026-05-23 is now three-layered at the spec and harness boundary, plus a separate upstream steering layer.
 
-- In spec-driven development, separate portable repo-native planning layers from integrated spec-execution surfaces inside agent harnesses. Spec Kit and OpenSpec are increasingly about durable, agent-agnostic planning artifacts checked into the repo. Kiro Specs are increasingly about executing that planning model inside a bundled harness that also includes steering, hooks, MCP, and installable capability packs.
-- In interoperability, keep the protocol boundary explicit: `ACP` for editor or client-to-agent control, `MCP` for agent-to-tool or server access, and `A2A` for agent-to-agent coordination. Treat registries and instruction files as a discovery layer above those protocols, not as interchangeable with them.
+- In spec-driven development, keep portable repo-native planning layers separate from integrated spec-execution surfaces. Spec Kit and OpenSpec still represent portable artifacts checked into the repo. Kiro Specs still represent bundled execution inside a vendor harness.
+- Add an explicit harness-primitives layer between those. This is an inference from fresh official sources: OpenAI, GitHub, and Kiro now all expose durable instruction or profile files, skills, subagents, and sandbox or workspace descriptors as product surfaces. Those are not just docs conventions, and they are not yet full planning methodologies.
+- Treat product-steering systems as another distinct layer upstream of coding agents. Atlassian Product Collection, Teamwork Graph, and Linear's agent-plus-release surfaces increasingly supply the customer signal, prioritization context, code context, and shipped-state evidence that agents act on.
+- In interoperability, keep the protocol boundary explicit: `ACP` for client-to-agent control, `MCP` for agent-to-tool or server access, and `A2A` for agent-to-agent coordination. Treat registries, agent profiles, and instruction files as discovery or harness surfaces above those protocols, not as interchangeable with them.
 
 ## Sources
 
-- Accessed 2026-05-22: [GitHub Spec Kit](https://github.github.com/spec-kit/)
-- Accessed 2026-05-22: [OpenSpec](https://openspec.dev/)
-- Published 2026-05-05 and accessed 2026-05-22: [Kiro Specs](https://kiro.dev/docs/specs/)
-- Published 2026-01-08 and accessed 2026-05-22: [Kiro Steering](https://kiro.dev/docs/cli/steering/)
-- Accessed 2026-05-22: [Kiro Powers](https://kiro.dev/powers/)
-- Published 2026-03-09 and accessed 2026-05-22: [ACP Registry is stabilized](https://agentclientprotocol.com/announcements/acp-agent-registry-stabilized)
-- Accessed 2026-05-22: [Agent Client Protocol Introduction](https://agentclientprotocol.com/get-started/introduction)
-- Accessed 2026-05-22: [ACP Registry](https://agentclientprotocol.com/get-started/registry)
-- Accessed 2026-05-22: [GitHub Copilot CLI ACP server](https://docs.github.com/en/copilot/reference/copilot-cli-reference/acp-server)
-- Accessed 2026-05-22: [Gemini CLI ACP mode](https://github.com/google-gemini/gemini-cli/blob/main/docs/cli/acp-mode.md)
-- Accessed 2026-05-22: [The MCP Registry](https://modelcontextprotocol.io/registry/about)
+- Accessed 2026-05-23: [GitHub Spec Kit](https://github.github.com/spec-kit/)
+- Accessed 2026-05-23: [OpenSpec](https://openspec.dev/)
+- Published 2026-05-05 and accessed 2026-05-23: [Kiro Specs](https://kiro.dev/docs/specs/)
+- Published 2026-05-18 and accessed 2026-05-23: [Introducing Kiro Web](https://kiro.dev/blog/introducing-kiro-web/)
+- Published 2026-04-15 and accessed 2026-05-23: [The next evolution of the Agents SDK](https://openai.com/index/the-next-evolution-of-the-agents-sdk/)
+- Accessed 2026-05-23: [Creating custom agents for Copilot cloud agent](https://docs.github.com/en/copilot/how-tos/copilot-on-github/customize-copilot/customize-cloud-agent/create-custom-agents)
+- Accessed 2026-05-23: [Invoking custom agents in Copilot CLI](https://docs.github.com/en/copilot/how-tos/copilot-cli/use-copilot-cli-agents/invoke-custom-agents)
+- Published 2026-04-01 and accessed 2026-05-23: [Run multiple agents at once with /fleet in Copilot CLI](https://github.blog/ai-and-ml/github-copilot/run-multiple-agents-at-once-with-fleet-in-copilot-cli/)
+- Published 2026-02-26 and accessed 2026-05-23: [Enterprise AI Controls and agent control plane now generally available](https://github.blog/changelog/2026-02-26-enterprise-ai-controls-agent-control-plane-now-generally-available/)
+- Published 2026-04-22 and accessed 2026-05-23: [Agents CLI in Agent Platform: create to production in one CLI](https://developers.googleblog.com/agents-cli-in-agent-platform-create-to-production-in-one-cli/)
+- Accessed 2026-05-23: [Google Agent Development Kit](https://adk.dev/)
+- Published 2026-05-06 and accessed 2026-05-23: [Introducing Product Collection](https://www.atlassian.com/blog/company-news/introducing-product-collection)
+- Published 2026-05-06 and accessed 2026-05-23: [Atlassian Teamwork Graph: The context engine behind your AI - everywhere](https://www.atlassian.com/blog/company-news/teamwork-graph-team-26)
+- Accessed 2026-05-23: [Linear Agent](https://linear.app/docs/linear-agent)
+- Accessed 2026-05-23: [Linear Customer Requests](https://linear.app/docs/customer-requests)
+- Accessed 2026-05-23: [Linear Releases](https://linear.app/docs/releases)
+- Published 2026-05-14 and accessed 2026-05-23: [Linear Code Intelligence](https://linear.app/changelog/2026-05-14-code-intelligence)
+- Published 2026-03-09 and accessed 2026-05-23: [ACP Registry is stabilized](https://agentclientprotocol.com/announcements/acp-agent-registry-stabilized)
+- Accessed 2026-05-23: [ACP Registry](https://agentclientprotocol.com/get-started/registry)
+- Accessed 2026-05-23: [A2A specification](https://a2a-protocol.org/latest/specification/)
+- Accessed 2026-05-23: [The MCP Registry](https://modelcontextprotocol.io/registry/about/)
 <!-- state-of-the-art:managed:end -->
