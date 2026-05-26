@@ -6,7 +6,8 @@ The observatory tracks the state of the art for:
 
 - spec-driven development
 - outcome-driven development and product discovery
-- coding-agent execution, vendor agent harnesses, and managed lifecycle surfaces
+- coding-agent execution
+- repo-owned instruction/context files, vendor agent harnesses, and managed lifecycle surfaces
 - general agent build, deploy, runtime, and operating surfaces
 - orchestration and interoperability
 - software portfolio and project steering
@@ -33,5 +34,5 @@ The observatory report should answer:
 - what categories matter right now
 - which tools meaningfully define those categories
 - what vocabulary is established versus invented
-- where the practical abstraction boundaries sit between portable repo-native spec or planning layers, integrated spec-execution surfaces inside agent harnesses, end-user agents, vendor harnesses, managed lifecycle surfaces, general agent platforms or frameworks, protocols, and control or governance planes
+- where the practical abstraction boundaries sit between portable repo-native spec or planning layers, repo-owned instruction/context files, harness-native profile/skill/subagent surfaces, integrated spec-execution surfaces inside agent harnesses, end-user agents, vendor harnesses, managed lifecycle surfaces, general agent platforms or frameworks, protocols, and control or governance planes
 - what the most credible shape of the ecosystem looks like
