@@ -16,7 +16,7 @@ Manual edits outside the managed block are allowed. Manual edits inside the mana
 <!-- state-of-the-art:managed:start -->
 ## Last Reviewed
 
-2026-05-30
+2026-05-31
 
 ## Scope
 
@@ -34,23 +34,23 @@ This document tracks the state of the art for:
 
 ## Current View
 
-As of 2026-05-30, the layered map from 2026-05-29 still holds, but one further abstraction boundary is now material. Orchestration is no longer only a cloud control-plane or protocol story. Official materials across Spec Kit, Claude Code, GitHub Copilot CLI, Kiro, and Google Antigravity now expose first-class local orchestration primitives: portable workflow runners, parallel task execution, built-in or custom subagents, agent teams, and self-correcting review loops. The practical map is therefore sharper if it distinguishes `instruction and capability surfaces` from `orchestration surfaces` inside local harnesses, and `portable planning layers` from `portable repo-native workflow automation`.
+As of 2026-05-31, the 2026-05-30 split between portable planning, repo-owned instruction surfaces, harness-native instruction surfaces, and local orchestration surfaces still holds. Fresh official-source review across Spec Kit, OpenSpec, Kiro, OpenAI, Claude Code, GitHub Copilot, Google Antigravity, AWS AgentCore, MCP, ACP, and A2A did not overturn the current reading of planning layers, harness-native orchestration, or protocol boundaries.
 
-- Accessed on 2026-05-30, GitHub Spec Kit still presents `Spec -> Plan -> Tasks -> Implement`, 30 integrations, 105 extensions, and 22 presets. The official workflows docs now make clear that Spec Kit also owns a portable workflow layer with conditional logic, loops, fan-out and fan-in, and pause or resume semantics.
-- Accessed on 2026-05-30, OpenSpec still positions checked-in specs, proposals, design notes, tasks, and spec deltas as a lightweight agent-agnostic planning layer that survives agent switching.
-- Accessed on 2026-05-30, Kiro Specs still package requirements, design, and tasks. Kiro's task executor now explicitly documents parallel wave execution, Kiro Web remains the browser-based autonomous multi-repo pull-request surface, and Kiro CLI 2.5.0 adds subagent review loops that let reviewer and implementer stages iterate before results return.
-- Published on 2026-04-15 and accessed on 2026-05-30, OpenAI's updated Agents SDK still bundles a model-native harness with sandbox execution, `Manifest`, MCP, skills, and `AGENTS.md`.
-- Published on 2026-04-22 and accessed on 2026-05-30, OpenAI workspace agents still provide the managed cloud counterpart: shared agents, repeatable workflows, connected tools, and organization-level controls.
-- Accessed on 2026-05-30, Anthropic's Claude Code docs still treat skills as a reusable workflow surface, and the features overview now makes `agent teams` explicit as independent Claude sessions that coordinate through shared task lists and direct messaging.
-- Accessed on 2026-05-30, GitHub Copilot docs still center version-controlled custom agents, skills, MCP servers, and delegated subagent execution, but the built-in agent set now makes local orchestration more legible as a first-class surface rather than a hidden implementation detail.
-- Published on 2026-05-19 and accessed on 2026-05-30, Google still positions Antigravity 2.0, Antigravity CLI, Managed Agents in the Gemini API, and Jules as a platform family rather than a single assistant. Antigravity CLI now explicitly markets concurrent subagents as part of that family.
-- Published on 2026-04-22 and accessed on 2026-05-30, AWS AgentCore still belongs in both the managed harness layer and the broader agent platform layer.
-- Accessed on 2026-05-30, official MCP materials still support the 2026-05-29 correction: `MCP core plus official extensions` is the right summary, with production-ready Apps, official Tasks for long-running work, and registry metadata still in preview and aimed at downstream registries rather than direct host consumption.
-- Accessed on 2026-05-30, ACP still reads as the client-to-agent control protocol, now including stabilized logout alongside registry, session list, session info update, session resume, session close, and config options.
-- Accessed on 2026-05-30, official A2A v1.0 materials still position A2A as the stable agent-to-agent coordination protocol.
-- Published on 2026-04-27 and accessed on 2026-05-30, OpenAI Symphony; published on 2026-05-06 and accessed on 2026-05-30, Atlassian Teamwork Collection and Strategy Collection; and accessed on 2026-05-30, Linear Agent, Code Intelligence, Customer Requests, Releases, and AI Agents still support the same broader conclusion: project systems are becoming agent control planes that combine shared context, customer signal, shipped-state telemetry, and executive steering.
+The material correction is higher in the stack. Official Atlassian Product Collection materials and current Linear docs make a distinct `product discovery, feedback, and decision` layer explicit between `shared context backbones` and `portfolio or executive steering`. This layer joins customer-signal capture, prioritization, AI-assisted analysis, release tracking, and delivery feedback. Atlassian Strategy Collection and Focus still sit above it as executive control planes; Teamwork Graph-like shared context systems still sit below it.
 
-This does not overturn the prior AWS or protocol corrections. It sharpens the middle of the stack. Between checked-in specs and top-down organizational control planes, there is now a distinct local orchestration layer inside agent harnesses, plus a clearer portable repo-native workflow layer beside portable planning.
+- Accessed on 2026-05-31, Spec Kit still pairs `Spec -> Plan -> Tasks -> Implement` with portable workflow automation.
+- Accessed on 2026-05-31, OpenSpec still positions checked-in proposals, design notes, tasks, and spec deltas as the lightweight agent-agnostic planning layer.
+- Published on 2026-05-29 and accessed on 2026-05-31, Kiro's latest official materials still combine Specs, autonomous web pull-request flows, and parallel or review-loop execution.
+- Published on 2026-04-15 and accessed on 2026-05-31, OpenAI's Agents SDK still defines a model-native harness with sandbox execution and portable `Manifest`; workspace agents, last updated on 2026-05-29 and accessed on 2026-05-31, still provide the managed cloud counterpart.
+- Accessed on 2026-05-31, Claude Code and GitHub Copilot still make subagents, agent teams, or parallel delegation first-class local orchestration primitives.
+- Published on 2026-05-19 and accessed on 2026-05-31, Google explicitly transitions Gemini CLI toward Antigravity CLI, reinforcing Antigravity as the canonical local Google harness rather than a parallel sibling.
+- Published on 2026-04-22 and accessed on 2026-05-31, AWS AgentCore still spans both the managed harness layer and the broader agent platform layer.
+- Accessed on 2026-05-31, official protocol materials still support the existing split: `MCP core plus official extensions`, `ACP` for client-to-agent control, and `A2A v1.0` for agent-to-agent coordination.
+- Accessed on 2026-05-31, Atlassian Product Collection packages feedback capture, Jira Product Discovery, and Rovo around product decisions that stay connected to delivery.
+- Accessed on 2026-05-31, Linear Customer Requests and Releases reinforce the same layer from a second vendor by linking customer feedback directly to issues or projects and by recording what shipped and when.
+- Published on 2026-05-06 and accessed on 2026-05-31, Atlassian Strategy Collection still presents Focus as the executive command center over goals, budgets, delivery health, and human or AI capital.
+
+This is a bounded hierarchy update, not a stack reset. The observatory should stop collapsing `product discovery and decision surfaces` into the broader `software portfolio and project steering` bucket.
 
 ## Notable Categories
 
@@ -73,18 +73,18 @@ This does not overturn the prior AWS or protocol corrections. It sharpens the mi
 
 ### Harness-native instruction and capability surfaces
 
-- GitHub custom agent profiles in `.github/agents/*.md`
+- GitHub custom agents
 - OpenAI `Manifest` workspace abstraction
 - Claude Code skills
 - Kiro steering surfaces
-- Antigravity project, permission, hook, and skills-loading surfaces
-- AgentCore harness configs, coding-assistant skills, and MCP-server surfaces
+- Google Antigravity configuration, hook, plugin, and skills surfaces
+- AgentCore harness configs and skills
 
 ### Harness-native orchestration surfaces
 
-- GitHub Copilot built-in and custom subagents
+- GitHub Copilot subagents
 - Claude Code subagents and agent teams
-- Kiro task execution, Kiro Web autonomous mode, and Kiro CLI review loops
+- Kiro parallel task execution, autonomous web flows, and CLI review loops
 - Antigravity CLI subagents
 
 ### Integrated spec-execution surfaces inside agent harnesses
@@ -95,17 +95,15 @@ This does not overturn the prior AWS or protocol corrections. It sharpens the mi
 ### Coding-agent execution
 
 - Codex
-- GitHub Copilot CLI and cloud agent
+- GitHub Copilot
 - Claude Code
-- Antigravity CLI
-- Jules
 - Kiro
-- Rovo Dev
+- Antigravity CLI
 
 ### Managed agent harnesses and lifecycle surfaces
 
 - OpenAI Agents SDK and ChatGPT workspace agents
-- Google Antigravity 2.0 and Managed Agents in the Gemini API
+- Google Antigravity 2.0 and managed agents in the Gemini API
 - GitHub Copilot custom agent surface
 - Amazon Bedrock AgentCore Harness, Managed Agents on Bedrock, and Agent Registry
 
@@ -134,68 +132,65 @@ This does not overturn the prior AWS or protocol corrections. It sharpens the mi
 - OpenAI Symphony
 - Atlassian Teamwork Collection
 - Atlassian Teamwork Graph
-- Atlassian Teamwork Graph CLI
-- Atlassian Rovo MCP Server
 - Linear Agent
-- Linear Code Intelligence
-- Linear AI Agents
+
+### Product discovery, feedback, and decision surfaces
+
+- Atlassian Product Collection
+- Jira Product Discovery
+- Linear Customer Requests
+- Linear Releases
 
 ### Software portfolio and project steering
 
 - Atlassian Strategy Collection
 - Atlassian Focus
-- Linear Customer Requests
-- Linear Releases
 
 ### Agent governance and control planes
 
-- AWS Agent Registry approval and curation workflows
+- AWS Agent Registry approval workflows
 - AWS AgentCore Policy
 - isolated sandboxes, approval flows, and auditable agent activity as a now-common enterprise pattern
 
 ## Current Conclusion
 
-The practical map for 2026-05-30 is still layered, but the middle of the stack now needs a cleaner split.
+The practical map for 2026-05-31 is still layered, but the top of the stack now needs the same kind of split that the middle of the stack needed on 2026-05-30.
 
 - Keep portable repo-native planning layers distinct from portable repo-native workflow automation.
 - Keep repo-owned markdown contracts and procedural workflow files distinct from harness-native instruction and capability surfaces.
-- Add a distinct harness-native orchestration layer for subagents, agent teams, autonomous review loops, and parallel task execution.
-- Keep external work-control planes distinct from local orchestration surfaces. Symphony, Atlassian, and Linear still sit above the local harness layer rather than replacing it.
+- Keep harness-native orchestration distinct from both repo-native workflow automation and external work-control planes.
+- Add a distinct `product discovery, feedback, and decision` layer between shared context backbones and executive portfolio steering.
+- Treat Atlassian Product Collection plus Linear Customer Requests and Releases as the clearest official examples of that layer.
+- Keep Strategy Collection and Focus above that layer, and Teamwork Graph-like shared context systems below it.
 - Keep the AWS reading from 2026-05-29: AWS spans both managed harness and broader operating-surface layers.
 - Keep the protocol split from 2026-05-29: `MCP core plus official extensions`, `ACP` for client-to-agent control, and `A2A v1.0` for agent-to-agent coordination.
 - Keep asynchronous cloud coding agents as a distinct execution subtype alongside terminal and IDE agents.
 
 ## Sources
 
-- Accessed 2026-05-30: [GitHub Spec Kit](https://github.github.com/spec-kit/index.html)
-- Accessed 2026-05-30: [Spec Kit workflows](https://github.github.com/spec-kit/reference/workflows.html)
-- Accessed 2026-05-30: [OpenSpec](https://openspec.dev/)
-- Accessed 2026-05-30: [Kiro Specs](https://kiro.dev/docs/specs/)
-- Published 2026-05-18 and accessed 2026-05-30: [Introducing Kiro Web](https://kiro.dev/blog/introducing-kiro-web/)
-- Published 2026-05-29 and accessed 2026-05-30: [Kiro CLI 2.5.0](https://kiro.dev/changelog/cli/2-5/)
-- Published 2026-04-15 and accessed 2026-05-30: [The next evolution of the Agents SDK](https://openai.com/index/the-next-evolution-of-the-agents-sdk)
-- Published 2026-04-22 and accessed 2026-05-30: [Workspace agents](https://openai.com/academy/workspace-agents/)
-- Accessed 2026-05-30: [Claude Code features overview](https://code.claude.com/docs/en/features-overview)
-- Accessed 2026-05-30: [About custom agents](https://docs.github.com/en/copilot/concepts/agents/copilot-cli/about-custom-agents)
-- Accessed 2026-05-30: [Invoking custom agents](https://docs.github.com/en/copilot/how-tos/copilot-cli/use-copilot-cli/invoke-custom-agents)
-- Accessed 2026-05-30: [Antigravity CLI](https://www.antigravity.google/product/antigravity-cli)
-- Published 2026-04-22 and accessed 2026-05-30: [Amazon Bedrock AgentCore adds new features to help developers build agents faster](https://aws.amazon.com/about-aws/whats-new/2026/04/agentcore-new-features-to-build-agents-faster/)
-- Published 2026-04-28 and accessed 2026-05-30: [Amazon Bedrock now offers OpenAI models, Codex, and Managed Agents](https://aws.amazon.com/about-aws/whats-new/2026/04/bedrock-openai-models-codex-managed-agents/)
-- Accessed 2026-05-30: [MCP Apps](https://modelcontextprotocol.io/extensions/apps/overview)
-- Accessed 2026-05-30: [MCP Tasks](https://modelcontextprotocol.io/extensions/tasks/overview)
-- Accessed 2026-05-30: [The MCP Registry](https://modelcontextprotocol.io/registry/about)
-- Accessed 2026-05-30: [ACP Updates](https://agentclientprotocol.com/updates)
-- Published 2026-05-21 and accessed 2026-05-30: [Logout Method is stabilized](https://agentclientprotocol.com/announcements/logout-method-stabilized)
-- Accessed 2026-05-30: [A2A Protocol Ships v1.0](https://a2a-protocol.org/latest/announcing-1.0/)
-- Published 2026-04-27 and accessed 2026-05-30: [Symphony](https://openai.com/index/open-source-codex-orchestration-symphony/)
-- Published 2026-05-06 and accessed 2026-05-30: [Built for the next era of teamwork: What's new in Teamwork Collection](https://www.atlassian.com/blog/company-news/built-for-the-next-era-of-teamwork-whats-new-in-teamwork-collection)
-- Published 2026-05-06 and accessed 2026-05-30: [Strategy Collection your executive command center: From insight to action](https://www.atlassian.com/blog/company-news/strategy-collection-team-26)
-- Accessed 2026-05-30: [Atlassian Teamwork Graph](https://www.atlassian.com/platform/teamwork-graph)
-- Accessed 2026-05-30: [Atlassian Focus](https://www.atlassian.com/software/focus)
-- Accessed 2026-05-30: [Teamwork Graph CLI and Rovo MCP decision guide](https://support.atlassian.com/rovo/docs/teamwork-graph-cli-and-rovo-mcp-decision-guide/)
-- Accessed 2026-05-30: [Linear Agent](https://linear.app/docs/linear-agent)
-- Accessed 2026-05-30: [AI Agents](https://linear.app/docs/agents-in-linear)
-- Accessed 2026-05-30: [Code Intelligence](https://linear.app/docs/code-intelligence)
-- Accessed 2026-05-30: [Customer Requests](https://linear.app/docs/customer-requests)
-- Accessed 2026-05-30: [Releases](https://linear.app/docs/releases)
+- Accessed 2026-05-31: [GitHub Spec Kit](https://github.github.com/spec-kit/index.html)
+- Accessed 2026-05-31: [Spec Kit workflows](https://github.github.com/spec-kit/reference/workflows.html)
+- Accessed 2026-05-31: [OpenSpec](https://openspec.dev/)
+- Accessed 2026-05-31: [Kiro changelog](https://kiro.dev/changelog/)
+- Published 2026-04-15 and accessed 2026-05-31: [The next evolution of the Agents SDK](https://openai.com/index/the-next-evolution-of-the-agents-sdk/)
+- Published 2026-04-09 and last updated 2026-05-29, accessed 2026-05-31: [Workspace agents](https://academy.openai.com/public/clubs/work-users-ynjqu/resources/workspace-agents)
+- Accessed 2026-05-31: [Claude Code features overview](https://code.claude.com/docs/en/features-overview)
+- Accessed 2026-05-31: [Run agents in parallel](https://code.claude.com/docs/en/agents)
+- Accessed 2026-05-31: [Custom agents and sub-agent orchestration](https://docs.github.com/en/copilot/how-tos/copilot-sdk/features/custom-agents)
+- Accessed 2026-05-31: [About custom agents](https://docs.github.com/en/copilot/concepts/agents/copilot-cli/about-custom-agents)
+- Published 2026-05-19 and accessed 2026-05-31: [An important update: Transitioning Gemini CLI to Antigravity CLI](https://developers.googleblog.com/an-important-update-transitioning-gemini-cli-to-antigravity-cli/)
+- Published 2026-05-19 and accessed 2026-05-31: [All the news from the Google I/O 2026 Developer keynote](https://developers.googleblog.com/en/all-the-news-from-the-google-io-2026-developer-keynote/)
+- Published 2026-04-22 and accessed 2026-05-31: [Amazon Bedrock AgentCore adds new features to help developers build agents faster](https://aws.amazon.com/about-aws/whats-new/2026/04/agentcore-new-features-to-build-agents-faster/)
+- Accessed 2026-05-31: [MCP Tasks](https://modelcontextprotocol.io/extensions/tasks/overview)
+- Accessed 2026-05-31: [The MCP Registry](https://modelcontextprotocol.io/registry/about)
+- Published 2026-05-21 and accessed 2026-05-31: [Logout Method is stabilized](https://agentclientprotocol.com/announcements/logout-method-stabilized)
+- Accessed 2026-05-31: [A2A Protocol Ships v1.0](https://a2a-protocol.org/latest/announcing-1.0/)
+- Accessed 2026-05-31: [Atlassian Product Collection](https://www.atlassian.com/collections/product)
+- Published 2026-05-06 and accessed 2026-05-31: [Introducing Product Collection: Built for better decisions, in the AI era](https://www.atlassian.com/blog/company-news/introducing-product-collection)
+- Published 2026-05-06 and accessed 2026-05-31: [Built for the next era of teamwork: What's new in Teamwork Collection](https://www.atlassian.com/blog/company-news/teamwork-collection-team-26)
+- Published 2026-05-06 and accessed 2026-05-31: [Strategy Collection your executive command center: From insight to action](https://www.atlassian.com/blog/company-news/strategy-collection-team-26)
+- Accessed 2026-05-31: [Customer Requests](https://linear.app/docs/customer-requests)
+- Accessed 2026-05-31: [Releases](https://linear.app/docs/releases)
+- Accessed 2026-05-31: [Linear Agent](https://linear.app/docs/linear-agent)
+- Published 2026-04-27 and accessed 2026-05-31: [Symphony](https://openai.com/index/open-source-codex-orchestration-symphony/)
 <!-- state-of-the-art:managed:end -->
