@@ -16,7 +16,7 @@ Manual edits outside the managed block are allowed. Manual edits inside the mana
 <!-- state-of-the-art:managed:start -->
 ## Last Reviewed
 
-2026-05-31
+2026-06-01
 
 ## Scope
 
@@ -29,28 +29,31 @@ This document tracks the state of the art for:
 - vendor agent harnesses and managed lifecycle surfaces
 - general agent build, deploy, runtime, and operating surfaces
 - orchestration and interoperability
+- shared context backbones
+- work-control planes for software delivery
 - software portfolio and project steering
 - agent governance and control planes
 
 ## Current View
 
-As of 2026-05-31, the 2026-05-30 split between portable planning, repo-owned instruction surfaces, harness-native instruction surfaces, and local orchestration surfaces still holds. Fresh official-source review across Spec Kit, OpenSpec, Kiro, OpenAI, Claude Code, GitHub Copilot, Google Antigravity, AWS AgentCore, MCP, ACP, and A2A did not overturn the current reading of planning layers, harness-native orchestration, or protocol boundaries.
+As of 2026-06-01, the 2026-05-30 and 2026-05-31 layer splits still mostly hold. Fresh official-source review across Spec Kit, OpenSpec, Kiro, OpenAI, Atlassian, Linear, AWS, MCP, ACP, and A2A did not overturn the current reading of portable planning layers, harness-native execution and orchestration, managed harnesses, or protocol boundaries.
 
-The material correction is higher in the stack. Official Atlassian Product Collection materials and current Linear docs make a distinct `product discovery, feedback, and decision` layer explicit between `shared context backbones` and `portfolio or executive steering`. This layer joins customer-signal capture, prioritization, AI-assisted analysis, release tracking, and delivery feedback. Atlassian Strategy Collection and Focus still sit above it as executive control planes; Teamwork Graph-like shared context systems still sit below it.
+The material correction is between shared context and higher-order product or portfolio surfaces. Current official Atlassian and Linear materials, together with OpenAI's Symphony specification, make `work-control planes` explicit enough to separate from `shared context backbones`.
 
-- Accessed on 2026-05-31, Spec Kit still pairs `Spec -> Plan -> Tasks -> Implement` with portable workflow automation.
-- Accessed on 2026-05-31, OpenSpec still positions checked-in proposals, design notes, tasks, and spec deltas as the lightweight agent-agnostic planning layer.
-- Published on 2026-05-29 and accessed on 2026-05-31, Kiro's latest official materials still combine Specs, autonomous web pull-request flows, and parallel or review-loop execution.
-- Published on 2026-04-15 and accessed on 2026-05-31, OpenAI's Agents SDK still defines a model-native harness with sandbox execution and portable `Manifest`; workspace agents, last updated on 2026-05-29 and accessed on 2026-05-31, still provide the managed cloud counterpart.
-- Accessed on 2026-05-31, Claude Code and GitHub Copilot still make subagents, agent teams, or parallel delegation first-class local orchestration primitives.
-- Published on 2026-05-19 and accessed on 2026-05-31, Google explicitly transitions Gemini CLI toward Antigravity CLI, reinforcing Antigravity as the canonical local Google harness rather than a parallel sibling.
-- Published on 2026-04-22 and accessed on 2026-05-31, AWS AgentCore still spans both the managed harness layer and the broader agent platform layer.
-- Accessed on 2026-05-31, official protocol materials still support the existing split: `MCP core plus official extensions`, `ACP` for client-to-agent control, and `A2A v1.0` for agent-to-agent coordination.
-- Accessed on 2026-05-31, Atlassian Product Collection packages feedback capture, Jira Product Discovery, and Rovo around product decisions that stay connected to delivery.
-- Accessed on 2026-05-31, Linear Customer Requests and Releases reinforce the same layer from a second vendor by linking customer feedback directly to issues or projects and by recording what shipped and when.
-- Published on 2026-05-06 and accessed on 2026-05-31, Atlassian Strategy Collection still presents Focus as the executive command center over goals, budgets, delivery health, and human or AI capital.
+Teamwork Graph and Linear Code Intelligence are context fabrics. They unify or expose the information that agents and humans need across code, issues, docs, and connected tools. Symphony, Teamwork Collection and Agents in Jira, Linear Agent, AI Agents in Linear, issue delegation, triage intelligence, triage automations, and one-click issue handoff into coding tools use issue or project systems as the operational surface where work is assigned, delegated, triaged, automated, and audited. Product discovery surfaces remain distinct: they feed feedback, prioritization, and release evidence into those work systems, but they are not the same layer.
 
-This is a bounded hierarchy update, not a stack reset. The observatory should stop collapsing `product discovery and decision surfaces` into the broader `software portfolio and project steering` bucket.
+- Accessed on 2026-06-01, Spec Kit still defines the portable `Spec -> Plan -> Tasks -> Implement` workflow plus repo-native workflow automation.
+- Accessed on 2026-06-01, OpenSpec still positions checked-in specs, proposals, design notes, tasks, and spec deltas as the lightweight agent-agnostic planning layer.
+- Published on 2026-05-06 and 2026-05-29, then accessed on 2026-06-01, Kiro's Quick Plan, requirements analysis, parallel task execution, and subagent review loops strengthen but do not change its placement as an integrated spec-execution harness.
+- Published on 2026-04-15 and 2026-04-22, then accessed on 2026-06-01, OpenAI's Agents SDK and workspace agents still define model-native and managed harness surfaces; published on 2026-04-27 and accessed on 2026-06-01, Symphony adds a clearer reading above them by turning an issue tracker into a control plane for coding agents.
+- Published on 2026-05-06 and accessed on 2026-06-01, Atlassian now draws the same split from the opposite direction: Teamwork Graph is the data layer, while Teamwork Collection and Agents in Jira place agents directly inside the work system with audit trails and admin controls.
+- Published on 2026-03-24 and 2026-05-14, then accessed on 2026-06-01, Linear makes the boundary explicit too: Code Intelligence brings code into shared product context, while Linear Agent, AI Agents, delegation, triage intelligence, triage automations, and issue launches into Codex or Claude Code operate on the active project system itself.
+- Published on 2026-05-06 and accessed on 2026-06-01, Atlassian Product Collection still sits above or alongside those layers as the connected `feedback -> prioritization -> delivery` decision surface, and Strategy Collection still sits above that as the executive steering surface.
+- Accessed on 2026-06-01, Linear Customer Requests and Releases still reinforce the same discovery and feedback layer by linking external customer signal and shipped release facts back into issues and projects.
+- Published on 2026-04-09 and 2026-04-22, then accessed on 2026-06-01, AWS Agent Registry and AgentCore still span both governed harness surfaces and broader operating-surface layers.
+- Accessed on 2026-06-01, official protocol materials still support the existing split: MCP core plus official extensions and registry surfaces, ACP for client-to-agent control, and A2A v1.0 for agent-to-agent coordination.
+
+This is a bounded hierarchy correction, not a stack reset. The observatory should stop combining `shared context backbones` and `work-control planes` in the same category.
 
 ## Notable Categories
 
@@ -82,14 +85,16 @@ This is a bounded hierarchy update, not a stack reset. The observatory should st
 
 ### Harness-native orchestration surfaces
 
-- GitHub Copilot subagents
-- Claude Code subagents and agent teams
-- Kiro parallel task execution, autonomous web flows, and CLI review loops
+- GitHub Copilot sub-agent orchestration
+- Claude Code subagents, agent view, and agent teams
+- Kiro parallel task execution and subagent review loops
 - Antigravity CLI subagents
 
 ### Integrated spec-execution surfaces inside agent harnesses
 
 - Kiro Specs
+- Kiro Quick Plan
+- Kiro requirements analysis
 - Kiro Web autonomous workflows
 
 ### Coding-agent execution
@@ -121,18 +126,23 @@ This is a bounded hierarchy update, not a stack reset. The observatory should st
 ### Interoperability protocols and extension surfaces
 
 - MCP core
-- MCP Apps
 - MCP Tasks
 - MCP Registry
 - ACP
 - A2A v1.0
 
-### Shared context backbones and agent control planes
+### Shared context backbones
+
+- Atlassian Teamwork Graph
+- Linear Code Intelligence
+
+### Work-control planes
 
 - OpenAI Symphony
 - Atlassian Teamwork Collection
-- Atlassian Teamwork Graph
+- Atlassian Agents in Jira
 - Linear Agent
+- AI Agents in Linear
 
 ### Product discovery, feedback, and decision surfaces
 
@@ -154,43 +164,47 @@ This is a bounded hierarchy update, not a stack reset. The observatory should st
 
 ## Current Conclusion
 
-The practical map for 2026-05-31 is still layered, but the top of the stack now needs the same kind of split that the middle of the stack needed on 2026-05-30.
+The practical map for 2026-06-01 is still layered, but the middle-top of the stack now needs one cleaner split.
 
 - Keep portable repo-native planning layers distinct from portable repo-native workflow automation.
 - Keep repo-owned markdown contracts and procedural workflow files distinct from harness-native instruction and capability surfaces.
-- Keep harness-native orchestration distinct from both repo-native workflow automation and external work-control planes.
-- Add a distinct `product discovery, feedback, and decision` layer between shared context backbones and executive portfolio steering.
-- Treat Atlassian Product Collection plus Linear Customer Requests and Releases as the clearest official examples of that layer.
-- Keep Strategy Collection and Focus above that layer, and Teamwork Graph-like shared context systems below it.
-- Keep the AWS reading from 2026-05-29: AWS spans both managed harness and broader operating-surface layers.
-- Keep the protocol split from 2026-05-29: `MCP core plus official extensions`, `ACP` for client-to-agent control, and `A2A v1.0` for agent-to-agent coordination.
+- Keep harness-native orchestration distinct from both repo-native workflow automation and higher-level work-control planes.
+- Split `shared context backbones` from `work-control planes`.
+- Treat Teamwork Graph and Linear Code Intelligence as context fabrics, not as the same layer as Jira-, Linear-, or Symphony-style control planes.
+- Treat Symphony, Teamwork Collection and Agents in Jira, and Linear Agent and AI Agents in Linear as the clearest current work-control planes.
+- Keep `product discovery, feedback, and decision` distinct from both context backbones and work-control planes, even when a vendor bundles them together in the same product surface.
+- Keep Atlassian Product Collection plus Linear Customer Requests and Releases as the clearest official examples of that discovery layer.
+- Keep Strategy Collection and Focus above that layer, and keep the AWS and protocol readings from 2026-05-29 onward unchanged.
 - Keep asynchronous cloud coding agents as a distinct execution subtype alongside terminal and IDE agents.
 
 ## Sources
 
-- Accessed 2026-05-31: [GitHub Spec Kit](https://github.github.com/spec-kit/index.html)
-- Accessed 2026-05-31: [Spec Kit workflows](https://github.github.com/spec-kit/reference/workflows.html)
-- Accessed 2026-05-31: [OpenSpec](https://openspec.dev/)
-- Accessed 2026-05-31: [Kiro changelog](https://kiro.dev/changelog/)
-- Published 2026-04-15 and accessed 2026-05-31: [The next evolution of the Agents SDK](https://openai.com/index/the-next-evolution-of-the-agents-sdk/)
-- Published 2026-04-09 and last updated 2026-05-29, accessed 2026-05-31: [Workspace agents](https://academy.openai.com/public/clubs/work-users-ynjqu/resources/workspace-agents)
-- Accessed 2026-05-31: [Claude Code features overview](https://code.claude.com/docs/en/features-overview)
-- Accessed 2026-05-31: [Run agents in parallel](https://code.claude.com/docs/en/agents)
-- Accessed 2026-05-31: [Custom agents and sub-agent orchestration](https://docs.github.com/en/copilot/how-tos/copilot-sdk/features/custom-agents)
-- Accessed 2026-05-31: [About custom agents](https://docs.github.com/en/copilot/concepts/agents/copilot-cli/about-custom-agents)
-- Published 2026-05-19 and accessed 2026-05-31: [An important update: Transitioning Gemini CLI to Antigravity CLI](https://developers.googleblog.com/an-important-update-transitioning-gemini-cli-to-antigravity-cli/)
-- Published 2026-05-19 and accessed 2026-05-31: [All the news from the Google I/O 2026 Developer keynote](https://developers.googleblog.com/en/all-the-news-from-the-google-io-2026-developer-keynote/)
-- Published 2026-04-22 and accessed 2026-05-31: [Amazon Bedrock AgentCore adds new features to help developers build agents faster](https://aws.amazon.com/about-aws/whats-new/2026/04/agentcore-new-features-to-build-agents-faster/)
-- Accessed 2026-05-31: [MCP Tasks](https://modelcontextprotocol.io/extensions/tasks/overview)
-- Accessed 2026-05-31: [The MCP Registry](https://modelcontextprotocol.io/registry/about)
-- Published 2026-05-21 and accessed 2026-05-31: [Logout Method is stabilized](https://agentclientprotocol.com/announcements/logout-method-stabilized)
-- Accessed 2026-05-31: [A2A Protocol Ships v1.0](https://a2a-protocol.org/latest/announcing-1.0/)
-- Accessed 2026-05-31: [Atlassian Product Collection](https://www.atlassian.com/collections/product)
-- Published 2026-05-06 and accessed 2026-05-31: [Introducing Product Collection: Built for better decisions, in the AI era](https://www.atlassian.com/blog/company-news/introducing-product-collection)
-- Published 2026-05-06 and accessed 2026-05-31: [Built for the next era of teamwork: What's new in Teamwork Collection](https://www.atlassian.com/blog/company-news/teamwork-collection-team-26)
-- Published 2026-05-06 and accessed 2026-05-31: [Strategy Collection your executive command center: From insight to action](https://www.atlassian.com/blog/company-news/strategy-collection-team-26)
-- Accessed 2026-05-31: [Customer Requests](https://linear.app/docs/customer-requests)
-- Accessed 2026-05-31: [Releases](https://linear.app/docs/releases)
-- Accessed 2026-05-31: [Linear Agent](https://linear.app/docs/linear-agent)
-- Published 2026-04-27 and accessed 2026-05-31: [Symphony](https://openai.com/index/open-source-codex-orchestration-symphony/)
+- Accessed 2026-06-01: [GitHub Spec Kit](https://github.github.com/spec-kit/)
+- Accessed 2026-06-01: [Spec Kit workflows](https://github.github.com/spec-kit/reference/workflows.html)
+- Accessed 2026-06-01: [OpenSpec](https://openspec.dev/)
+- Published 2026-05-06 and accessed 2026-06-01: [Kiro 0.12 changelog](https://kiro.dev/changelog/ide/0-12/)
+- Published 2026-05-29 and accessed 2026-06-01: [Kiro 2.5 changelog](https://kiro.dev/changelog/cli/2-5/)
+- Published 2026-04-15 and accessed 2026-06-01: [OpenAI Agents SDK update](https://openai.com/index/the-next-evolution-of-the-agents-sdk/)
+- Published 2026-04-22 and accessed 2026-06-01: [OpenAI Workspace agents](https://openai.com/academy/workspace-agents/)
+- Published 2026-04-27 and accessed 2026-06-01: [OpenAI Symphony](https://openai.com/index/open-source-codex-orchestration-symphony/)
+- Published 2026-05-06 and accessed 2026-06-01: [Atlassian Teamwork Graph blog](https://www.atlassian.com/blog/company-news/teamwork-graph-team-26)
+- Published 2026-05-06 and accessed 2026-06-01: [Atlassian Teamwork Collection blog](https://www.atlassian.com/blog/company-news/teamwork-collection-team-26)
+- Accessed 2026-06-01: [Atlassian Teamwork Graph product page](https://www.atlassian.com/platform/teamwork-graph)
+- Published 2026-05-06 and accessed 2026-06-01: [Atlassian Product Collection](https://www.atlassian.com/blog/company-news/introducing-product-collection)
+- Published 2026-05-06 and accessed 2026-06-01: [Atlassian Strategy Collection](https://www.atlassian.com/blog/company-news/strategy-collection-team-26)
+- Published 2026-03-24 and accessed 2026-06-01: [Linear Agent launch](https://linear.app/changelog/2026-03-24-introducing-linear-agent)
+- Accessed 2026-06-01: [Linear Agent docs](https://linear.app/docs/linear-agent)
+- Published 2026-05-14 and accessed 2026-06-01: [Linear Code Intelligence](https://linear.app/now/code-intelligence-for-linear-agent)
+- Accessed 2026-06-01: [Linear AI Agents](https://linear.app/docs/agents-in-linear)
+- Accessed 2026-06-01: [Linear issue delegation](https://linear.app/docs/assigning-issues)
+- Accessed 2026-06-01: [Linear Triage](https://linear.app/docs/triage)
+- Accessed 2026-06-01: [Linear Triage Intelligence](https://linear.app/docs/triage-intelligence)
+- Accessed 2026-06-01: [Linear Customer Requests](https://linear.app/docs/customer-requests)
+- Accessed 2026-06-01: [Linear Releases](https://linear.app/docs/releases)
+- Published 2026-04-22 and accessed 2026-06-01: [AWS AgentCore update](https://aws.amazon.com/about-aws/whats-new/2026/04/agentcore-new-features-to-build-agents-faster/)
+- Published 2026-04-09 and accessed 2026-06-01: [AWS Agent Registry](https://aws.amazon.com/about-aws/whats-new/2026/04/aws-agent-registry-in-agentcore-preview/)
+- Accessed 2026-06-01: [MCP Tasks](https://modelcontextprotocol.io/extensions/tasks/overview)
+- Accessed 2026-06-01: [MCP Registry](https://modelcontextprotocol.io/registry/about)
+- Published 2026-05-21 and accessed 2026-06-01: [ACP logout stabilization](https://agentclientprotocol.com/announcements/logout-method-stabilized)
+- Accessed 2026-06-01: [A2A v1.0 announcement](https://a2a-protocol.org/latest/announcing-1.0/)
 <!-- state-of-the-art:managed:end -->
